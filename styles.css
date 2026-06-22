@@ -21,51 +21,55 @@ body {
 }
 
 .hero h1 {
-    font-size: 48px;
+    font-size: 52px;
     margin: 0;
+    font-weight: 800;
 }
 
 .hero p {
-    font-size: 20px;
-    margin-top: 10px;
+    font-size: 22px;
+    margin-top: 12px;
     opacity: 0.9;
 }
 
 .btn-hero {
-    margin-top: 25px;
-    padding: 14px 26px;
+    margin-top: 30px;
+    padding: 14px 28px;
     background: white;
     color: #0b3d91;
-    border-radius: 10px;
+    border-radius: 12px;
     font-weight: 700;
     text-decoration: none;
-    transition: 0.3s;
+    transition: 0.3s ease;
 }
 
 .btn-hero:hover {
     background: #e3e9ff;
+    transform: translateY(-3px);
 }
 
 /* NAV */
-nav {
-    background: white;
-    padding: 12px;
-    text-align: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+.navbar {
     position: sticky;
     top: 0;
-    z-index: 10;
+    background: white;
+    padding: 14px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    z-index: 100;
 }
 
-nav a {
+.navbar a {
     color: #0b3d91;
-    margin: 0 18px;
+    margin: 0 20px;
     text-decoration: none;
     font-weight: 600;
+    transition: 0.3s ease;
 }
 
-nav a:hover {
+.navbar a:hover {
     color: #1a73e8;
+    transform: translateY(-2px);
 }
 
 /* SECCIONES */
@@ -154,4 +158,37 @@ footer {
     text-align: center;
     padding: 25px;
     margin-top: 40px;
+}
+
+
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+
+.card, .project-card {
+    background: white;
+    padding: 28px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    transition: 0.25s ease;
+}
+
+.card:hover, .project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
+
+
+.section h2 {
+    color: #0b3d91;
+    border-left: 6px solid #1a73e8;
+    padding-left: 14px;
+    font-size: 28px;
+    font-weight: 800;
 }
