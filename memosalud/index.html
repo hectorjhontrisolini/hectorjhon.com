@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>MemoSalud</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1AA088">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MemoSalud">
+<link rel="apple-touch-icon" href="icon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600;700;800&family=Schibsted+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet">
+<style>
+:root{
+  --med:#1AA088;--meds:#E1F2EC;--medk:#15806B;
+  --wat:#2F74C0;--wats:#EAF2FB;--watt:#D3E4F7;--watb:#2F74C0;
+  --act:#E0823C;--acts:#FBEDDF;
+  --ok:#22B07A;--oks:#EAF6F0;--err:#D9534F;
+  --bg:#EEF3F8;--surf:#fff;
+  --ink:#15212D;--sub:#65737F;--ln:#E3EAF1;--mu:#8A97A3;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;padding:0;position:fixed}
+body{font-family:Mulish,sans-serif;background:var(--bg);display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;overflow:hidden;padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+.ic{font-family:'Material Symbols Rounded';font-style:normal;line-height:1;user-select:none;display:inline-flex}
+
+.phone{width:100%;height:100%;background:var(--bg);border-radius:0;padding:0;box-shadow:none;position:relative;display:flex;flex-direction:column}
+.notch{display:none}
+.screen{width:100%;height:100%;background:var(--bg);border-radius:0;overflow:hidden;position:relative;display:flex;flex-direction:column}
+
+/* Screen pages */
+.sp{position:absolute;inset:0;display:none;flex-direction:column;background:var(--bg)}
+.sp.on{display:flex;z-index:5}
+.sp.slide-r{animation:slR .22s ease-out}
+.sp.slide-l{animation:slL .22s ease-out}
+@keyframes slR{from{transform:translateX(100%)}to{transform:translateX(0)}}
+@keyframes slL{from{transform:translateX(-25%);opacity:.5}to{transform:translateX(0);opacity:1}}
+
+/* Status bar */
+.sb{display:none}
+.sb-dark{color:#fff}
+.sb .si{display:flex;gap:6px;align-items:center;font-size:16px}
+
+/* Scrollable area */
+.sc{flex:1;overflow-y:auto;overflow-x:hidden}
+.sc::-webkit-scrollbar{display:none}
+
+/* Tab bar */
+.tb{background:var(--surf);border-top:1px solid var(--ln);display:flex;justify-content:space-around;align-items:center;padding:10px 0 calc(10px + env(safe-area-inset-bottom,0px));flex-shrink:0}
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:var(--mu);font-size:11px;font-weight:600;padding:2px 8px}
+.tab.on{color:var(--med);font-weight:700}
+.tab .ic{font-size:25px}
+
+/* Cards */
+.card{background:var(--surf);border:1px solid var(--ln);border-radius:18px;padding:15px;margin-bottom:11px}
+.card.now{border:2px solid var(--med);box-shadow:0 6px 16px rgba(26,160,136,.16)}
+.card.done{opacity:.65}
+.row{display:flex;align-items:center;gap:13px}
+
+/* Icon chips */
+.ch{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:24px}
+.ch-m{background:var(--meds);color:var(--med)}
+.ch-ok{background:var(--oks);color:var(--ok)}
+.ch-g{background:#F1F5F9;color:var(--mu)}
+.ch-w{background:var(--wats);color:var(--wat)}
+.ch-a{background:var(--acts);color:var(--act)}
+.ch-sm{width:40px;height:40px;font-size:20px;border-radius:11px}
+
+/* Text */
+.mn{font-size:17px;font-weight:800;color:var(--ink)}
+.ms{font-size:13px;color:var(--sub);margin-top:2px;font-weight:500}
+.h1{font-family:'Schibsted Grotesk';font-size:26px;font-weight:800;color:var(--ink)}
+.h2{font-family:'Schibsted Grotesk';font-size:22px;font-weight:800;color:var(--ink)}
+.label{font-size:13px;color:var(--mu);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin:14px 0 10px}
+
+/* Page headers */
+.phdr{padding:6px 22px 14px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.phdr-sub{font-size:14px;color:var(--sub);font-weight:600;margin-top:2px}
+.bhdr{padding:6px 22px 12px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.back{background:none;border:none;cursor:pointer;display:flex;align-items:center;font-size:28px;color:var(--ink)}
+
+/* Buttons */
+.btn{border:none;cursor:pointer;font-family:Mulish;display:flex;align-items:center;justify-content:center;gap:7px;transition:transform .15s}
+.btn:active{transform:scale(.93)}
+.fab{width:50px;height:50px;border-radius:16px;background:var(--med);color:#fff;font-size:28px;box-shadow:0 6px 14px rgba(26,160,136,.32)}
+.b-taken{flex:1;height:50px;border-radius:13px;background:var(--med);color:#fff;font-size:15px;font-weight:800}
+.b-snooze{width:50px;height:50px;border-radius:13px;background:var(--meds);color:var(--med);font-size:24px}
+.b-pri{width:100%;height:58px;border-radius:16px;color:#fff;font-size:18px;font-weight:800}
+.b-med{background:var(--med);box-shadow:0 8px 18px rgba(26,160,136,.32)}
+.b-wat{background:var(--watb);box-shadow:0 8px 18px rgba(47,116,192,.28)}
+.b-act{background:linear-gradient(135deg,var(--act),#D96E2A);box-shadow:0 8px 18px rgba(224,130,60,.28)}
+.now-badge{background:var(--meds);color:var(--med);padding:5px 10px;border-radius:14px;font-size:12px;font-weight:700;white-space:nowrap}
+.foot{padding:14px 22px 28px;flex-shrink:0}
+
+/* Form */
+.fl{font-size:13px;color:var(--sub);font-weight:700;margin:16px 0 7px}
+.fi{background:var(--surf);border:1px solid var(--ln);border-radius:14px;padding:15px;font-size:17px;font-weight:700;color:var(--ink);width:100%;font-family:Mulish;outline:none}
+.fi:focus{border-color:var(--med)}
+.fi::placeholder{color:var(--mu);font-weight:500}
+.fta{min-height:80px;resize:none;font-size:15px;font-weight:500}
+.tc{display:flex;flex-wrap:wrap;gap:9px}
+.tchip{background:var(--med);color:#fff;padding:10px 13px;border-radius:13px;font-size:15px;font-weight:800;border:none;font-family:Mulish;display:flex;align-items:center;gap:5px;cursor:pointer}
+.tchip:active{transform:scale(.93)}
+.tadd{background:var(--surf);border:1.5px dashed #B9C6D2;color:var(--med);padding:10px 13px;border-radius:13px;font-size:15px;font-weight:800;font-family:Mulish;display:flex;align-items:center;gap:5px;cursor:pointer}
+.seg{display:flex;gap:8px}
+.segb{flex:1;padding:11px 0;border-radius:12px;text-align:center;font-size:14px;font-weight:700;cursor:pointer;border:1px solid var(--ln);background:var(--surf);color:var(--sub);font-family:Mulish;transition:all .15s}
+.segb.on-m{background:var(--med);border-color:var(--med);color:#fff}
+.segb.on-w{background:var(--watb);border-color:var(--watb);color:#fff}
+.2col{display:flex;gap:12px}
+
+/* Dark mode — se aplica a .screen */
+.dark-mode{
+  --bg:#0D1620;--surf:#16222E;--ln:#243341;
+  --ink:#E8EEF4;--sub:#93A4B3;--mu:#607080;
+  --med:#2DBE99;--meds:rgba(45,190,153,.13);--medk:#1A9A7A;
+  --ok:#2DBE99;--oks:rgba(45,190,153,.13);
+  --wat:#8BB6E4;--wats:rgba(139,182,228,.13);--watt:rgba(139,182,228,.25);--watb:#3D7FCB;
+  --act:#F0A05C;--acts:rgba(240,160,92,.13);
+  --err:#F07070;
+}
+
+/* Ring (water + activity) */
+.ring{width:210px;height:210px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:14px auto 8px}
+.ring-hole{width:142px;height:142px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.rn{font-family:'Schibsted Grotesk';font-size:34px;font-weight:800;line-height:1}
+.rsub{font-size:12px;font-weight:600;color:var(--sub)}
+
+/* Water glasses */
+.wglasses{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:10px;padding:0 22px;margin-bottom:16px}
+.wglass{aspect-ratio:1;border-radius:14px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .15s;background:var(--surf);border:1.5px solid var(--watt)}
+.wglass:active{transform:scale(.88)}
+.wglass .ic{font-size:26px;color:var(--watt)}
+.wglass.f{background:var(--watb);border-color:var(--watb)}
+.wglass.f .ic{color:#fff}
+
+/* Activity chips */
+.achips{display:flex;gap:8px;padding:0 22px;margin-bottom:16px}
+.ach{flex:1;background:var(--surf);border:1px solid var(--ln);border-radius:14px;padding:12px 6px;text-align:center}
+.achn{font-family:'Schibsted Grotesk';font-size:18px;font-weight:800;color:var(--ink)}
+.achl{font-size:11px;color:var(--mu);font-weight:600;margin-top:2px}
+
+/* Timeline (dashboard) */
+.tl{position:relative;padding-left:30px;margin:0 22px 16px}
+.tlline{position:absolute;left:9px;top:6px;bottom:10px;width:3px;background:#DCE5EE;border-radius:2px}
+.tli{position:relative;margin-bottom:14px}
+.tld{position:absolute;left:-30px;top:2px;width:21px;height:21px;border-radius:50%;background:var(--surf);border:2px solid #C7D2DD;display:flex;align-items:center;justify-content:center}
+.tld.ok{background:var(--ok);border-color:var(--ok)}
+.tld.now{width:25px;height:25px;left:-32px;top:0;background:var(--med);border:3px solid #A7E0D2}
+.tld.due{width:25px;height:25px;left:-32px;top:0;background:var(--act);border:3px solid #F6D3B0}
+.tlc{background:var(--surf);border:1px solid var(--ln);border-radius:16px;padding:13px 15px}
+.tlc.ok{opacity:.7}
+.tlc.now{border:2px solid var(--med);box-shadow:0 6px 16px rgba(26,160,136,.18)}
+.tlc.due{border:2px solid var(--act);box-shadow:0 6px 16px rgba(224,130,60,.18)}
+
+/* Med detail hero */
+.hero{background:linear-gradient(150deg,var(--med),var(--medk));padding:0 22px 22px;flex-shrink:0;margin-top:-48px;padding-top:54px}
+.hero-icon{width:64px;height:64px;border-radius:18px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:34px;color:#fff}
+
+/* Heatmap */
+.hm{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;padding:0 22px;margin-bottom:10px}
+.hmc{aspect-ratio:1;border-radius:7px;background:var(--ln)}
+.hmc.ok{background:var(--ok)}
+.hmc.late{background:var(--act)}
+.hmc.miss{background:var(--err)}
+.hmc.today{background:var(--wat)}
+.hm-leg{display:flex;gap:12px;flex-wrap:wrap;padding:0 22px;margin-bottom:18px}
+.hml{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--sub);font-weight:600}
+.hmd{width:10px;height:10px;border-radius:3px}
+
+/* Settings */
+.setcard{background:var(--surf);border:1px solid var(--ln);border-radius:18px;margin:0 22px;overflow:hidden;margin-bottom:6px}
+.setrow{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--ln)}
+.setrow:last-child{border-bottom:none}
+.srl{flex:1}
+.srl-t{font-size:16px;font-weight:700;color:var(--ink)}
+.srl-s{font-size:13px;color:var(--sub);font-weight:500;margin-top:2px}
+.toggle{width:51px;height:31px;border-radius:16px;background:var(--ln);position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
+.toggle.on{background:var(--med)}
+.toggle::after{content:'';position:absolute;top:3px;left:3px;width:25px;height:25px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.15);transition:left .2s}
+.toggle.on::after{left:23px}
+
+/* Water config */
+.wcc{display:flex;align-items:center;justify-content:center;gap:20px;margin:12px 0}
+.wcb{width:52px;height:52px;border-radius:16px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:26px;transition:transform .15s}
+.wcb:active{transform:scale(.9)}
+.wc-num{font-family:'Schibsted Grotesk';font-size:44px;font-weight:800;color:var(--ink)}
+.int-row{display:flex;gap:10px;margin-bottom:18px}
+.intb{flex:1;padding:12px;border-radius:14px;text-align:center;font-size:15px;font-weight:800;cursor:pointer;border:1px solid var(--ln);background:var(--surf);color:var(--sub);font-family:Mulish;transition:all .15s}
+.intb.on{background:var(--watb);color:#fff;border-color:var(--watb)}
+
+/* Familia */
+.famcard{background:var(--surf);border:1px solid var(--ln);border-radius:18px;padding:15px;margin-bottom:11px;display:flex;align-items:center;gap:13px;cursor:pointer}
+.famav{width:50px;height:50px;border-radius:15px;background:var(--med);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Schibsted Grotesk';font-size:20px;font-weight:800;flex-shrink:0}
+.famrelchips{display:flex;flex-wrap:wrap;gap:8px}
+.b-call{width:50px;height:50px;border-radius:13px;background:var(--ok);color:#fff;font-size:22px;text-decoration:none;display:flex;align-items:center;justify-content:center}
+
+/* En construcción */
+.wip{display:inline-flex;align-items:center;gap:4px;background:#FFF3CD;color:#8A6D1F;padding:4px 9px;border-radius:9px;font-size:11px;font-weight:700;white-space:nowrap}
+.wip .ic{font-size:14px}
+.dark-mode .wip{background:rgba(240,160,92,.18);color:#F0A05C}
+
+/* Toast */
+.toast{position:absolute;bottom:90px;left:22px;right:22px;background:var(--ink);color:#fff;border-radius:14px;padding:14px 18px;font-size:15px;font-weight:700;display:flex;align-items:center;gap:10px;z-index:50;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none}
+.toast.on{opacity:1;transform:translateY(0)}
+.toast .ic{font-size:22px;color:var(--ok)}
+</style>
+</head>
+<body>
+<div class="phone">
+<div class="notch"></div>
+<div class="screen">
+
+<!-- ══════════ BIENVENIDA ══════════ -->
+<div id="s-welcome" class="sp on" style="background:linear-gradient(160deg,var(--med) 0%,var(--medk) 100%);justify-content:space-between">
+  <div class="sb sb-dark"><span>9:41</span><div class="si ic">signal_cellular_alt wifi battery_full</div></div>
+  <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 32px;text-align:center">
+    <div style="width:96px;height:96px;border-radius:28px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;margin-bottom:28px;box-shadow:0 8px 24px rgba(0,0,0,.18)">
+      <span class="ic" style="font-size:52px;color:#fff">medication</span>
+    </div>
+    <div style="font-family:'Schibsted Grotesk';font-size:34px;font-weight:800;color:#fff;margin-bottom:10px;letter-spacing:-0.5px">MemoSalud</div>
+    <div style="font-size:16px;color:rgba(255,255,255,.82);font-weight:600;line-height:1.55;max-width:260px">Tu compañero diario para una vida más saludable</div>
+  </div>
+  <div style="padding:0 28px 44px;display:flex;flex-direction:column;gap:13px">
+    <button class="btn" style="height:58px;border-radius:18px;background:#fff;color:var(--med);font-size:18px;font-weight:800;font-family:Mulish;box-shadow:0 8px 20px rgba(0,0,0,.15)" onclick="nav('s-setup',true)">Comenzar</button>
+    <button class="btn" style="background:none;border:none;color:rgba(255,255,255,.72);font-size:15px;font-weight:700;height:44px;font-family:Mulish" onclick="enterApp()">Ya tengo cuenta</button>
+  </div>
+</div>
+
+<!-- ══════════ SETUP INICIAL ══════════ -->
+<div id="s-setup" class="sp" style="background:var(--bg)">
+  <div class="sb"><span>9:41</span><div class="si ic">signal_cellular_alt wifi battery_full</div></div>
+  <div class="sc" style="padding:0 28px 20px">
+    <div style="display:flex;justify-content:center;gap:7px;margin:10px 0 28px">
+      <div style="width:30px;height:5px;border-radius:3px;background:var(--med)"></div>
+      <div style="width:30px;height:5px;border-radius:3px;background:var(--ln)"></div>
+    </div>
+    <div class="h1" style="margin-bottom:6px">¿Cómo te llamas?</div>
+    <div class="phdr-sub" style="margin-bottom:28px">Así te saludaremos cada mañana</div>
+    <div class="fl">Tu nombre</div>
+    <input class="fi" id="setup-name" type="text" placeholder="Ej: María, Carlos…" maxlength="30" style="font-size:18px">
+    <div style="margin-top:30px">
+      <div class="fl">Meta de agua por día</div>
+      <div style="display:flex;align-items:center;gap:16px;margin-top:10px">
+        <button class="btn" style="width:50px;height:50px;border-radius:14px;background:var(--wats);color:var(--wat);font-size:22px" onclick="adjSetup('w',-1)"><span class="ic">remove</span></button>
+        <div style="flex:1;text-align:center">
+          <span id="setup-wg" style="font-family:'Schibsted Grotesk';font-size:30px;font-weight:800;color:var(--ink)">8</span>
+          <span style="font-size:14px;color:var(--sub);font-weight:600;margin-left:6px">vasos</span>
+        </div>
+        <button class="btn" style="width:50px;height:50px;border-radius:14px;background:var(--watb);color:#fff;font-size:22px" onclick="adjSetup('w',1)"><span class="ic">add</span></button>
+      </div>
+    </div>
+    <div style="margin-top:26px">
+      <div class="fl">Meta de pasos por día</div>
+      <div style="display:flex;align-items:center;gap:16px;margin-top:10px">
+        <button class="btn" style="width:50px;height:50px;border-radius:14px;background:var(--acts);color:var(--act);font-size:22px" onclick="adjSetup('s',-500)"><span class="ic">remove</span></button>
+        <div style="flex:1;text-align:center">
+          <span id="setup-sg" style="font-family:'Schibsted Grotesk';font-size:30px;font-weight:800;color:var(--ink)">5 000</span>
+          <span style="font-size:14px;color:var(--sub);font-weight:600;margin-left:4px">pasos</span>
+        </div>
+        <button class="btn" style="width:50px;height:50px;border-radius:14px;background:var(--act);color:#fff;font-size:22px" onclick="adjSetup('s',500)"><span class="ic">add</span></button>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <button class="btn b-pri b-med" onclick="finishSetup()">Empezar a usar MemoSalud</button>
+  </div>
+</div>
+
+<!-- ══════════ DASHBOARD ══════════ -->
+<div id="s-dash" class="sp">
+  <div class="sb"><span>9:41</span><div class="si ic">signal_cellular_alt wifi battery_full</div></div>
+  <div class="phdr" style="padding-bottom:6px">
+    <div>
+      <div class="h1" id="dash-greeting">Buenos días</div>
+      <div class="phdr-sub" id="dash-date">Sábado 27 de junio</div>
+    </div>
+  </div>
+  <div class="sc">
+    <div id="dash-family" style="padding:0 22px"></div>
+    <div class="tl" id="dash-tl"><div class="tlline"></div></div>
+  </div>
+  <div class="tb" id="tb-dash"></div>
+</div>
+
+<!-- ══════════ MED LISTA ══════════ -->
+<div id="s-med" class="sp">
+  <div class="sb"><span>9:41</span><div class="si ic">signal_cellular_alt wifi battery_full</div></div>
+  <div class="phdr">
+    <div><div class="h1">Medicinas</div><div class="phdr-sub">Hoy · <span id="cnt-t">1</span> de <span id="cnt-n">3</span> tomadas</div></div>
+    <button class="btn fab" onclick="nav('s-med-form',true)"><span class="ic">add</span></button>
+  </div>
+  <div class="sc" style="padding:0 22px 16px" id="med-body"></div>
+  <div class="tb" id="tb-med"></div>
+</div>
+
+<!-- ══════════ MED FORM ══════════ -->
+<div id="s-med-form" class="sp">
+  <div class="sb"><span>9:41</span><div class="si ic">signal_cellular_alt wifi battery_full</div></div>
+  <div class="bhdr">
+    <button class="back" onclick="goBack()"><span class="ic">arrow_back</span></button>
+    <div class="h2" id="form-ttl">Nueva medicina</div>
+  </div>
+  <div class="sc" style="padding:0 22px">
+    <div class="fl">NOMBRE</div>
+    <input class="fi" id="f-name" placeholder="Losartán">
+    <div style="display:flex;gap:12px">
+      <div style="flex:1"><div class="fl">DOSIS</div><input class="fi" id="f-dose" placeholder="50 mg"></div>
+      <div style="flex:1"><div class="fl">CANTIDAD</div><input class="fi" id="f-qty" placeholder="1 tableta"></div>
+    </div>
+    <div class="fl">HORARIOS</div>
+    <div class="seg" id="sched-mode-seg" style="margin-bottom:14px">
+      <button class="segb on-m" onclick="setSchedMode('frecuencia',this)">Por horario</button>
+      <button class="segb" onclick="setSchedMode('comidas',this)">Por comidas</button>
+    </div>
+    <!-- Modo frecuencia -->
+    <div id="sched-frec">
+      <div style="display:flex;gap:8px;margin-bottom:12px" id="freq-seg2">
+        <button class="segb on-m" style="flex:1" onclick="setFreq(1,this)">1×</button>
+        <button class="segb" style="flex:1" onclick="setFreq(2,this)">2×</button>
+        <button class="segb" style="flex:1" onclick="setFreq(3,this)">3×</button>
+        <button class="segb" style="flex:1" onclick="setFreq(4,this)">4×</button>
+      </div>
+      <div class="fl" style="margin-top:4px">PRIMERA TOMA</div>
+      <input type="time" class="fi" id="f-start-time" value="08:00" oninput="updateCalcTimes()">
+      <div id="calc-time-chips" class="tc" style="margin-top:10px"></div>
+    </div>
+    <!-- Modo comidas -->
+    <div id="sched-meal" style="display:none">
+      <div id="meal-rows"></div>
+    </div>
+    <div style="display:flex;gap:12px">
+      <div style="flex:1"><div class="fl">STOCK (tabletas)</div><input class="fi" id="f-stock" type="number" placeholder="Ej: 30" min="1"></div>
+    </div>
+    <div class="fl">NOTAS (opcional)</div>
+    <textarea class="fi fta" id="f-notes" placeholder="Tomar con agua, después de comer…"></textarea>
+    <button class="btn" style="width:100%;height:44px;border-radius:13px;background:none;border:1px solid var(--ln);color:var(--sub);font-size:14px;font-weight:700;gap:6px;margin-top:6px" onclick="navToSettings()">
+      <span class="ic" style="font-size:18px">tune</span>Más ajustes de recordatorio
+    </button>
+    <div style="height:16px"></div>
+  </div>
+  <div class="foot"><button class="btn b-pri b-med" onclick="saveMed()">Guardar medicina</button></div>
+</div>
+
+<!-- ══════════ MED DETALLE ══════════ -->
+<div id="s-med-det" class="sp" style="background:var(--bg)">
+  <div class="sb sb-dark" style="position:relative;z-index:2"><span>9:41</span><div class="si ic">signal_cellular_alt wifi battery_full</div></div>
+  <div class="hero">
+    <div style="display:flex;justify-content:space-between;margin-bottom:16px">
+      <button class="back" style="color:#fff" onclick="goBack()"><span class="ic">arrow_back</span></button>
+      <button class="back" style="color:#fff" onclick="nav('s-med-form',true);loadEditForm()"><span class="ic">edit</span></button>
+    </div>
+    <div class="hero-icon"><span class="ic">medication</span></div>
+    <div style="font-family:'Schibsted Grotesk';font-size:26px;font-weight:800;color:#fff" id="det-name"></div>
+    <div style="font-size:15px;color:rgba(255,255,255,.85);font-weight:600;margin-top:3px" id="det-sched"></div>
+  </div>
+  <div style="display:flex;gap:12px;padding:16px 22px;flex-shrink:0">
+    <div style="flex:1;background:var(--surf);border:1px solid var(--ln);border-radius:16px;padding:14px;text-align:center">
+      <div style="font-family:'Schibsted Grotesk';font-size:28px;font-weight:800;color:var(--med)" id="det-pct">85%</div>
+      <div style="font-size:13px;color:var(--sub);font-weight:600;margin-top:4px">Cumplimiento</div>
+    </div>
+    <div id="det-tabs-card" style="flex:1;background:var(--surf);border:1px solid var(--ln);border-radius:16px;padding:14px;text-align:center;cursor:pointer" onclick="editStock()">
+      <div style="font-family:'Schibsted Grotesk';font-size:28px;font-weight:800;color:var(--sub)" id="det-tabs">—</div>
+      <div style="font-size:13px;color:var(--sub);font-weight:600;margin-top:4px">Tabletas restantes</div>
+    </div>
+  </div>
+  <div class="sc" style="padding:0 22px">
+    <div id="det-taken-wrap"></div>
+    <div style="background:var(--surf);border:1px solid var(--ln);border-radius:16px;padding:15px;margin-bottom:14px">
+      <div style="font-size:13px;font-weight:700;color:var(--sub);margin-bottom:6px">NOTAS</div>
+      <div style="font-size:15px;font-weight:500;color:var(--ink)" id="det-notes"></div>
+    </div>
+    <div class="mn" style="margin-bottom:10px">Últimos registros</div>
+    <div id="det-records" style="background:var(--surf);border:1px solid var(--ln);border-radius:16px;padding:0 15px;margin-bottom:20px"></div>
+  </div>
+</div>
+
+<!-- ══════════ MED HISTORIAL ══════════ -->
+<div id="s-med-hist" class="sp">
+  <div class="sb"><span>9:41</span><div class="si ic">signal_cellular_alt wifi battery_full</div></div>
+  <div class="bhdr">
+    <button class="back" onclick="goBack()"><span class="ic">arrow_back</span></button>
+    <div class="h2">Historial</div>
+  </div>
+  <div class="sc">
+    <div style="display:flex;justify-content:space-around;padding:0 22px;margin-bottom:8px">
+      <span style="font-size:11px;color:var(--mu);font-weight:600">L</span><span style="font-size:11px;color:var(--mu);font-weight:600">M</span>
+      <span style="font-size:11px;color:var(--mu);font-weight:600">X</span><span style="font-size:11px;color:var(--mu);font-weight:600">J</span>
+      <span style="font-size:11px;color:var(--mu);font-weight:600">V</span><span style="font-size:11px;color:var(--mu);font-weight:600">S</span>
+      <span style="font-size:11px;color:var(--mu);font-weight:600">D</span>
+    </div>
+    <div class="hm" id="hm-grid"></div>
+    <div class="hm-leg">
+      <div class="hml"><div class="hmd" style="background:var(--ok)"></div>A tiempo</div>
+      <div class="hml"><div class="hmd" style="background:var(--act)"></div>Tarde</div>
+      <div class="hml"><div class="hmd" style="background:var(--err)"></div>Omitida</div>
+      <div class="hml"><div class="hmd" style="background:var(--wat)"></div>Hoy</div>
+      <div class="hml"><div class="hmd" style="background:var(--ln)"></div>Futuro</div>
+    </div>
+    <div class="mn" style="padding:0 22px;margin-bottom:10px">Medicinas este mes</div>
+    <div id="hist-list" style="background:var(--surf);border:1px solid var(--ln);border-radius:18px;margin:0 22px 20px;overflow:hidden"></div>
+  </div>
+</div>
+
+<!-- ══════════ AGUA ══════════ -->
+<div id="s-agua" class="sp" style="background:var(--wats)">
+  <div class="sb" style="background:var(--wats)"><span style="color:var(--ink)">9:41</span><div class="si ic" style="color:var(--ink)">signal_cellular_alt wifi battery_full</div></div>
+  <div class="phdr" style="background:var(--wats)">
+    <div><div class="h1" style="color:var(--wat)">Agua</div><div class="phdr-sub" id="w-sub">Meta: 8 vasos hoy</div></div>
+    <button class="btn" style="background:none;border:none;cursor:pointer;font-size:26px;color:var(--wat)" onclick="nav('s-agua-cfg',true)"><span class="ic">tune</span></button>
+  </div>
+  <div class="sc" style="background:var(--wats)">
+    <div class="ring" id="w-ring">
+      <div class="ring-hole" style="background:var(--surf);box-shadow:0 2px 10px rgba(0,0,0,.06)">
+        <span class="ic" style="font-size:28px;color:var(--wat)">water_drop</span>
+        <div class="rn" style="color:var(--wat)" id="w-num">3/8</div>
+        <div class="rsub" id="w-ml">750 ml</div>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:14px;font-weight:600;color:var(--sub);margin:4px 22px 16px" id="w-msg">¡Vas bien! Sigue hidratándote 💧</div>
+    <div class="wglasses" id="w-bars"></div>
+    <div style="padding:0 22px 10px">
+      <button class="btn b-pri b-wat" onclick="addGlass()">
+        <span class="ic" style="font-size:22px">water_drop</span>Registrar un vaso
+      </button>
+    </div>
+    <div style="display:flex;justify-content:center;padding-bottom:20px">
+      <div class="wip"><span class="ic">construction</span>Recordatorios de agua en construcción</div>
+    </div>
+  </div>
+  <div class="tb" id="tb-agua"></div>
+</div>
+
+<!-- ══════════ AGUA CONFIG ══════════ -->
+<div id="s-agua-cfg" class="sp">
+  <div class="sb"><span>9:41</span><div class="si ic">signal_cellular_alt wifi battery_full</div></div>
+  <div class="bhdr">
+    <button class="back" onclick="goBack()"><span class="ic">arrow_back</span></button>
+    <div class="h2">Configuración agua</div>
+  </div>
+  <div class="sc" style="padding:0 22px">
+    <div class="fl">META DE VASOS DIARIOS</div>
+    <div class="wcc">
+      <button class="btn wcb" style="background:var(--wats);color:var(--wat)" onclick="adjGoal(-1)"><span class="ic">remove</span></button>
+      <span class="wc-num" id="wc-n">8</span>
+      <button class="btn wcb" style="background:var(--watb);color:#fff" onclick="adjGoal(1)"><span class="ic">add</span></button>
+    </div>
+    <div class="fl">INTERVALO DE RECORDATORIO</div>
+    <div class="int-row">
+      <div class="intb on" onclick="pickInt(this)">1h</div>
+      <div class="intb" onclick="pickInt(this)">2h</div>
+      <div class="intb" onclick="pickInt(this)">3h</div>
+    </div>
+    <div class="fl">VENTANA ACTIVA</div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+      <div style="flex:1;background:var(--surf);border:1px solid var(--ln);border-radius:14px;padding:14px;text-align:center;font-family:'Schibsted Grotesk';font-size:18px;font-weight:800;color:var(--ink)">7:00</div>
+      <span class="ic" style="color:var(--mu)">arrow_forward</span>
+      <div style="flex:1;background:var(--surf);border:1px solid var(--ln);border-radius:14px;padding:14px;text-align:center;font-family:'Schibsted Grotesk';font-size:18px;font-weight:800;color:var(--ink)">22:00</div>
+    </div>
+    <div class="fl">RECORDATORIOS</div>
+    <div class="setcard" style="margin:0 0 16px">
+      <div class="setrow" style="border:none">
+        <div class="srl"><div class="srl-t">Activar recordatorios</div><div class="srl-s">Notificaciones de agua</div></div>
+        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><button class="btn b-pri b-wat" onclick="goBack();showToast('Configuración guardada')">Guardar configuración</button></div>
+</div>
+
+<!-- ══════════ ACTIVIDAD ══════════ -->
+<div id="s-act" class="sp" style="background:var(--acts)">
+  <div class="sb" style="background:var(--acts)"><span>9:41</span><div class="si ic">signal_cellular_alt wifi battery_full</div></div>
+  <div class="phdr" style="background:var(--acts)">
+    <div><div class="h1" style="color:var(--act)">Actividad</div><div class="phdr-sub">Meta: 5 000 pasos hoy</div></div>
+  </div>
+  <div class="sc" style="background:var(--acts)">
+    <div class="ring" id="a-ring">
+      <div class="ring-hole" style="background:var(--surf);box-shadow:0 2px 10px rgba(0,0,0,.06)">
+        <span class="ic" style="font-size:28px;color:var(--act)">directions_walk</span>
+        <div class="rn" style="color:var(--act)" id="a-steps">3 240</div>
+        <div class="rsub">de 5 000 pasos</div>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:center;margin-bottom:12px">
+      <div class="wip"><span class="ic">construction</span>Conteo de pasos en construcción — datos de ejemplo</div>
+    </div>
+    <div class="achips">
+      <div class="ach"><div class="achn" id="a-km">2.4</div><div class="achl">km</div></div>
+      <div class="ach"><div class="achn" id="a-cal">143</div><div class="achl">kcal</div></div>
+      <div class="ach"><div class="achn">28'</div><div class="achl">tiempo activo</div></div>
+    </div>
+    <div style="background:var(--surf);border:1px solid var(--ln);border-radius:18px;padding:15px 18px;margin:0 22px 18px;display:flex;align-items:center;justify-content:space-between">
+      <div><div style="font-size:15px;font-weight:700;color:var(--ink)">Meta diaria</div><div style="font-size:13px;color:var(--sub);font-weight:500">Pasos por día</div></div>
+      <span style="font-family:'Schibsted Grotesk';font-size:20px;font-weight:800;color:var(--act)">5 000</span>
+    </div>
+    <div style="padding:0 22px 8px">
+      <button class="btn b-pri b-act" onclick="showToast('Caminata GPS — próximamente en el módulo Actividad')">
+        <span class="ic" style="font-size:22px">directions_walk</span>Iniciar caminata GPS
+      </button>
+    </div>
+    <div style="display:flex;justify-content:center;padding-bottom:20px">
+      <div class="wip"><span class="ic">construction</span>GPS en construcción</div>
+    </div>
+  </div>
+  <div class="tb" id="tb-act"></div>
+</div>
+
+<!-- ══════════ AJUSTES ══════════ -->
+<div id="s-set" class="sp">
+  <div class="sb"><span>9:41</span><div class="si ic">signal_cellular_alt wifi battery_full</div></div>
+  <div class="phdr"><div class="h1">Ajustes</div></div>
+  <div class="sc" style="padding-bottom:24px">
+
+    <!-- Perfil -->
+    <div class="label" style="padding:0 22px">Perfil</div>
+    <div class="setcard">
+      <div class="setrow" style="gap:14px">
+        <div id="set-avatar" style="width:52px;height:52px;border-radius:16px;background:var(--med);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Schibsted Grotesk';font-size:22px;font-weight:800;flex-shrink:0">?</div>
+        <div class="srl">
+          <div class="srl-t" id="set-name">—</div>
+          <div class="srl-s">Toca el lápiz para cambiar tu nombre</div>
+        </div>
+        <span class="ic" style="color:var(--med);font-size:22px;cursor:pointer" onclick="editName()">edit</span>
+      </div>
+    </div>
+
+    <!-- Permisos -->
+    <div class="label" style="padding:0 22px;margin-top:18px">Permisos</div>
+    <div class="setcard">
+      <div class="setrow">
+        <span class="ic" style="color:var(--ok);font-size:22px">check_circle</span>
+        <div class="srl"><div class="srl-t">Notificaciones</div><div class="srl-s">Concedido</div></div>
+      </div>
+      <div class="setrow">
+        <span class="ic" style="color:var(--ok);font-size:22px">check_circle</span>
+        <div class="srl"><div class="srl-t">Ubicación GPS</div><div class="srl-s">Concedido (mientras se usa)</div></div>
+      </div>
+      <div class="setrow" style="cursor:pointer" onclick="showToast('Abre Ajustes del sistema para conceder acceso')">
+        <span class="ic" style="color:var(--act);font-size:22px">warning</span>
+        <div class="srl"><div class="srl-t">Sensor de movimiento</div><div class="srl-s">Pendiente — toca para conceder</div></div>
+        <span class="ic" style="color:var(--mu)">chevron_right</span>
+      </div>
+    </div>
+
+    <!-- Recordatorios -->
+    <div class="label" style="padding:0 22px;margin-top:18px">Recordatorios</div>
+    <div class="setcard">
+      <div class="setrow" style="cursor:pointer" onclick="cycleSnooze()">
+        <div class="srl"><div class="srl-t">Posponer la toma</div><div class="srl-s">Toca para cambiar el tiempo de posponer</div></div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div id="set-snooze" style="font-family:'Schibsted Grotesk';font-size:18px;font-weight:800;color:var(--med)">10 min</div>
+          <span class="ic" style="color:var(--mu);font-size:18px">chevron_right</span>
+        </div>
+      </div>
+      <div class="setrow" style="cursor:pointer" onclick="cycleWaterInt()">
+        <div class="srl"><div class="srl-t">Intervalo de agua</div><div class="srl-s">Toca para cambiar la frecuencia</div></div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div id="set-water-int" style="font-family:'Schibsted Grotesk';font-size:18px;font-weight:800;color:var(--wat)">2 h</div>
+          <span class="ic" style="color:var(--mu);font-size:18px">chevron_right</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Horarios de comidas -->
+    <div class="label" style="padding:0 22px;margin-top:18px">Horarios de comidas</div>
+    <div class="setcard">
+      <div class="setrow">
+        <span class="ic" style="font-size:22px;color:var(--mu)">no_meals</span>
+        <div class="srl"><div class="srl-t">Ayunas</div><div class="srl-s">Estómago vacío, antes del desayuno</div></div>
+        <input type="time" id="set-meal-ayunas" class="fi" style="width:95px;padding:8px 10px;font-size:15px;font-weight:800;text-align:center" onchange="saveMealTime('ayunas',this.value)">
+      </div>
+      <div class="setrow">
+        <span class="ic" style="font-size:22px;color:var(--act)">breakfast_dining</span>
+        <div class="srl"><div class="srl-t">Desayuno</div></div>
+        <input type="time" id="set-meal-breakfast" class="fi" style="width:95px;padding:8px 10px;font-size:15px;font-weight:800;text-align:center" onchange="saveMealTime('breakfast',this.value)">
+      </div>
+      <div class="setrow">
+        <span class="ic" style="font-size:22px;color:var(--wat)">lunch_dining</span>
+        <div class="srl"><div class="srl-t">Almuerzo</div></div>
+        <input type="time" id="set-meal-lunch" class="fi" style="width:95px;padding:8px 10px;font-size:15px;font-weight:800;text-align:center" onchange="saveMealTime('lunch',this.value)">
+      </div>
+      <div class="setrow">
+        <span class="ic" style="font-size:22px;color:var(--med)">dinner_dining</span>
+        <div class="srl"><div class="srl-t">Cena</div></div>
+        <input type="time" id="set-meal-dinner" class="fi" style="width:95px;padding:8px 10px;font-size:15px;font-weight:800;text-align:center" onchange="saveMealTime('dinner',this.value)">
+      </div>
+    </div>
+    <div class="setcard" style="margin-top:6px">
+      <div class="setrow" style="cursor:pointer;border:none" onclick="cycleMinsAnte()">
+        <div class="srl"><div class="srl-t">Avisar antes de comidas</div><div class="srl-s">Minutos de anticipación del recordatorio</div></div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div id="set-mins-before" style="font-family:'Schibsted Grotesk';font-size:18px;font-weight:800;color:var(--med)">15 min</div>
+          <span class="ic" style="color:var(--mu);font-size:18px">chevron_right</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Familia -->
+    <div class="label" style="padding:0 22px;margin-top:18px">Familia</div>
+    <div class="setcard">
+      <div class="setrow" style="cursor:pointer" onclick="nav('s-family',true)">
+        <span class="ic" style="font-size:22px;color:var(--med)">diversity_1</span>
+        <div class="srl"><div class="srl-t">Gestionar familiares</div><div class="srl-s" id="set-family-count">Sin familiares agregados</div></div>
+        <span class="ic" style="color:var(--mu)">chevron_right</span>
+      </div>
+    </div>
+
+    <!-- Apariencia -->
+    <div class="label" style="padding:0 22px;margin-top:18px">Apariencia</div>
+    <div class="setcard">
+      <div class="setrow">
+        <div class="srl-t" style="flex:1">Tema</div>
+        <div class="seg" id="seg-theme" style="gap:6px;width:160px">
+          <button class="segb on-m" style="font-size:13px;padding:9px 0" onclick="setTheme('light',this)">Claro</button>
+          <button class="segb" style="font-size:13px;padding:9px 0" onclick="setTheme('dark',this)">Oscuro</button>
+        </div>
+      </div>
+      <div class="setrow">
+        <div class="srl"><div class="srl-t">Idioma</div><div class="wip"><span class="ic">construction</span>Inglés en construcción</div></div>
+        <div class="seg" id="seg-lang" style="gap:6px;width:120px">
+          <button class="segb on-m" style="font-size:13px;padding:9px 0" onclick="setLang('es',this)">ES</button>
+          <button class="segb" style="font-size:13px;padding:9px 0" onclick="setLang('en',this)">EN</button>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;padding:16px 22px;margin-top:20px">
+      <div style="font-size:13px;color:var(--mu);font-weight:600">MemoSalud</div>
+      <div style="font-size:12px;color:var(--mu);margin-top:4px">
+        <div>v1.2 • Build 02072026</div>
+        <div style="margin-top:6px;font-size:11px;color:var(--ln)">PWA — Compilado el 2 de julio de 2026</div>
+      </div>
+    </div>
+  </div>
+  <div class="tb" id="tb-set"></div>
+</div>
+
+<!-- ══════════ FAMILIA ══════════ -->
+<div id="s-family" class="sp">
+  <div class="sb"><span>9:41</span><div class="si ic">signal_cellular_alt wifi battery_full</div></div>
+  <div class="bhdr">
+    <button class="back" onclick="goBack()"><span class="ic">arrow_back</span></button>
+    <div class="h2">Familia</div>
+  </div>
+  <div class="sc" style="padding:0 22px 16px">
+    <div id="family-empty" style="display:none;text-align:center;padding:40px 20px;color:var(--sub)">
+      <span class="ic" style="font-size:48px;color:var(--mu);margin-bottom:10px;display:block">diversity_1</span>
+      <div style="font-size:15px;font-weight:600">Aún no agregas familiares</div>
+      <div style="font-size:13px;margin-top:4px">Agrega a tu mamá, papá u otro ser querido para ayudarte a recordarles sus medicinas</div>
+    </div>
+    <div id="family-list"></div>
+  </div>
+  <div class="foot"><button class="btn b-pri b-med" onclick="openFamilyForm(null)"><span class="ic" style="font-size:20px">person_add</span>Agregar familiar</button></div>
+</div>
+
+<!-- ══════════ FAMILIA FORM ══════════ -->
+<div id="s-family-form" class="sp">
+  <div class="sb"><span>9:41</span><div class="si ic">signal_cellular_alt wifi battery_full</div></div>
+  <div class="bhdr">
+    <button class="back" onclick="goBack()"><span class="ic">arrow_back</span></button>
+    <div class="h2" id="family-form-ttl">Agregar familiar</div>
+  </div>
+  <div class="sc" style="padding:0 22px">
+    <div class="fl">NOMBRE</div>
+    <input class="fi" id="ff-name" placeholder="Ej: María">
+    <div class="fl">RELACIÓN</div>
+    <div class="famrelchips" id="ff-rel-chips">
+      <button class="segb" style="flex:none;padding:11px 16px" onclick="setFamRel('Mamá',this)">Mamá</button>
+      <button class="segb" style="flex:none;padding:11px 16px" onclick="setFamRel('Papá',this)">Papá</button>
+      <button class="segb" style="flex:none;padding:11px 16px" onclick="setFamRel('Hijo/a',this)">Hijo/a</button>
+      <button class="segb" style="flex:none;padding:11px 16px" onclick="setFamRel('Otro',this)">Otro</button>
+    </div>
+    <div class="fl">TELÉFONO (para llamarlo desde la app)</div>
+    <input class="fi" id="ff-phone" type="tel" placeholder="Ej: 987654321">
+    <div style="height:16px"></div>
+  </div>
+  <div class="foot"><button class="btn b-pri b-med" onclick="saveFamilyMember()">Guardar familiar</button></div>
+</div>
+
+<!-- ══════════ FAMILIA DETALLE ══════════ -->
+<div id="s-family-det" class="sp" style="background:var(--bg)">
+  <div class="sb sb-dark" style="position:relative;z-index:2"><span>9:41</span><div class="si ic">signal_cellular_alt wifi battery_full</div></div>
+  <div class="hero">
+    <div style="display:flex;justify-content:space-between;margin-bottom:16px">
+      <button class="back" style="color:#fff" onclick="goBack()"><span class="ic">arrow_back</span></button>
+      <a class="back" style="color:#fff;text-decoration:none" id="famdet-call" href="#"><span class="ic">call</span></a>
+    </div>
+    <div class="hero-icon" id="famdet-avatar"><span class="ic">person</span></div>
+    <div style="font-family:'Schibsted Grotesk';font-size:26px;font-weight:800;color:#fff" id="famdet-name"></div>
+    <div style="font-size:15px;color:rgba(255,255,255,.85);font-weight:600;margin-top:3px" id="famdet-rel"></div>
+  </div>
+  <div class="sc" style="padding:0 22px 16px">
+    <div class="mn" style="margin:14px 0 10px">Medicinas</div>
+    <div id="famdet-meds"></div>
+    <div id="famdet-addform" style="display:none;background:var(--surf);border:1px solid var(--ln);border-radius:16px;padding:15px;margin-top:10px">
+      <div class="fl" style="margin-top:0">NOMBRE</div>
+      <input class="fi" id="fm-name" placeholder="Ej: Losartán">
+      <div style="display:flex;gap:12px">
+        <div style="flex:1"><div class="fl">DOSIS</div><input class="fi" id="fm-dose" placeholder="50 mg"></div>
+        <div style="flex:1"><div class="fl">HORA</div><input class="fi" id="fm-time" type="time" value="08:00"></div>
+      </div>
+      <div class="fl">NOTAS (opcional)</div>
+      <input class="fi" id="fm-notes" placeholder="Con el desayuno…">
+      <button class="btn b-pri b-med" style="height:48px;margin-top:14px" onclick="saveFamilyMed()">Guardar medicina</button>
+    </div>
+    <button class="btn" id="famdet-addbtn" style="width:100%;height:48px;border-radius:14px;background:none;border:1.5px dashed #B9C6D2;color:var(--med);font-size:15px;font-weight:800;gap:6px;margin-top:12px" onclick="toggleFamilyMedForm()">
+      <span class="ic" style="font-size:20px">add</span>Agregar medicina
+    </button>
+  </div>
+</div>
+
+<!-- Toast global -->
+<div class="toast" id="toast"><span class="ic">check_circle</span><span id="toast-msg"></span></div>
+
+</div><!-- /screen -->
+</div><!-- /phone -->
+
+<script>
+// ═══════ ESTADO ═══════
+const ST = {
+  name:'',
+  meds: [
+    {id:1,name:'Metformina',dose:'850 mg',qty:'1 tableta',times:['08:00'],time:'08:00',notes:'Con desayuno',status:'upcoming',schedMode:'frecuencia',stock:28,history:[]},
+    {id:2,name:'Losartán',dose:'50 mg',qty:'1 tableta',times:['09:00'],time:'09:00',notes:'Tomar con agua',status:'upcoming',schedMode:'frecuencia',stock:21,history:[]},
+    {id:3,name:'Atorvastatina',dose:'20 mg',qty:'1 tableta',times:['21:00'],time:'21:00',notes:'Antes de dormir',status:'upcoming',schedMode:'frecuencia',stock:14,history:[]},
+  ],
+  water:{glasses:3,goal:8},
+  meals:{ayunas:'07:00',breakfast:'08:00',lunch:'13:00',dinner:'20:00'},
+  minsBefore:15,
+  act:{steps:3240,goal:5000},
+  detId:null,
+  formTimes:['09:00'],
+  editId:null,
+};
+let _setupW=8, _setupS=5000;
+let _keepForm=false;
+function navToSettings(){_keepForm=true;nav('s-set',true);}
+
+let _schedMode='frecuencia', _freq=1;
+let _mealSel={ayunas:{on:false},breakfast:{on:false,when:'con'},lunch:{on:false,when:'con'},dinner:{on:false,when:'con'}};
+const MEAL_LABEL={ayunas:'En ayunas',breakfast:'Desayuno',lunch:'Almuerzo',dinner:'Cena'};
+const MEAL_ICON={ayunas:'no_meals',breakfast:'breakfast_dining',lunch:'lunch_dining',dinner:'dinner_dining'};
+const WHEN_LABEL={antes:'Antes',con:'Con',despues:'Después'};
+function mealMin(key){const t=ST.meals[key]||'08:00';const[h,m]=t.split(':').map(Number);return h*60+m;}
+function getWhenOff(when){return{antes:-ST.minsBefore,con:0,despues:ST.minsBefore}[when]||0;}
+function minToTime(min){min=((min%1440)+1440)%1440;return String(Math.floor(min/60)).padStart(2,'0')+':'+String(min%60).padStart(2,'0');}
+function adjSetup(t,d){
+  if(t==='w'){_setupW=Math.max(1,Math.min(16,_setupW+d));document.getElementById('setup-wg').textContent=_setupW;}
+  else{_setupS=Math.max(1000,Math.min(20000,_setupS+d));document.getElementById('setup-sg').textContent=_setupS.toLocaleString('es').replace(',','.');}
+}
+function finishSetup(){
+  const n=document.getElementById('setup-name').value.trim();
+  ST.name=n||'amigo'; ST.water.goal=_setupW; ST.act.goal=_setupS;
+  enterApp();
+  saveState();
+}
+function enterApp(){
+  if(!ST.name) ST.name='amigo';
+  initDemoHistory();
+  computeMedStatus();
+  renderDash(); renderWater(); renderAct();
+  const cur=document.querySelector('.sp.on'); if(cur) cur.classList.remove('on');
+  document.getElementById('s-dash').classList.add('on');
+  syncTabs();
+  requestNotifPermission();
+}
+
+// ═══════ NAVEGACIÓN ═══════
+const stack = [];
+const TAB = {inicio:'s-dash',medicinas:'s-med',agua:'s-agua',actividad:'s-act',ajustes:'s-set'};
+const SCR_TAB = {'s-dash':'inicio','s-med':'medicinas','s-med-form':'medicinas','s-med-det':'medicinas','s-med-hist':'medicinas','s-agua':'agua','s-agua-cfg':'agua','s-act':'actividad','s-set':'ajustes','s-family':'ajustes','s-family-form':'ajustes','s-family-det':'ajustes'};
+const TB_IDS = ['tb-dash','tb-med','tb-agua','tb-act','tb-set'];
+
+function nav(id, push=false) {
+  const cur = document.querySelector('.sp.on');
+  if (cur && push) stack.push(cur.id);
+  // Blindaje: limpia CUALQUIER pantalla que haya quedado marcada "on" por error.
+  document.querySelectorAll('.sp.on').forEach(el => el.classList.remove('on'));
+  const next = document.getElementById(id);
+  next.classList.add('on', push ? 'slide-r' : 'slide-l');
+  setTimeout(() => next.classList.remove('slide-r','slide-l'), 300);
+  onEnter(id);
+  syncTabs();
+}
+
+function goBack() {
+  if (!stack.length) return;
+  const cur = document.querySelector('.sp.on');
+  if (cur) cur.classList.remove('on');
+  nav(stack.pop(), false);
+}
+
+function switchTab(tab) {
+  stack.length = 0;
+  nav(TAB[tab], false);
+}
+
+function onEnter(id) {
+  const fns = {'s-dash':renderDash,'s-med':renderMedList,'s-med-det':renderDet,'s-med-hist':renderHist,'s-med-form':renderForm,'s-agua':renderWater,'s-act':renderAct,'s-set':renderSettings,'s-family':renderFamily,'s-family-form':renderFamilyForm,'s-family-det':renderFamilyDet};
+  if (fns[id]) fns[id]();
+}
+
+function syncTabs() {
+  const cur = document.querySelector('.sp.on')?.id;
+  const active = SCR_TAB[cur] || 'medicinas';
+  const tabs = [
+    {k:'inicio',ic:'home',l:'Inicio'},{k:'medicinas',ic:'medication',l:'Medicinas'},
+    {k:'agua',ic:'water_drop',l:'Agua'},{k:'actividad',ic:'directions_walk',l:'Actividad'},
+    {k:'ajustes',ic:'settings',l:'Ajustes'},
+  ];
+  const html = tabs.map(t=>`<div class="tab${t.k===active?' on':''}" onclick="switchTab('${t.k}')"><span class="ic">${t.ic}</span><span>${t.l}</span></div>`).join('');
+  TB_IDS.forEach(id => { const el=document.getElementById(id); if(el) el.innerHTML=html; });
+}
+
+// ═══════ DASHBOARD ═══════
+function renderDash() {
+  const now=new Date(), h=now.getHours();
+  const gr=h<12?'Buenos días':h<19?'Buenas tardes':'Buenas noches';
+  const days=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  const months=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const grEl=document.getElementById('dash-greeting');
+  const dtEl=document.getElementById('dash-date');
+  if(grEl) grEl.textContent=`${gr}, ${ST.name||'amigo'}`;
+  if(dtEl) dtEl.textContent=`${days[now.getDay()]} ${now.getDate()} de ${months[now.getMonth()]}`;
+
+  const famEl=document.getElementById('dash-family');
+  if(famEl){
+    const pending=[];
+    FAMILY.forEach(f=>f.meds.forEach(m=>{ if(m.status==='now'||m.status==='overdue') pending.push({f,m}); }));
+    if(!pending.length){ famEl.innerHTML=''; }
+    else {
+      famEl.innerHTML=`<div class="mn" style="margin-bottom:10px">Recordatorios de familia</div>` + pending.map(({f,m})=>{
+        const isOverdue=m.status==='overdue';
+        return`<div class="card" style="border-color:${isOverdue?'var(--act)':'var(--med)'};border-width:2px">
+          <div class="row">
+            <div class="famav" style="width:40px;height:40px;font-size:16px">${f.name.charAt(0).toUpperCase()}</div>
+            <div style="flex:1"><div class="mn">${m.name} ${m.dose||''}</div><div class="ms">${f.name} · ${fmt(m.time)}</div></div>
+            ${f.phone?`<a class="b-call" style="width:40px;height:40px;font-size:18px" href="tel:${f.phone}"><span class="ic">call</span></a>`:''}
+          </div>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button class="btn b-taken" onclick="markFamilyTaken(${f.id},${m.id});renderDash()"><span class="ic" style="font-size:19px">check</span>Ya lo tomó</button>
+            <button class="btn b-snooze" onclick="snoozeFamilyMed(${f.id},${m.id});renderDash()"><span class="ic">snooze</span></button>
+          </div>
+        </div>`;
+      }).join('');
+    }
+  }
+
+  const medItems = ST.meds.flatMap(m=>(m.times||[m.time]).map(t=>({t,l:`${m.name} ${m.dose}`,st:m.status,id:m.id})));
+  const extra = [
+    {t:'08:30', l:'Vaso de agua · 1 de 8', st:'done', id:null},
+    {t:'11:00', l:'Caminar 20 min', st:'soon', id:null},
+    {t:'13:00', l:'Vaso de agua · 5 de 8', st:'soon', id:null},
+  ];
+  const items = [...medItems, ...extra].sort((a,b) => a.t.localeCompare(b.t));
+  const wrap = document.getElementById('dash-tl');
+  const items_html = items.map(it => {
+    const isDone = it.st==='taken' || it.st==='done';
+    const isNow = it.st==='now';
+    const isOverdue = it.st==='overdue';
+    const dotCls = isDone?'tld ok':isNow?'tld now':isOverdue?'tld due':'tld';
+    const cardCls = isDone?'tlc ok':isNow?'tlc now':isOverdue?'tlc due':'tlc';
+    const tColor = isDone?'var(--ok)':isNow?'var(--med)':isOverdue?'var(--act)':'var(--mu)';
+    const tLabel = isDone?'· Completado':isNow?'· Ahora':isOverdue?'· Pendiente':'· Programado';
+    const dot = isDone?`<span class="ic" style="font-size:13px;color:#fff">check</span>`:'';
+    let inner = `<div style="font-size:12px;font-weight:700;color:${tColor}">${fmt(it.t)} ${tLabel}</div><div style="font-size:15px;font-weight:700;color:var(--ink);margin-top:2px">${it.l}</div>`;
+    if ((isNow||isOverdue) && it.id) inner += `<div style="display:flex;gap:8px;margin-top:10px">
+      <button class="btn b-taken" onclick="markTaken(${it.id});renderDash()"><span class="ic" style="font-size:19px">check</span>Ya lo tomé</button>
+      <button class="btn b-snooze" onclick="snooze(${it.id});renderDash()"><span class="ic">snooze</span></button>
+    </div>`;
+    return `<div class="tli"><div class="${dotCls}">${dot}</div><div class="${cardCls}">${inner}</div></div>`;
+  }).join('');
+  wrap.innerHTML = '<div class="tlline"></div>' + items_html;
+}
+
+// ═══════ MED LIST ═══════
+function fmt(t){const[h,m]=t.split(':');return`${Number(h)}:${m}`}
+
+function renderMedList() {
+  const bands={morning:[],afternoon:[],night:[]};
+  ST.meds.forEach(m=>{const h=parseInt((m.times||[m.time])[0]);bands[h<12?'morning':h<18?'afternoon':'night'].push(m);});
+  const lab={morning:'MAÑANA',afternoon:'TARDE',night:'NOCHE'};
+  let html='';
+  Object.entries(bands).forEach(([b,items])=>{
+    if(!items.length)return;
+    html+=`<div class="label">${lab[b]}</div>`;
+    items.forEach(m=>{
+      const times=m.times||[m.time];
+      const timesStr=times.map(fmt).join(' · ');
+      const sub=`${timesStr} · ${m.qty}${m.notes?' · '+m.notes:''}`;
+      if(m.status==='now'){
+        html+=`<div class="card now row" data-id="${m.id}" data-act="det" style="cursor:pointer">
+          <div class="ch ch-m"><span class="ic">medication</span></div>
+          <div style="flex:1"><div class="mn">${m.name} ${m.dose}</div><div class="ms">${sub}</div></div>
+          <span class="now-badge">Ahora</span></div>`;
+      } else if(m.status==='taken'){
+        html+=`<div class="card done row" data-id="${m.id}" data-act="det" style="cursor:pointer">
+          <div class="ch ch-ok"><span class="ic">check_circle</span></div>
+          <div style="flex:1"><div class="mn">${m.name} ${m.dose}</div><div class="ms">${sub}</div></div>
+          <span class="ic" style="color:var(--mu)">chevron_right</span></div>`;
+      } else if(m.status==='overdue'){
+        html+=`<div class="card row" data-id="${m.id}" data-act="det" style="cursor:pointer;border-color:var(--act)">
+          <div class="ch ch-a"><span class="ic">warning</span></div>
+          <div style="flex:1"><div class="mn">${m.name} ${m.dose}</div><div class="ms">${sub}</div></div>
+          <span style="background:var(--acts);color:var(--act);padding:4px 9px;border-radius:10px;font-size:12px;font-weight:700;white-space:nowrap">Pendiente</span></div>`;
+      } else {
+        html+=`<div class="card row" data-id="${m.id}" data-act="det" style="cursor:pointer">
+          <div class="ch ch-g"><span class="ic">schedule</span></div>
+          <div style="flex:1"><div class="mn">${m.name} ${m.dose}</div><div class="ms">${sub}</div></div>
+          <span class="ic" style="color:var(--mu)">chevron_right</span></div>`;
+      }
+    });
+  });
+  // Botón historial
+  html+=`<div style="display:flex;justify-content:center;margin-top:8px">
+    <button class="btn" style="background:none;border:1px solid var(--ln);border-radius:14px;padding:12px 20px;color:var(--sub);font-size:14px;font-weight:700;gap:6px" data-act="hist">
+      <span class="ic" style="font-size:18px">calendar_month</span>Ver historial completo
+    </button></div>`;
+  document.getElementById('med-body').innerHTML = html;
+  const taken=ST.meds.filter(m=>m.status==='taken').length;
+  document.getElementById('cnt-t').textContent=taken;
+  document.getElementById('cnt-n').textContent=ST.meds.length;
+}
+
+// ═══════ HISTORIAL ═══════
+function localDateStr(d){
+  return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function initDemoHistory(){
+  const now=new Date();
+  ST.meds.forEach(m=>{
+    if(m.history&&m.history.length>0)return;
+    m.history=[];
+    const times=m.times||[m.time];
+    for(let d=14;d>=1;d--){
+      const day=new Date(now);
+      day.setDate(day.getDate()-d);
+      const dateStr=localDateStr(day);
+      times.forEach(t=>{
+        const seed=(m.id*31+d*17+t.charCodeAt(0)*7)%100;
+        if(seed<15){
+          m.history.push({date:dateStr,scheduledTime:t,takenTime:null,minutesLate:null,status:'missed'});
+        } else {
+          const variation=((m.id*d+t.charCodeAt(1)||0)*3)%36-5;
+          const[h,mi]=t.split(':').map(Number);
+          const tot=h*60+mi+variation;
+          const takenTime=minToTime(tot);
+          m.history.push({date:dateStr,scheduledTime:t,takenTime,minutesLate:variation,status:variation<=15?'ok':'late'});
+        }
+      });
+    }
+    m.history.sort((a,b)=>b.date.localeCompare(a.date)||b.scheduledTime.localeCompare(a.scheduledTime));
+  });
+}
+
+function markTakenGeneric(meds,id){
+  const m=meds.find(x=>x.id===id); if(!m)return null;
+  const now=new Date();
+  const dateStr=localDateStr(now);
+  const takenTime=`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+  const times=m.times||[m.time];
+  // Registrar la toma más cercana a la hora actual
+  const nowMin=now.getHours()*60+now.getMinutes();
+  const closest=times.reduce((best,t)=>{const[h,mi]=t.split(':').map(Number);const d=Math.abs(nowMin-h*60-mi);return d<best.diff?{t,diff:d}:best;},{t:times[0],diff:Infinity});
+  const[sh,sm]=closest.t.split(':').map(Number);
+  const minutesLate=nowMin-sh*60-sm;
+  if(!m.history) m.history=[];
+  m.history.unshift({date:dateStr,scheduledTime:closest.t,takenTime,minutesLate,status:minutesLate<=15?'ok':'late'});
+  m.status='taken';
+  if(m.stock!=null&&m.stock>0) m.stock--;
+  times.forEach(t=>{_reminded[`${m.id}_${t}`]=true;});
+  return m;
+}
+
+function markTaken(id){
+  const m=markTakenGeneric(ST.meds,id); if(!m)return;
+  showToast(`✓ ${m.name} marcada como tomada`);
+  if(ST.meds.every(x=>x.status==='taken')) showToast('¡Todas las medicinas tomadas hoy! 🎉');
+  saveState();
+}
+
+function snoozeMinutes(){
+  const opt=SNOOZE_OPTS[_snoozeIdx]||'10 min';
+  return parseInt(opt)||10;
+}
+
+function closestTime(m,nowMin){
+  const times=m.times||[m.time];
+  return times.reduce((best,t)=>{const[h,mi]=t.split(':').map(Number);const d=Math.abs(nowMin-h*60-mi);return d<best.diff?{t,diff:d}:best;},{t:times[0],diff:Infinity}).t;
+}
+
+function snooze(id){
+  const m=ST.meds.find(x=>x.id===id); if(!m)return;
+  const nowMin=new Date().getHours()*60+new Date().getMinutes();
+  const t=closestTime(m,nowMin);
+  const mins=snoozeMinutes();
+  const key=`${m.id}_${t}`;
+  _snoozedUntil[key]=Date.now()+mins*60000;
+  _reminded[key]=true;
+  m.status='upcoming';
+  showToast(`${m.name} pospuesta ${mins} minutos`);
+  saveState();
+}
+
+function openDet(id){ ST.detId=id; nav('s-med-det',true); }
+
+function markTakenFromDet(id){ markTaken(id); renderDet(); }
+
+// ═══════ MED DETALLE ═══════
+function relativeDate(dateStr){
+  const today=new Date(); today.setHours(0,0,0,0);
+  const d=new Date(dateStr+'T00:00:00'); d.setHours(0,0,0,0);
+  const diff=Math.round((today-d)/86400000);
+  if(diff===0)return'Hoy';
+  if(diff===1)return'Ayer';
+  return`Hace ${diff}d`;
+}
+
+function renderDet(){
+  const m=ST.meds.find(x=>x.id===ST.detId); if(!m)return;
+  document.getElementById('det-name').textContent=`${m.name} ${m.dose}`;
+  document.getElementById('det-sched').textContent=`${m.qty} · ${fmt(m.time)} · diario`;
+
+  // Cumplimiento: % de tomas no-missed en los últimos 14 días
+  const hist=m.history||[];
+  document.getElementById('det-pct').textContent=`${medPct(m)}%`;
+
+  // Tabletas restantes
+  const stockEl=document.getElementById('det-tabs');
+  stockEl.textContent=m.stock!=null?m.stock:'—';
+
+  document.getElementById('det-notes').textContent=m.notes||'Sin notas.';
+
+  const takenWrap=document.getElementById('det-taken-wrap');
+  if(takenWrap){
+    takenWrap.innerHTML=m.status==='taken'
+      ?`<div style="display:flex;align-items:center;gap:8px;justify-content:center;background:var(--oks);color:var(--ok);border-radius:14px;padding:13px;font-size:15px;font-weight:800;margin-bottom:14px"><span class="ic" style="font-size:20px">check_circle</span>Ya tomada hoy</div>`
+      :`<button class="btn b-taken" style="width:100%;margin-bottom:14px" onclick="markTakenFromDet(${m.id})"><span class="ic" style="font-size:19px">check</span>Marcar como tomada</button>`;
+  }
+
+  // Últimos registros (máx 10)
+  const recs=hist.slice(0,10);
+  if(recs.length===0){
+    document.getElementById('det-records').innerHTML=`<div style="text-align:center;color:var(--sub);padding:20px;font-size:14px">Sin registros aún</div>`;
+    return;
+  }
+  document.getElementById('det-records').innerHTML=recs.map(r=>{
+    const ok=r.status==='ok';
+    const missed=r.status==='missed';
+    const icon=missed?'cancel':ok?'check_circle':'schedule';
+    const color=missed?'var(--act)':ok?'var(--ok)':'var(--warn,#f59e0b)';
+    const bg=missed?'var(--acts)':ok?'var(--oks)':'#fef3c7';
+    const label=missed?'Omitida':ok?'A tiempo':`+${r.minutesLate} min`;
+    const timeLabel=r.takenTime?`${relativeDate(r.date)} ${r.takenTime}`:`${relativeDate(r.date)} ${r.scheduledTime}`;
+    return`<div style="display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--ln)">
+      <span class="ic" style="color:${color};font-size:20px">${icon}</span>
+      <span style="flex:1;font-size:14px;font-weight:700;color:var(--ink)">${timeLabel}</span>
+      <span style="background:${bg};color:${color};padding:4px 9px;border-radius:10px;font-size:12px;font-weight:700">${label}</span>
+    </div>`;
+  }).join('');
+}
+
+function editStock(){
+  const m=ST.meds.find(x=>x.id===ST.detId); if(!m)return;
+  const cur=m.stock!=null?m.stock:'';
+  const val=prompt(`Tabletas restantes de ${m.name}:`,cur);
+  if(val===null)return;
+  const n=parseInt(val);
+  m.stock=isNaN(n)||n<0?null:n;
+  document.getElementById('det-tabs').textContent=m.stock!=null?m.stock:'—';
+  saveState();
+}
+
+function loadEditForm(){
+  const m=ST.meds.find(x=>x.id===ST.detId); if(!m)return;
+  ST.editId=ST.detId;
+  document.getElementById('form-ttl').textContent='Editar medicina';
+  document.getElementById('f-name').value=m.name;
+  document.getElementById('f-dose').value=m.dose;
+  document.getElementById('f-qty').value=m.qty;
+  document.getElementById('f-notes').value=m.notes||'';
+  document.getElementById('f-stock').value=m.stock||'';
+  _schedMode=m.schedMode||'frecuencia';
+  if(_schedMode==='frecuencia'){
+    const times=m.times||[m.time||'08:00'];
+    _freq=times.length; ST.formTimes=times;
+    document.getElementById('f-start-time').value=times[0]||'08:00';
+    document.getElementById('sched-frec').style.display='block';
+    document.getElementById('sched-meal').style.display='none';
+    document.querySelectorAll('#sched-mode-seg .segb').forEach((b,i)=>i===0?b.classList.add('on-m'):b.classList.remove('on-m'));
+    document.querySelectorAll('#freq-seg2 .segb').forEach((b,i)=>i===_freq-1?b.classList.add('on-m'):b.classList.remove('on-m'));
+    updateCalcTimes();
+  } else {
+    _mealSel=m.mealSel?JSON.parse(JSON.stringify(m.mealSel)):{ayunas:{on:false},breakfast:{on:false,when:'con'},lunch:{on:false,when:'con'},dinner:{on:false,when:'con'}};
+    document.getElementById('sched-frec').style.display='none';
+    document.getElementById('sched-meal').style.display='block';
+    document.querySelectorAll('#sched-mode-seg .segb').forEach((b,i)=>i===1?b.classList.add('on-m'):b.classList.remove('on-m'));
+    renderMealRows();
+  }
+}
+
+// ═══════ MED HISTORIAL ═══════
+function medPct(m){
+  const hist=m.history||[];
+  if(!hist.length)return m.status==='taken'?100:0;
+  const taken=hist.filter(h=>h.status!=='missed').length;
+  return Math.round(taken/hist.length*100);
+}
+
+function renderHist(){
+  const today=new Date(); today.setHours(0,0,0,0);
+  const allEntries={};
+  ST.meds.forEach(m=>(m.history||[]).forEach(h=>{
+    (allEntries[h.date]=allEntries[h.date]||[]).push(h.status);
+  }));
+  let cells='';
+  for(let i=34;i>=0;i--){
+    const day=new Date(today); day.setDate(day.getDate()-i);
+    const dateStr=localDateStr(day);
+    let cls='';
+    if(i===0) cls='today';
+    else if(day>today) cls='';
+    else{
+      const statuses=allEntries[dateStr];
+      if(!statuses||!statuses.length) cls='ok';
+      else if(statuses.includes('missed')) cls='miss';
+      else if(statuses.includes('late')) cls='late';
+      else cls='ok';
+    }
+    cells+=`<div class="hmc ${cls}"></div>`;
+  }
+  document.getElementById('hm-grid').innerHTML=cells;
+  document.getElementById('hist-list').innerHTML=ST.meds.map((m,i)=>{
+    const pct=medPct(m);
+    return`<div style="display:flex;align-items:center;gap:12px;padding:12px 15px;border-bottom:1px solid var(--ln);${i===ST.meds.length-1?'border:none':''}">
+      <div class="ch ch-m ch-sm"><span class="ic">medication</span></div>
+      <div style="flex:1"><div style="font-size:15px;font-weight:700;color:var(--ink)">${m.name} ${m.dose}</div>
+        <div style="font-size:12px;color:var(--sub)">${pct}% de cumplimiento</div></div>
+      <div style="font-family:'Schibsted Grotesk';font-size:18px;font-weight:800;color:var(--med)">${pct}%</div>
+    </div>`;
+  }).join('');
+}
+
+// ═══════ MED FORM ═══════
+function renderForm(){
+  if(!ST.editId && !_keepForm){
+    document.getElementById('form-ttl').textContent='Nueva medicina';
+    document.getElementById('f-name').value='';
+    document.getElementById('f-dose').value='';
+    document.getElementById('f-qty').value='';
+    document.getElementById('f-notes').value='';
+    document.getElementById('f-stock').value='';
+    _schedMode='frecuencia'; _freq=1;
+    _mealSel={ayunas:{on:false},breakfast:{on:false,when:'con'},lunch:{on:false,when:'con'},dinner:{on:false,when:'con'}};
+    document.getElementById('sched-frec').style.display='block';
+    document.getElementById('sched-meal').style.display='none';
+    document.querySelectorAll('#sched-mode-seg .segb').forEach((b,i)=>i===0?b.classList.add('on-m'):b.classList.remove('on-m'));
+    document.querySelectorAll('#freq-seg2 .segb').forEach((b,i)=>i===0?b.classList.add('on-m'):b.classList.remove('on-m'));
+    document.getElementById('f-start-time').value='08:00';
+  }
+  if(_keepForm&&_schedMode==='comidas') renderMealRows();
+  _keepForm=false;
+  updateCalcTimes();
+  ST.editId=null;
+}
+
+function setSchedMode(mode,btn){
+  _schedMode=mode;
+  document.getElementById('sched-frec').style.display=mode==='frecuencia'?'block':'none';
+  document.getElementById('sched-meal').style.display=mode==='comidas'?'block':'none';
+  document.querySelectorAll('#sched-mode-seg .segb').forEach(b=>b.classList.remove('on-m'));
+  btn.classList.add('on-m');
+  if(mode==='comidas') renderMealRows();
+}
+
+function setFreq(n,btn){
+  _freq=n;
+  document.querySelectorAll('#freq-seg2 .segb').forEach(b=>b.classList.remove('on-m'));
+  btn.classList.add('on-m');
+  updateCalcTimes();
+}
+
+function updateCalcTimes(){
+  const val=(document.getElementById('f-start-time')||{}).value||'08:00';
+  const[sh,sm]=val.split(':').map(Number);
+  const startMin=sh*60+sm;
+  const intv=Math.round(1440/_freq);
+  const times=[];
+  for(let i=0;i<_freq;i++){times.push(minToTime(startMin+intv*i));}
+  ST.formTimes=times;
+  const el=document.getElementById('calc-time-chips');
+  if(el) el.innerHTML=_freq===1?'':times.map(t=>`<div class="tchip" style="cursor:default;gap:6px"><span class="ic" style="font-size:14px">schedule</span>${t}</div>`).join('');
+}
+
+function toggleMeal(key){_mealSel[key].on=!_mealSel[key].on;renderMealRows();}
+function setMealWhen(key,when){_mealSel[key].when=when;renderMealRows();}
+
+function renderMealRows(){
+  const ayunas=_mealSel.ayunas;
+  const ayunasRow=`<div style="display:flex;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid var(--ln)">
+    <div onclick="toggleMeal('ayunas')" style="width:26px;height:26px;border-radius:8px;background:${ayunas.on?'var(--med)':'var(--ln)'};display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+      ${ayunas.on?'<span class="ic" style="font-size:16px;color:#fff">check</span>':''}
+    </div>
+    <span class="ic" style="font-size:20px;color:var(--mu)">no_meals</span>
+    <div style="flex:1">
+      <div style="font-size:15px;font-weight:700;color:var(--ink)">En ayunas</div>
+      <div style="font-size:12px;color:var(--sub)">Estómago vacío · ~${ST.meals.ayunas}</div>
+    </div>
+    <span style="background:var(--meds);color:var(--med);padding:4px 9px;border-radius:9px;font-size:12px;font-weight:700">${ST.meals.ayunas}</span>
+  </div>`;
+
+  const mealRows=['breakfast','lunch','dinner'].map(k=>{
+    const s=_mealSel[k];
+    const dispTime=minToTime(mealMin(k)+getWhenOff(s.when));
+    return `<div style="display:flex;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid var(--ln)">
+      <div onclick="toggleMeal('${k}')" style="width:26px;height:26px;border-radius:8px;background:${s.on?'var(--med)':'var(--ln)'};display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+        ${s.on?'<span class="ic" style="font-size:16px;color:#fff">check</span>':''}
+      </div>
+      <span class="ic" style="font-size:20px;color:var(--mu)">${MEAL_ICON[k]}</span>
+      <div style="flex:1">
+        <div style="font-size:15px;font-weight:700;color:var(--ink)">${MEAL_LABEL[k]}</div>
+        <div style="font-size:12px;color:var(--sub)">~${dispTime}</div>
+      </div>
+      <div style="display:flex;gap:4px">
+        ${['antes','con','despues'].map(w=>`<button onclick="setMealWhen('${k}','${w}')" style="padding:5px 8px;border-radius:9px;border:1.5px solid ${s.when===w?'var(--med)':'var(--ln)'};background:${s.when===w?'var(--meds)':'transparent'};color:${s.when===w?'var(--med)':'var(--sub)'};font-size:12px;font-weight:700;cursor:pointer;font-family:Mulish">${WHEN_LABEL[w]}</button>`).join('')}
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('meal-rows').innerHTML=ayunasRow+mealRows;
+}
+
+function getMealTimes(){
+  const times=[];
+  if(_mealSel.ayunas.on) times.push(ST.meals.ayunas);
+  ['breakfast','lunch','dinner'].filter(k=>_mealSel[k].on).forEach(k=>times.push(minToTime(mealMin(k)+getWhenOff(_mealSel[k].when))));
+  return times.sort();
+}
+
+function pickSeg(btn,groupId,cls){
+  btn.closest('.seg').querySelectorAll('.segb').forEach(b=>b.classList.remove(cls));
+  btn.classList.add(cls);
+}
+
+// ═══════ AJUSTES ═══════
+const SNOOZE_OPTS=['5 min','10 min','15 min','20 min','30 min'];
+const WATER_INT_OPTS=['1 h','2 h','3 h'];
+const MINS_BEFORE_OPTS=[5,10,15,20,30,45,60];
+let _snoozeIdx=1, _waterIntIdx=1, _minsBeforeIdx=2;
+
+function renderSettings(){
+  const name=ST.name||'—';
+  const nameEl=document.getElementById('set-name');
+  const avatarEl=document.getElementById('set-avatar');
+  if(nameEl) nameEl.textContent=name;
+  if(avatarEl) avatarEl.textContent=name==='—'?'?':name.charAt(0).toUpperCase();
+  // Poblar horarios de comidas
+  ['ayunas','breakfast','lunch','dinner'].forEach(k=>{
+    const el=document.getElementById(`set-meal-${k}`);
+    if(el) el.value=ST.meals[k]||'';
+  });
+  const mbEl=document.getElementById('set-mins-before');
+  if(mbEl) mbEl.textContent=`${ST.minsBefore} min`;
+  const famCountEl=document.getElementById('set-family-count');
+  if(famCountEl) famCountEl.textContent=FAMILY.length?`${FAMILY.length} familiar${FAMILY.length!==1?'es':''} agregado${FAMILY.length!==1?'s':''}`:'Sin familiares agregados';
+}
+
+function saveMealTime(key,val){
+  if(!val)return;
+  ST.meals[key]=val;
+  // Actualizar vista previa en formulario si está abierto en modo comidas
+  if(document.querySelector('.sp.on')?.id==='s-med-form'&&_schedMode==='comidas') renderMealRows();
+  showToast(`${MEAL_LABEL[key]}: ${val}`);
+  saveState();
+}
+
+function cycleMinsAnte(){
+  _minsBeforeIdx=(_minsBeforeIdx+1)%MINS_BEFORE_OPTS.length;
+  ST.minsBefore=MINS_BEFORE_OPTS[_minsBeforeIdx];
+  const el=document.getElementById('set-mins-before');
+  if(el) el.textContent=`${ST.minsBefore} min`;
+  if(_schedMode==='comidas') renderMealRows();
+  showToast(`Avisar ${ST.minsBefore} min antes de las comidas`);
+  saveState();
+}
+
+function editName(){
+  const nameEl=document.getElementById('set-name');
+  if(!nameEl) return;
+  const cur=ST.name||'';
+  nameEl.innerHTML=`<input id="set-name-inp" type="text" value="${cur}" maxlength="30"
+    style="font-size:16px;font-weight:700;color:var(--ink);border:none;border-bottom:2px solid var(--med);
+    background:none;outline:none;width:100%;font-family:Mulish"
+    onblur="saveName()" onkeydown="if(event.key==='Enter')this.blur()">`;
+  const inp=document.getElementById('set-name-inp');
+  inp.focus(); inp.select();
+}
+
+function saveName(){
+  const inp=document.getElementById('set-name-inp');
+  if(!inp) return;
+  const v=inp.value.trim();
+  if(v) { ST.name=v; showToast(`Nombre guardado: ${v}`); saveState(); }
+  renderSettings();
+}
+
+function cycleSnooze(){
+  _snoozeIdx=(_snoozeIdx+1)%SNOOZE_OPTS.length;
+  const el=document.getElementById('set-snooze');
+  if(el) el.textContent=SNOOZE_OPTS[_snoozeIdx];
+  showToast(`Posponer: ${SNOOZE_OPTS[_snoozeIdx]}`);
+  saveState();
+}
+
+function cycleWaterInt(){
+  _waterIntIdx=(_waterIntIdx+1)%WATER_INT_OPTS.length;
+  const el=document.getElementById('set-water-int');
+  if(el) el.textContent=WATER_INT_OPTS[_waterIntIdx];
+  showToast(`Intervalo de agua: ${WATER_INT_OPTS[_waterIntIdx]}`);
+  saveState();
+}
+
+function setTheme(mode,btn){
+  const screen=document.querySelector('.screen');
+  mode==='dark'?screen.classList.add('dark-mode'):screen.classList.remove('dark-mode');
+  document.getElementById('seg-theme').querySelectorAll('.segb').forEach(b=>b.classList.remove('on-m'));
+  btn.classList.add('on-m');
+  saveState();
+}
+
+function setLang(lang,btn){
+  document.getElementById('seg-lang').querySelectorAll('.segb').forEach(b=>b.classList.remove('on-m'));
+  btn.classList.add('on-m');
+  if(lang==='en') showToast('Inglés — próximamente');
+}
+
+function saveMed(){
+  const name=document.getElementById('f-name').value.trim();
+  if(!name){showToast('Escribe el nombre de la medicina');return;}
+  const times=_schedMode==='frecuencia'?ST.formTimes:getMealTimes();
+  if(!times.length){showToast('Selecciona al menos un horario o comida');return;}
+  const stockVal=parseInt(document.getElementById('f-stock').value);
+  const data={
+    name,
+    dose:document.getElementById('f-dose').value.trim(),
+    qty:document.getElementById('f-qty').value.trim()||'1 tableta',
+    times, time:times[0],
+    notes:document.getElementById('f-notes').value.trim(),
+    stock:isNaN(stockVal)?null:stockVal,
+    status:'upcoming',
+    schedMode:_schedMode,
+    mealSel:_schedMode==='comidas'?JSON.parse(JSON.stringify(_mealSel)):undefined
+  };
+  if(ST.editId){
+    const idx=ST.meds.findIndex(x=>x.id===ST.editId);
+    if(idx>=0) ST.meds[idx]={...ST.meds[idx],...data};
+    ST.editId=null;
+  } else {
+    ST.meds.push({id:Date.now(),...data});
+  }
+  computeMedStatus();
+  saveState();
+  goBack(); showToast(`${name} guardada`);
+}
+
+// ═══════ FAMILIA ═══════
+let FAMILY=[];
+let _famRel='Mamá', _famEditId=null, _famDetId=null;
+
+function setFamRel(rel,btn){
+  _famRel=rel;
+  document.querySelectorAll('#ff-rel-chips .segb').forEach(b=>b.classList.remove('on-m'));
+  btn.classList.add('on-m');
+}
+
+function openFamilyForm(id){
+  _famEditId=id;
+  nav('s-family-form',true);
+}
+
+function renderFamilyForm(){
+  const f=_famEditId?FAMILY.find(x=>x.id===_famEditId):null;
+  document.getElementById('family-form-ttl').textContent=f?'Editar familiar':'Agregar familiar';
+  document.getElementById('ff-name').value=f?f.name:'';
+  document.getElementById('ff-phone').value=f?(f.phone||''):'';
+  _famRel=f?f.relation:'Mamá';
+  document.querySelectorAll('#ff-rel-chips .segb').forEach(b=>b.classList.toggle('on-m',b.textContent===_famRel));
+}
+
+function saveFamilyMember(){
+  const name=document.getElementById('ff-name').value.trim();
+  if(!name){showToast('Escribe el nombre');return;}
+  const phone=document.getElementById('ff-phone').value.trim();
+  if(_famEditId){
+    const f=FAMILY.find(x=>x.id===_famEditId);
+    if(f){f.name=name;f.relation=_famRel;f.phone=phone;}
+  } else {
+    FAMILY.push({id:Date.now(),name,relation:_famRel,phone,meds:[]});
+  }
+  _famEditId=null;
+  saveState();
+  goBack(); showToast(`${name} agregado a Familia`);
+}
+
+function renderFamily(){
+  const listEl=document.getElementById('family-list');
+  const emptyEl=document.getElementById('family-empty');
+  if(!FAMILY.length){
+    emptyEl.style.display='block';
+    listEl.innerHTML='';
+    return;
+  }
+  emptyEl.style.display='none';
+  listEl.innerHTML=FAMILY.map(f=>{
+    const pending=f.meds.filter(m=>m.status==='now'||m.status==='overdue').length;
+    const sub=f.meds.length===0?'Sin medicinas registradas':pending>0?`${pending} pendiente${pending!==1?'s':''} de tomar`:`${f.meds.length} medicina${f.meds.length!==1?'s':''} · al día`;
+    return`<div class="famcard" onclick="openFamilyDet(${f.id})">
+      <div class="famav">${f.name.charAt(0).toUpperCase()}</div>
+      <div style="flex:1"><div class="mn">${f.name}</div><div class="ms">${f.relation} · ${sub}</div></div>
+      ${pending>0?`<span style="background:var(--acts);color:var(--act);padding:4px 9px;border-radius:10px;font-size:12px;font-weight:700">${pending}</span>`:'<span class="ic" style="color:var(--mu)">chevron_right</span>'}
+    </div>`;
+  }).join('');
+}
+
+function openFamilyDet(id){ _famDetId=id; nav('s-family-det',true); }
+
+function renderFamilyDet(){
+  const f=FAMILY.find(x=>x.id===_famDetId); if(!f)return;
+  document.getElementById('famdet-name').textContent=f.name;
+  document.getElementById('famdet-rel').textContent=f.relation;
+  document.getElementById('famdet-avatar').innerHTML=`<span style="font-family:'Schibsted Grotesk';font-size:26px;font-weight:800">${f.name.charAt(0).toUpperCase()}</span>`;
+  const callEl=document.getElementById('famdet-call');
+  if(f.phone){ callEl.href=`tel:${f.phone}`; callEl.style.display='flex'; }
+  else { callEl.style.display='none'; }
+  document.getElementById('famdet-addform').style.display='none';
+  document.getElementById('famdet-addbtn').style.display='flex';
+  if(!f.meds.length){
+    document.getElementById('famdet-meds').innerHTML=`<div style="text-align:center;color:var(--sub);padding:20px;font-size:14px">Aún no hay medicinas registradas</div>`;
+    return;
+  }
+  document.getElementById('famdet-meds').innerHTML=f.meds.map(m=>{
+    const isNow=m.status==='now', isOverdue=m.status==='overdue', isTaken=m.status==='taken';
+    const cardCls=isTaken?'card done':isNow?'card now':'card';
+    const badge=isTaken?`<span class="ic" style="color:var(--ok)">check_circle</span>`:isNow?`<span class="now-badge">Ahora</span>`:isOverdue?`<span style="background:var(--acts);color:var(--act);padding:4px 9px;border-radius:10px;font-size:12px;font-weight:700">Pendiente</span>`:`<span class="ic" style="color:var(--mu)">schedule</span>`;
+    let actions='';
+    if(isNow||isOverdue){
+      actions=`<div style="display:flex;gap:8px;margin-top:10px">
+        <button class="btn b-taken" onclick="markFamilyTaken(${f.id},${m.id})"><span class="ic" style="font-size:19px">check</span>Ya lo tomó</button>
+        <button class="btn b-snooze" onclick="snoozeFamilyMed(${f.id},${m.id})"><span class="ic">snooze</span></button>
+      </div>`;
+    }
+    return`<div class="${cardCls}" style="margin-bottom:11px">
+      <div class="row"><div class="ch ch-m"><span class="ic">medication</span></div>
+      <div style="flex:1"><div class="mn">${m.name} ${m.dose||''}</div><div class="ms">${fmt(m.time)}${m.notes?' · '+m.notes:''}</div></div>
+      ${badge}</div>${actions}
+    </div>`;
+  }).join('');
+}
+
+function toggleFamilyMedForm(){
+  const form=document.getElementById('famdet-addform');
+  const btn=document.getElementById('famdet-addbtn');
+  const show=form.style.display==='none';
+  form.style.display=show?'block':'none';
+  btn.style.display=show?'none':'flex';
+  if(show){
+    document.getElementById('fm-name').value='';
+    document.getElementById('fm-dose').value='';
+    document.getElementById('fm-time').value='08:00';
+    document.getElementById('fm-notes').value='';
+  }
+}
+
+function saveFamilyMed(){
+  const f=FAMILY.find(x=>x.id===_famDetId); if(!f)return;
+  const name=document.getElementById('fm-name').value.trim();
+  if(!name){showToast('Escribe el nombre de la medicina');return;}
+  const time=document.getElementById('fm-time').value||'08:00';
+  f.meds.push({
+    id:Date.now(),
+    name,
+    dose:document.getElementById('fm-dose').value.trim(),
+    time, times:[time],
+    notes:document.getElementById('fm-notes').value.trim(),
+    status:'upcoming',
+    history:[]
+  });
+  computeMedStatus();
+  saveState();
+  toggleFamilyMedForm();
+  renderFamilyDet();
+  renderFamily();
+  showToast(`${name} agregada para ${f.name}`);
+}
+
+function markFamilyTaken(memberId,medId){
+  const f=FAMILY.find(x=>x.id===memberId); if(!f)return;
+  const m=markTakenGeneric(f.meds,medId); if(!m)return;
+  showToast(`✓ ${m.name} de ${f.name} marcada como tomada`);
+  renderFamilyDet(); renderFamily();
+  saveState();
+}
+
+function snoozeFamilyMed(memberId,medId){
+  const f=FAMILY.find(x=>x.id===memberId); if(!f)return;
+  const m=f.meds.find(x=>x.id===medId); if(!m)return;
+  const nowMin=new Date().getHours()*60+new Date().getMinutes();
+  const t=closestTime(m,nowMin);
+  const mins=snoozeMinutes();
+  const key=`${m.id}_${t}`;
+  _snoozedUntil[key]=Date.now()+mins*60000;
+  _reminded[key]=true;
+  m.status='upcoming';
+  showToast(`${m.name} de ${f.name} pospuesta ${mins} minutos`);
+  renderFamilyDet();
+  saveState();
+}
+
+// ═══════ AGUA ═══════
+function renderWater(){
+  const{glasses,goal}=ST.water;
+  const pct=Math.round(glasses/goal*100);
+  document.getElementById('w-ring').style.background=`conic-gradient(var(--wat) 0 ${pct}%, var(--watt) 0)`;
+  document.getElementById('w-num').textContent=`${glasses}/${goal}`;
+  document.getElementById('w-ml').textContent=`${glasses*250} ml`;
+  document.getElementById('w-sub').textContent=`Meta: ${goal} vasos hoy`;
+  const msgs=['¡Empieza a hidratarte! 💧','¡Vas bien! Sigue hidratándote 💧','¡Buen ritmo! 💧','¡Casi en la meta! 💪','¡Meta completada! 🎉'];
+  document.getElementById('w-msg').textContent=msgs[Math.min(Math.floor(glasses/(goal/4)),4)];
+  document.getElementById('w-bars').innerHTML=Array.from({length:goal},(_,i)=>
+    `<div class="wglass${i<glasses?' f':''}" onclick="setGlasses(${i+1})"><span class="ic">local_drink</span></div>`
+  ).join('');
+}
+
+function addGlass(){
+  if(ST.water.glasses>=ST.water.goal){showToast('¡Meta de agua completada! 🎉');return;}
+  ST.water.glasses++;renderWater();
+  const r=ST.water.goal-ST.water.glasses;
+  showToast(r===0?'¡Meta de agua completada! 🎉':`Vaso registrado · ${r} restante${r!==1?'s':''}`);
+  saveState();
+}
+
+function setGlasses(n){
+  ST.water.glasses=(n===ST.water.glasses)?n-1:n;
+  if(ST.water.glasses<0) ST.water.glasses=0;
+  renderWater();
+  if(ST.water.glasses>=ST.water.goal) showToast('¡Meta de agua completada! 🎉');
+  saveState();
+}
+
+function adjGoal(d){
+  ST.water.goal=Math.max(1,Math.min(15,ST.water.goal+d));
+  document.getElementById('wc-n').textContent=ST.water.goal;
+  saveState();
+}
+
+function pickInt(el){document.querySelectorAll('.intb').forEach(c=>c.classList.remove('on'));el.classList.add('on');}
+
+// ═══════ ACTIVIDAD ═══════
+function renderAct(){
+  const{steps,goal}=ST.act;
+  const pct=Math.min(Math.round(steps/goal*100),100);
+  document.getElementById('a-ring').style.background=`conic-gradient(var(--act) 0 ${pct}%, var(--acts) 0)`;
+  document.getElementById('a-steps').textContent=steps.toLocaleString('es');
+  document.getElementById('a-km').textContent=(steps*0.00075).toFixed(1);
+  document.getElementById('a-cal').textContent=Math.round(steps*0.044);
+}
+
+// ═══════ TOAST ═══════
+let toastT;
+function showToast(msg){
+  const el=document.getElementById('toast');
+  document.getElementById('toast-msg').textContent=msg;
+  el.classList.add('on');
+  clearTimeout(toastT);
+  toastT=setTimeout(()=>el.classList.remove('on'),3000);
+}
+
+// ═══════ RECORDATORIOS ═══════
+let _notifGranted=false, _reminded={}, _snoozedUntil={};
+
+function requestNotifPermission(){
+  if(!('Notification' in window))return;
+  if(Notification.permission==='granted'){_notifGranted=true;return;}
+  Notification.requestPermission().then(p=>{_notifGranted=(p==='granted');});
+}
+
+function computeStatusFor(meds){
+  const nowMin=new Date().getHours()*60+new Date().getMinutes();
+  const nowMs=Date.now();
+  meds.forEach(m=>{
+    if(m.status==='taken')return;
+    const times=m.times||[m.time];
+    let status='upcoming';
+    for(const t of times){
+      const key=`${m.id}_${t}`;
+      if(_snoozedUntil[key]&&nowMs<_snoozedUntil[key])continue;
+      const[h,mi]=t.split(':').map(Number);
+      const diff=nowMin-(h*60+mi);
+      if(diff>=-5&&diff<=30){status='now';break;}
+      if(diff>30) status='overdue';
+    }
+    // Si hay una toma futura hoy, no es overdue aún
+    if(status==='overdue'&&times.some(t=>{const[h,mi]=t.split(':').map(Number);return nowMin<h*60+mi-5;}))
+      status='upcoming';
+    m.status=status;
+  });
+}
+
+function computeMedStatus(){
+  computeStatusFor(ST.meds);
+  FAMILY.forEach(f=>computeStatusFor(f.meds));
+}
+
+function checkRemindersFor(meds,ownerLabel){
+  const nowMin=new Date().getHours()*60+new Date().getMinutes();
+  const nowMs=Date.now();
+  meds.forEach(m=>{
+    if(m.status==='taken')return;
+    const times=m.times||[m.time];
+    times.forEach(t=>{
+      const key=`${m.id}_${t}`;
+      if(_snoozedUntil[key]){
+        if(nowMs<_snoozedUntil[key])return;
+        delete _snoozedUntil[key];
+        delete _reminded[key];
+        sendReminder(m,t,ownerLabel);
+        return;
+      }
+      const[h,mi]=t.split(':').map(Number);
+      const diff=(h*60+mi)-nowMin;
+      if(diff>=-1&&diff<=0&&!_reminded[key]){
+        _reminded[key]=true;
+        sendReminder(m,t,ownerLabel);
+      } else if(diff>0){
+        delete _reminded[key];
+      }
+    });
+  });
+}
+
+function checkReminders(){
+  checkRemindersFor(ST.meds,null);
+  FAMILY.forEach(f=>checkRemindersFor(f.meds,f.name));
+}
+
+function sendReminder(m,t,ownerLabel){
+  if('vibrate' in navigator) navigator.vibrate([600,200,600,200,600]);
+  const who=ownerLabel?` de ${ownerLabel}`:'';
+  const body=`${fmt(t)} · ${m.dose}${m.qty?' · '+m.qty:''}${m.notes?' · '+m.notes:''}`;
+  if(_notifGranted){
+    try{new Notification(`⏰ Medicina${who}: ${m.name} ${m.dose}`,{body,icon:'icon-192.png',tag:`med-${m.id}-${t}`,requireInteraction:true});}catch(e){}
+  }
+  m.status='now';
+  showToast(`⏰ Hora de la medicina${who} — ${m.name} ${m.dose} (${fmt(t)})`);
+  const cur=document.querySelector('.sp.on')?.id;
+  if(cur==='s-med') renderMedList();
+  if(cur==='s-dash') renderDash();
+  if(cur==='s-family') renderFamily();
+  if(cur==='s-family-det') renderFamilyDet();
+  saveState();
+}
+
+// Actualizar estado y revisar recordatorios cada minuto
+setInterval(()=>{
+  computeMedStatus();
+  checkReminders();
+  const cur=document.querySelector('.sp.on')?.id;
+  if(cur==='s-med') renderMedList();
+  if(cur==='s-dash') renderDash();
+},60000);
+
+// ═══════ PERSISTENCIA ═══════
+const STORAGE_KEY='memosalud_state_v1';
+
+function saveState(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      ST, FAMILY,
+      darkMode: document.querySelector('.screen')?.classList.contains('dark-mode')||false
+    }));
+  }catch(e){}
+}
+
+function loadState(){
+  try{
+    const raw=localStorage.getItem(STORAGE_KEY);
+    if(!raw) return false;
+    const data=JSON.parse(raw);
+    if(data.ST) Object.assign(ST, data.ST);
+    if(Array.isArray(data.FAMILY)) FAMILY=data.FAMILY;
+    if(data.darkMode){
+      document.querySelector('.screen')?.classList.add('dark-mode');
+      const themeSeg=document.getElementById('seg-theme');
+      if(themeSeg) themeSeg.querySelectorAll('.segb').forEach((b,i)=>b.classList.toggle('on-m',i===1));
+    }
+    return !!(data.ST && data.ST.name);
+  }catch(e){return false;}
+}
+
+// ═══════ SERVICE WORKER ═══════
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+
+// ═══════ INIT ═══════
+const _isReturningUser=loadState();
+if(_isReturningUser){ enterApp(); } else { renderMedList(); }
+syncTabs();
+
+document.getElementById('med-body').addEventListener('click', function(e) {
+  const t = e.target.closest('[data-act]');
+  if (!t) return;
+  const act = t.dataset.act;
+  const id = parseInt(t.dataset.id, 10);
+  if (act === 'det') openDet(id);
+  else if (act === 'hist') nav('s-med-hist', true);
+});
+</script>
+</body>
+</html>
