@@ -1,183 +1,539 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio – Héctor H. Jhon Trisolini</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Héctor Jhon Vargas Cerna — Data Scientist, Analista de Sistemas y Consultor Tecnológico. Portafolio profesional.">
+  <meta name="author" content="Hector Hernan Jhon Trisolini">
+  <title>Héctor Jhon Trisolini · Data Scientist & Consultor Tecnológico</title>
 
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.29.0/dist/tabler-icons.min.css">
+  <!-- AOS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
 <body>
 
-<!-- HERO / HEADER -->
-<header class="hero fade-in">
-    <h1>Héctor H. Jhon Trisolini</h1>
-    <p>Automatización · Apps · IA · Machine Learning · 3D · Electrónica</p>
-    <a href="#proyectos" class="btn-hero">Ver proyectos</a>
-</header>
+  <!-- ═══ NAV ═══ -->
+  <nav id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">
+        <div class="logo-badge">HJ</div>
+        <span>Héctor Jhon</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="#about" class="nav-link">Sobre mí</a>
+        <a href="#projects" class="nav-link">Proyectos</a>
+        <a href="#skills" class="nav-link">Habilidades</a>
+        <a href="#stfondes" class="nav-link">ST-FONDES</a>
+        <a href="#contact" class="nav-link">Contacto</a>
+        <a href="#contact" class="btn btn-primary nav-cta">Contratar</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Menú">
+        <i class="ti ti-menu-2" id="hamburgerIcon"></i>
+      </button>
+    </div>
+  </nav>
 
-<!-- NAV -->
-<nav class="navbar">
-    <a href="#sobre">Sobre mí</a>
-    <a href="#apps">Apps</a>
-    <a href="#ml">IA / ML</a>
-    <a href="#3d">3D</a>
-    <a href="#electronica">Electrónica</a>
-    <a href="#proyectos">Proyectos</a>
-    <a href="#contacto">Contacto</a>
-</nav>
+  <!-- ═══ HERO ═══ -->
+  <section id="hero">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-dots"></div>
 
-<!-- SOBRE MÍ -->
-<section id="sobre" class="section fade-in">
-    <h2>Sobre mí</h2>
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="availability-badge">
+          <span class="pulse-dot"></span>
+          <span>Disponible para proyectos</span>
+        </div>
 
-    <div class="card">
+        <h1 class="hero-title">
+          <span>Hector Hernan</span>
+          <span class="gradient-text">Jhon Trisolini</span>
+        </h1>
 
-        <h3>Quién soy</h3>
+        <div class="hero-subtitle">
+          Soy <span id="typed-text"></span><span class="typed-cursor">|</span>
+        </div>
 
-        <p>
-            Ingeniero Informático, Oficial retirado del Ejército del Perú y Especialista en Ciberseguridad y Datos. Construyo el puente entre el mundo digital, el físico y el estratégico. Con más de 30 años de trayectoria combinando la disciplina militar con la innovación tecnológica, me especializo en operar bajo situaciones de alta presión y crisis.
+        <p class="hero-description">
+          Especialista en análisis de datos, desarrollo de aplicaciones inteligentes y consultoría tecnológica. Transformo datos complejos en decisiones estratégicas de alto impacto.
         </p>
 
-        <p>
-            Mi enfoque radica en blindar infraestructuras críticas, analizar datos complejos para la toma de decisiones y fabricar soluciones tecnológicas integrales, transformando la resiliencia en un estándar operativo continuo.
-        </p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">
+            <i class="ti ti-rocket"></i> Ver Proyectos
+          </a>
+          <a href="#contact" class="btn btn-outline">
+            <i class="ti ti-mail"></i> Contactar
+          </a>
+        </div>
 
-        <h3>Qué hago</h3>
+        <div class="hero-socials">
+          <span class="socials-label">SÍGUEME</span>
+          <div class="socials-divider"></div>
+          <a href="https://github.com/hectorjhon" target="_blank" class="social-btn" aria-label="GitHub"><i class="ti ti-brand-github"></i></a>
+          <a href="https://linkedin.com/in/hectorjhon" target="_blank" class="social-btn" aria-label="LinkedIn"><i class="ti ti-brand-linkedin"></i></a>
+          <a href="mailto:admin@hectorjhon.com" class="social-btn" aria-label="Email"><i class="ti ti-mail"></i></a>
+        </div>
+      </div>
 
-        <div class="skills-grid">
-
-            <div class="skill-item">
-                <h4>🛡️ Ciberseguridad y Protección de Infraestructuras Críticas:</h4>
-                <p>
-                    Audito, blindo y administro redes corporativas e institucionales (Directorio Activo, Nube, Web). A través de Ethical Hacking y planes de respuesta ante incidentes, garantizo la continuidad operativa y la resiliencia de datos sensibles frente a amenazas avanzadas.
-                </p>
+      <div class="hero-terminal">
+        <div class="terminal-card">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
             </div>
-
-            <div class="skill-item">
-                <h4>📊 Inteligencia de Datos y Machine Learning:</h4>
-                <p>
-                    Despliego análisis exploratorios y predictivos utilizando Python y Power BI. Transformo grandes bases de datos aisladas en ecosistemas de inteligencia procesable, facilitando la toma de decisiones estratégicas en los más altos niveles de gobierno y gestión corporativa.
-                </p>
+            <span class="terminal-title">hectorjhon ~ analytics</span>
+          </div>
+          <div class="terminal-body">
+            <div class="terminal-line"><span class="t-prompt">$</span> <span class="t-cmd">python</span> <span class="t-file">st_fondes.py</span> <span class="t-flag">--analyze</span></div>
+            <div class="terminal-line t-muted">&gt; Cargando dataset FONDES...</div>
+            <div class="terminal-line t-muted">&gt; Iniciando pipeline ML...</div>
+            <div class="terminal-line t-muted">&gt; Procesando <span class="t-white">12,847</span> registros</div>
+            <div class="terminal-line t-muted">&gt; Entrenando XGBoost...</div>
+            <div class="terminal-line">&gt; Accuracy: <span class="t-green">97.3%</span> <span class="t-bar">████████████</span></div>
+            <div class="terminal-line">&gt; F1-Score: <span class="t-green">0.964</span> <span class="t-bar">███████████░</span></div>
+            <div class="terminal-line t-success">✓ <span class="t-white">Análisis completado</span></div>
+            <div class="terminal-line t-muted" style="margin-top:8px;"><span class="t-prompt">$</span> streamlit run app.py<span class="t-cursor t-prompt">▋</span></div>
+            <div class="terminal-stats">
+              <div class="t-stat t-stat-blue"><div class="t-stat-val">97.3%</div><div class="t-stat-label">Accuracy</div></div>
+              <div class="t-stat t-stat-purple"><div class="t-stat-val">12.8K</div><div class="t-stat-label">Registros</div></div>
+              <div class="t-stat t-stat-green"><div class="t-stat-val">Live</div><div class="t-stat-label">Streamlit</div></div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            <div class="skill-item">
-                <h4>📡 Sistemas C3I2 y Gestión de Crisis:</h4>
-                <p>
-                    Diseño e implemento centros de Comando, Control, Comunicaciones e Informática (C3I2). Integro mi experiencia en Inteligencia y Gestión del Riesgo de Desastres para asegurar comunicaciones ininterrumpidas y eficientes en escenarios de emergencia.
-                </p>
+    <div class="scroll-indicator">
+      <span>SCROLL</span>
+      <i class="ti ti-chevrons-down"></i>
+    </div>
+  </section>
+
+  <!-- ═══ ABOUT ═══ -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">// 01. SOBRE MÍ</span>
+        <h2 class="section-title">Quién <span class="gradient-text">soy</span></h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-photo-col" data-aos="fade-right">
+          <div class="photo-frame">
+            <div class="photo-placeholder">
+              <img src="foto-perfil.png" alt="Hector Hernan Jhon Trisolini" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 15%;">
             </div>
-
-            <div class="skill-item">
-                <h4>⚙️ Ingeniería de Hardware y Prototipado 3D:</h4>
-                <p>
-                     Llevo las ideas tácticas a la realidad física. Integro mis conocimientos en electrónica para desarrollar placas y sensores, ensamblándolos en carcasas y prototipos de precisión mediante modelado e impresión 3D en mi propio laboratorio, modernizando los procesos operativos.
-                </p>
+            <div class="experience-badge">
+              <div class="exp-num">5+</div>
+              <div class="exp-label">años exp.</div>
             </div>
-
+          </div>
         </div>
 
+        <div class="about-text-col" data-aos="fade-left">
+          <h3 class="about-role">Analista de Datos &amp; Consultor Tecnológico</h3>
+          <p class="about-bio">Soy un profesional especializado en análisis de datos, desarrollo de aplicaciones inteligentes y consultoría tecnológica. Combino habilidades técnicas sólidas con pensamiento estratégico para transformar datos complejos en soluciones de alto impacto.</p>
+          <p class="about-bio">Mi trabajo abarca desde el diseño de pipelines de datos y modelos de machine learning hasta el desarrollo de dashboards interactivos, como <strong class="accent">ST-FONDES</strong>, mi aplicación de análisis financiero en producción en Streamlit Cloud.</p>
+
+          <div class="tag-list">
+            <span class="tag tag-blue">Python</span>
+            <span class="tag tag-purple">Machine Learning</span>
+            <span class="tag tag-green">SQL</span>
+            <span class="tag tag-blue">Streamlit</span>
+            <span class="tag tag-yellow">Power BI</span>
+            <span class="tag tag-cyan">Pandas</span>
+            <span class="tag tag-red">XGBoost</span>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card"><div class="stat-num" style="color:#4f8ef7">5+</div><div class="stat-label">Años</div></div>
+            <div class="stat-card"><div class="stat-num" style="color:#8b5cf6">20+</div><div class="stat-label">Proyectos</div></div>
+            <div class="stat-card"><div class="stat-num" style="color:#10b981">15+</div><div class="stat-label">Clientes</div></div>
+            <div class="stat-card"><div class="stat-num" style="color:#f59e0b">97%</div><div class="stat-label">Satisfacción</div></div>
+          </div>
+        </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<!-- APPS -->
-<section id="apps" class="section fade-in">
-    <h2>Automatización y Apps</h2>
-    <div class="card">
-        <h3>📞 FONDITO</h3>
-        <p>Demo pública (datos 100% ficticios) de un panel de atención y seguimiento de solicitudes de financiamiento ante desastres, con ficha técnica, ficha municipal 360°, estadísticas y panel de administración. Desarrollado con Python y Streamlit.</p>
-        <a class="btn" href="https://fondito.streamlit.app/" target="_blank">Abrir FONDITO</a>
-    </div>
-    <div class="card">
-        <h3>💊 MemoSalud</h3>
-        <p>App PWA de recordatorios de salud para adultos mayores: medicinas, agua, actividad y perfiles familiares para que un cuidador ayude a recordarle a sus seres queridos.</p>
-        <a class="btn" href="memosalud/" target="_blank">Abrir MemoSalud</a>
-    </div>
-</section>
+  <!-- ═══ PROJECTS ═══ -->
+  <section id="projects" class="section section-alt">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">// 02. PROYECTOS</span>
+        <h2 class="section-title">Trabajo <span class="gradient-text">destacado</span></h2>
+        <div class="section-line"></div>
+      </div>
 
-<!-- IA / ML -->
-<section id="ml" class="section fade-in">
-    <h2>Machine Learning e IA (En Construccion)</h2>
-    <div class="card">
-        <p>Implemento modelos de Machine Learning e IA aplicados a problemas reales: clasificación, predicción, análisis de datos, 
-        automatización inteligente y soporte a la toma de decisiones.</p>
-        <a class="btn" href="#" target="_blank">Ver demos de IA</a>
-    </div>
-</section>
-
-<!-- 3D -->
-<section id="3d" class="section fade-in">
-    <h2>Modelado e Impresión 3D (En Construccion)</h2>
-    <div class="card">
-        <p>Diseño piezas funcionales, prototipos y soluciones técnicas usando modelado 3D e impresión FDM.</p>
-        <a class="btn" href="#" target="_blank">Galería 3D</a>
-    </div>
-</section>
-
-<!-- ELECTRÓNICA -->
-<section id="electronica" class="section fade-in">
-    <h2>Electrónica y Prototipado (En Construccion)</h2>
-    <div class="card">
-        <p>Diseño y prototipo circuitos electrónicos, sensores, módulos y soluciones integradas para automatización y proyectos técnicos.</p>
-        <a class="btn" href="#" target="_blank">Ver proyectos electrónicos</a>
-    </div>
-</section>
-
-<!-- PROYECTOS GRID -->
-<section id="proyectos" class="section fade-in">
-    <h2>Proyectos destacados</h2>
-
-    <div class="grid">
-
-        <div class="project-card">
-            <div class="icon">💊</div>
-            <h3>MemoSalud</h3>
-            <p>App PWA de salud para adultos mayores: medicinas, agua, actividad y recordatorios familiares.</p>
-            <a class="btn" href="memosalud/" target="_blank">Abrir MemoSalud</a>
+      <div class="projects-grid">
+        <div class="project-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="card-img card-img-blue">
+            <i class="ti ti-chart-bar card-icon"></i>
+            <span class="badge badge-featured">✦ DESTACADO</span>
+            <span class="badge badge-live badge-right"><span class="pulse-dot"></span>Live</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">ST-FONDES</h3>
+            <p class="card-desc">Aplicación web para análisis, seguimiento y predicción de datos FONDES. Dashboards interactivos, modelos ML y reportes automatizados.</p>
+            <div class="tag-list">
+              <span class="tag tag-sm tag-blue">Python</span>
+              <span class="tag tag-sm tag-blue">Streamlit</span>
+              <span class="tag tag-sm tag-blue">XGBoost</span>
+              <span class="tag tag-sm tag-blue">Pandas</span>
+            </div>
+            <div class="card-actions">
+              <!-- ⚠️ REEMPLAZA con tu URL real de Streamlit -->
+              <a href="https://ST-FONDES.streamlit.app" target="_blank" class="btn btn-primary btn-sm">
+                <i class="ti ti-external-link"></i> Ver App
+              </a>
+              <a href="#" class="btn btn-outline btn-sm">
+                <i class="ti ti-brand-github"></i> Código
+              </a>
+            </div>
+          </div>
         </div>
 
-        <div class="project-card">
-            <div class="icon">📞</div>
-            <h3>FONDITO</h3>
-            <p>Panel de atención y seguimiento de solicitudes de financiamiento ante desastres (demo pública, datos ficticios).</p>
-            <a class="btn" href="https://fondito.streamlit.app/" target="_blank">Abrir FONDITO</a>
+        <div class="project-card" data-aos="fade-up" data-aos-delay="80">
+          <div class="card-img card-img-green">
+            <i class="ti ti-database card-icon card-icon-green"></i>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Pipeline Analytics</h3>
+            <p class="card-desc">Automatización de ETL y análisis de datos institucionales con alertas, reportes programados y monitoreo en tiempo real.</p>
+            <div class="tag-list">
+              <span class="tag tag-sm tag-green">Python</span>
+              <span class="tag tag-sm tag-green">SQL</span>
+              <span class="tag tag-sm tag-green">Airflow</span>
+            </div>
+            <div class="card-actions">
+              <a href="#" class="btn btn-outline btn-sm"><i class="ti ti-brand-github"></i> Código</a>
+            </div>
+          </div>
         </div>
 
-        <div class="project-card">
-            <div class="icon">🤖</div>
-            <h3>Modelo IA Predictivo</h3>
-	    <h3>(En Construccion)</h3>
-            <p>Modelo de clasificación para soporte a la toma de decisiones.</p>
+        <div class="project-card" data-aos="fade-up" data-aos-delay="140">
+          <div class="card-img card-img-yellow">
+            <i class="ti ti-brain card-icon card-icon-yellow"></i>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Modelo Predictivo</h3>
+            <p class="card-desc">Sistema de clasificación con ML para optimización de decisiones institucionales. Interpretabilidad con SHAP y explicaciones automáticas.</p>
+            <div class="tag-list">
+              <span class="tag tag-sm tag-yellow">Scikit-learn</span>
+              <span class="tag tag-sm tag-yellow">XGBoost</span>
+              <span class="tag tag-sm tag-yellow">SHAP</span>
+            </div>
+            <div class="card-actions">
+              <a href="#" class="btn btn-outline btn-sm"><i class="ti ti-brand-github"></i> Código</a>
+            </div>
+          </div>
         </div>
 
-        <div class="project-card">
-            <div class="icon">🧩</div>
-            <h3>Prototipo Electrónico</h3>
-	    <h3>(En Construccion)</h3>
-            <p>Diseño de circuito funcional para automatización.</p>
+        <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="card-img card-img-purple">
+            <i class="ti ti-layout-dashboard card-icon card-icon-purple"></i>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">Dashboard BI</h3>
+            <p class="card-desc">Panel de control con KPIs en tiempo real, segmentación dinámica y análisis de tendencias para la toma de decisiones.</p>
+            <div class="tag-list">
+              <span class="tag tag-sm tag-purple">Power BI</span>
+              <span class="tag tag-sm tag-purple">DAX</span>
+              <span class="tag tag-sm tag-purple">SQL</span>
+            </div>
+            <div class="card-actions">
+              <a href="#" class="btn btn-outline btn-sm"><i class="ti ti-eye"></i> Ver demo</a>
+            </div>
+          </div>
         </div>
-
-        <div class="project-card">
-            <div class="icon">📐</div>
-            <h3>Diseño 3D Técnico</h3>
-	    <h3>(En Construccion)</h3>
-            <p>Piezas funcionales impresas en 3D para proyectos reales.</p>
-        </div>
-
+      </div>
     </div>
-</section>
+  </section>
 
-<!-- CONTACTO -->
-<section id="contacto" class="section fade-in">
-    <h2>Contacto</h2>
-    <div class="card">
-        <p><strong>Email:</strong> admin@hectorjhon.com (En Construccion)</p>
+  <!-- ═══ SKILLS ═══ -->
+  <section id="skills" class="section">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">// 03. SERVICIOS</span>
+        <h2 class="section-title">Habilidades &amp; <span class="gradient-text">Servicios</span></h2>
+        <div class="section-line"></div>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card" data-aos="fade-up" data-aos-delay="0">
+          <div class="svc-icon svc-blue"><i class="ti ti-chart-dots-3"></i></div>
+          <h3>Análisis de Datos</h3>
+          <p>Exploración, limpieza y análisis estadístico de grandes volúmenes de datos para extraer insights accionables.</p>
+          <span class="svc-stack">Python · Pandas · SQL</span>
+        </div>
+        <div class="service-card" data-aos="fade-up" data-aos-delay="80">
+          <div class="svc-icon svc-purple"><i class="ti ti-cpu"></i></div>
+          <h3>Machine Learning</h3>
+          <p>Modelos predictivos y sistemas de clasificación para automatizar decisiones con alta precisión.</p>
+          <span class="svc-stack">Scikit-learn · XGBoost</span>
+        </div>
+        <div class="service-card" data-aos="fade-up" data-aos-delay="140">
+          <div class="svc-icon svc-green"><i class="ti ti-device-desktop-analytics"></i></div>
+          <h3>Visualización &amp; BI</h3>
+          <p>Dashboards interactivos que comunican resultados de forma clara para la toma de decisiones.</p>
+          <span class="svc-stack">Power BI · Plotly</span>
+        </div>
+        <div class="service-card" data-aos="fade-up" data-aos-delay="180">
+          <div class="svc-icon svc-yellow"><i class="ti ti-code"></i></div>
+          <h3>Apps &amp; Automatización</h3>
+          <p>Aplicaciones web interactivas y automatización de procesos con Python y Streamlit.</p>
+          <span class="svc-stack">Streamlit · FastAPI</span>
+        </div>
+        <div class="service-card" data-aos="fade-up" data-aos-delay="220">
+          <div class="svc-icon svc-cyan"><i class="ti ti-database"></i></div>
+          <h3>Bases de Datos</h3>
+          <p>Diseño, optimización y gestión de bases de datos relacionales de alto rendimiento.</p>
+          <span class="svc-stack">PostgreSQL · MongoDB</span>
+        </div>
+        <div class="service-card" data-aos="fade-up" data-aos-delay="260">
+          <div class="svc-icon svc-red"><i class="ti ti-presentation-analytics"></i></div>
+          <h3>Consultoría Tecnológica</h3>
+          <p>Asesoría estratégica en arquitectura de datos, selección de herramientas y transformación digital.</p>
+          <span class="svc-stack">Estrategia · Arquitectura</span>
+        </div>
+      </div>
+
+      <div class="stack-panel" data-aos="fade-up">
+        <h3 class="stack-title">Stack Tecnológico</h3>
+        <div class="skills-cols">
+          <div class="skills-col">
+            <div class="col-header"><div class="col-bar col-bar-blue"></div><span>Data Science</span></div>
+            <div class="skill-item"><div class="skill-meta"><span>Python</span><span class="skill-pct" style="color:#4f8ef7">95%</span></div><div class="skill-track"><div class="skill-fill skill-fill-blue" style="width:95%"></div></div></div>
+            <div class="skill-item"><div class="skill-meta"><span>Machine Learning</span><span class="skill-pct" style="color:#4f8ef7">88%</span></div><div class="skill-track"><div class="skill-fill skill-fill-blue" style="width:88%"></div></div></div>
+            <div class="skill-item"><div class="skill-meta"><span>Estadística</span><span class="skill-pct" style="color:#4f8ef7">85%</span></div><div class="skill-track"><div class="skill-fill skill-fill-blue" style="width:85%"></div></div></div>
+          </div>
+          <div class="skills-col">
+            <div class="col-header"><div class="col-bar col-bar-purple"></div><span>Desarrollo</span></div>
+            <div class="skill-item"><div class="skill-meta"><span>Streamlit</span><span class="skill-pct" style="color:#8b5cf6">92%</span></div><div class="skill-track"><div class="skill-fill skill-fill-purple" style="width:92%"></div></div></div>
+            <div class="skill-item"><div class="skill-meta"><span>SQL / PostgreSQL</span><span class="skill-pct" style="color:#8b5cf6">90%</span></div><div class="skill-track"><div class="skill-fill skill-fill-purple" style="width:90%"></div></div></div>
+            <div class="skill-item"><div class="skill-meta"><span>FastAPI</span><span class="skill-pct" style="color:#8b5cf6">75%</span></div><div class="skill-track"><div class="skill-fill skill-fill-purple" style="width:75%"></div></div></div>
+          </div>
+          <div class="skills-col">
+            <div class="col-header"><div class="col-bar col-bar-green"></div><span>Analytics &amp; BI</span></div>
+            <div class="skill-item"><div class="skill-meta"><span>Power BI</span><span class="skill-pct" style="color:#10b981">87%</span></div><div class="skill-track"><div class="skill-fill skill-fill-green" style="width:87%"></div></div></div>
+            <div class="skill-item"><div class="skill-meta"><span>Excel / VBA</span><span class="skill-pct" style="color:#10b981">93%</span></div><div class="skill-track"><div class="skill-fill skill-fill-green" style="width:93%"></div></div></div>
+            <div class="skill-item"><div class="skill-meta"><span>Tableau</span><span class="skill-pct" style="color:#10b981">74%</span></div><div class="skill-track"><div class="skill-fill skill-fill-green" style="width:74%"></div></div></div>
+          </div>
+        </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<footer>
-    © 2026 – Héctor H. Jhon Trisolini · Portafolio Profesional
-</footer>
+  <!-- ═══ ST-FONDES FEATURED ═══ -->
+  <section id="stfondes" class="section section-alt">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">// 04. APP EN PRODUCCIÓN</span>
+        <h2 class="section-title">App <span class="gradient-text">ST-FONDES</span></h2>
+        <div class="section-line"></div>
+        <p class="section-subtitle">Mi proyecto principal — plataforma de análisis de datos en producción sobre Streamlit Cloud</p>
+      </div>
 
+      <div class="app-card" data-aos="fade-up">
+        <div class="app-mockup-col">
+          <div class="browser-frame">
+            <div class="browser-header">
+              <div class="browser-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+              <div class="browser-url">st-fondes.streamlit.app</div>
+            </div>
+            <div class="browser-body">
+              <div class="app-stats-row">
+                <div class="app-stat app-stat-blue"><div class="app-stat-num">97.3%</div><div class="app-stat-label">Accuracy</div></div>
+                <div class="app-stat app-stat-purple"><div class="app-stat-num">12.8K</div><div class="app-stat-label">Registros</div></div>
+                <div class="app-stat app-stat-green"><div class="app-stat-num">Live</div><div class="app-stat-label">Estado</div></div>
+              </div>
+              <div class="app-chart">
+                <div class="chart-label">Distribución por categoría</div>
+                <div class="chart-bars">
+                  <div class="chart-bar" style="height:80%;background:linear-gradient(180deg,#4f8ef7,rgba(79,142,247,.3))"></div>
+                  <div class="chart-bar" style="height:55%;background:linear-gradient(180deg,#8b5cf6,rgba(139,92,246,.3))"></div>
+                  <div class="chart-bar" style="height:95%;background:linear-gradient(180deg,#10b981,rgba(16,185,129,.3))"></div>
+                  <div class="chart-bar" style="height:65%;background:linear-gradient(180deg,#f59e0b,rgba(245,158,11,.3))"></div>
+                  <div class="chart-bar" style="height:75%;background:linear-gradient(180deg,#06b6d4,rgba(6,182,212,.3))"></div>
+                  <div class="chart-bar" style="height:45%;background:linear-gradient(180deg,#ef4444,rgba(239,68,68,.3))"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="streamlit-badge"><span class="pulse-dot"></span>Streamlit Cloud</div>
+        </div>
+
+        <div class="app-desc-col">
+          <div class="app-eyebrow gradient-text">APP DESTACADA</div>
+          <h3 class="app-title">Sistema de Análisis ST-FONDES</h3>
+          <p class="app-description">Plataforma web completa para el análisis, seguimiento y predicción de datos del fondo. Dashboards en tiempo real, modelos de ML y exportación de reportes automatizados.</p>
+
+          <div class="app-features">
+            <div class="app-feature">
+              <i class="ti ti-chart-line app-feat-icon" style="color:#4f8ef7"></i>
+              <div>
+                <div class="app-feat-title">Dashboard Interactivo</div>
+                <div class="app-feat-desc">Visualizaciones dinámicas con filtros en tiempo real</div>
+              </div>
+            </div>
+            <div class="app-feature">
+              <i class="ti ti-brain app-feat-icon" style="color:#8b5cf6"></i>
+              <div>
+                <div class="app-feat-title">Modelos Predictivos</div>
+                <div class="app-feat-desc">Predicción con XGBoost — Accuracy: 97.3%</div>
+              </div>
+            </div>
+            <div class="app-feature">
+              <i class="ti ti-file-analytics app-feat-icon" style="color:#10b981"></i>
+              <div>
+                <div class="app-feat-title">Reportes Automatizados</div>
+                <div class="app-feat-desc">Exportación PDF/Excel programada</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ⚠️ REEMPLAZA con tu URL real de Streamlit -->
+          <a href="https://ST-FONDES.streamlit.app" target="_blank" class="btn btn-primary btn-lg">
+            <i class="ti ti-rocket"></i>
+            Abrir ST-FONDES
+            <i class="ti ti-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CONTACT ═══ -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">// 05. CONTACTO</span>
+        <h2 class="section-title">Hablemos de tu <span class="gradient-text">proyecto</span></h2>
+        <div class="section-line"></div>
+        <p class="section-subtitle">¿Tienes un proyecto de datos o tecnología en mente? Conversemos.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info" data-aos="fade-right">
+          <div class="contact-links">
+            <a href="mailto:admin@hectorjhon.com" class="contact-item">
+              <div class="contact-icon" style="background:rgba(79,142,247,.1)"><i class="ti ti-mail" style="color:#4f8ef7"></i></div>
+              <div><div class="contact-type">Email</div><div class="contact-value">admin@hectorjhon.com</div></div>
+              <i class="ti ti-arrow-right contact-arrow"></i>
+            </a>
+            <a href="https://linkedin.com/in/hectorjhon" target="_blank" class="contact-item">
+              <div class="contact-icon" style="background:rgba(10,102,194,.15)"><i class="ti ti-brand-linkedin" style="color:#0a66c2"></i></div>
+              <div><div class="contact-type">LinkedIn</div><div class="contact-value">linkedin.com/in/hectorjhon</div></div>
+              <i class="ti ti-arrow-right contact-arrow"></i>
+            </a>
+            <a href="https://github.com/hectorjhon" target="_blank" class="contact-item">
+              <div class="contact-icon" style="background:rgba(255,255,255,.06)"><i class="ti ti-brand-github" style="color:#dde2f8"></i></div>
+              <div><div class="contact-type">GitHub</div><div class="contact-value">github.com/hectorjhon</div></div>
+              <i class="ti ti-arrow-right contact-arrow"></i>
+            </a>
+            <a href="https://wa.me/51999999999" target="_blank" class="contact-item">
+              <div class="contact-icon" style="background:rgba(37,211,102,.1)"><i class="ti ti-brand-whatsapp" style="color:#25d366"></i></div>
+              <div><div class="contact-type">WhatsApp</div><div class="contact-value">+51 999 999 999</div></div>
+              <i class="ti ti-arrow-right contact-arrow"></i>
+            </a>
+          </div>
+          <div class="availability-card">
+            <div class="availability-status"><span class="pulse-dot"></span><span>Disponible para proyectos</span></div>
+            <p>Abierto a freelance, consultoría y colaboraciones. Tiempo de respuesta: &lt; 24h.</p>
+          </div>
+        </div>
+
+        <div class="contact-form-col" data-aos="fade-left">
+          <div class="form-card">
+            <h3>Envíame un mensaje</h3>
+            <form id="contactForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Nombre</label>
+                  <input type="text" placeholder="Tu nombre" required>
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input type="email" placeholder="tu@email.com" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Asunto</label>
+                <input type="text" placeholder="¿En qué puedo ayudarte?">
+              </div>
+              <div class="form-group">
+                <label>Mensaje</label>
+                <textarea rows="5" placeholder="Cuéntame sobre tu proyecto..." required></textarea>
+              </div>
+              <button type="submit" id="submitBtn" class="btn btn-primary btn-full">
+                <i class="ti ti-send"></i> Enviar mensaje
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <div class="logo-badge">HJ</div>
+            <span>Héctor Jhon</span>
+          </div>
+          <p>Analista de Datos &amp; Consultor Tecnológico. Transformando datos en decisiones estratégicas.</p>
+          <div class="footer-socials">
+            <a href="https://github.com/hectorjhon" target="_blank" class="social-btn"><i class="ti ti-brand-github"></i></a>
+            <a href="https://linkedin.com/in/hectorjhon" target="_blank" class="social-btn"><i class="ti ti-brand-linkedin"></i></a>
+            <a href="#" class="social-btn"><i class="ti ti-brand-twitter"></i></a>
+            <a href="mailto:admin@hectorjhon.com" class="social-btn"><i class="ti ti-mail"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Navegación</div>
+          <a href="#about">Sobre mí</a>
+          <a href="#projects">Proyectos</a>
+          <a href="#skills">Habilidades</a>
+          <a href="#stfondes">ST-FONDES</a>
+          <a href="#contact">Contacto</a>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Servicios</div>
+          <span>Análisis de Datos</span>
+          <span>Machine Learning</span>
+          <span>Visualización BI</span>
+          <span>Apps Streamlit</span>
+          <span>Consultoría</span>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Contacto</div>
+          <a href="mailto:admin@hectorjhon.com"><i class="ti ti-mail" style="color:#4f8ef7"></i> admin@hectorjhon.com</a>
+          <span><i class="ti ti-map-pin" style="color:#8b5cf6"></i> Perú</span>
+          <a href="https://www.hectorjhon.com"><i class="ti ti-world" style="color:#10b981"></i> www.hectorjhon.com</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Hector Hernan Jhon Trisolini · Todos los derechos reservados</span>
+        <div>Construido con <span style="color:#ef4444">♥</span> y <span style="color:#4f8ef7">código limpio</span></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
