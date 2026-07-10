@@ -1,0 +1,28 @@
+apiVersion: 1
+
+datasources:
+  - name: InfluxDB-Hidrologia
+    type: influxdb
+    access: proxy
+    url: http://influxdb:8086
+    jsonData:
+      version: Flux
+      organization: sat-hidrologico
+      defaultBucket: hidrologia
+      tlsSkipVerify: true
+    secureJsonData:
+      token: hydro-super-secret-token
+    isDefault: true
+
+  - name: Postgres-Hydro
+    type: postgres
+    access: proxy
+    url: hydro-postgres:5432
+    database: hydro
+    user: hydro
+    secureJsonData:
+      password: hydro
+    jsonData:
+      sslmode: disable
+      postgresVersion: 1500
+      timescaledb: false
