@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Despacho Oficial · Archivo Familiar Trisolini</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="style.css">
+<script>
+  if (!sessionStorage.getItem('trisolini_access')) {
+    window.location.href = 'index.html';
+  }
+</script>
+</head>
+<body>
+
+<nav class="nav-trisolini">
+  <a href="index.html">🌳 Familia Trisolini</a>
+  <a href="biografia.html">📖 Biografía</a>
+  <a href="arbol.html">🌿 Árbol</a>
+  <a href="batallon.html">⚓ Batallón</a>
+  <a href="trayectoria.html">📅 Trayectoria</a>
+  <a href="despacho.html" class="activo">📜 Despacho</a>
+  <button class="logout" onclick="cerrarSesion()">🔒 Salir</button>
+</nav>
+
+<div class="contenedor">
+
+  <div class="documento-oficial marco-pergamino">
+    <div class="encabezado-despacho">
+      <svg class="sello-oficial" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="42" stroke="currentColor" stroke-width="2" stroke-dasharray="4 3"/>
+        <circle cx="50" cy="50" r="32" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M50 26 L50 74 M30 50 L70 50" stroke="currentColor" stroke-width="2"/>
+        <text x="50" y="20" text-anchor="middle" font-size="7" fill="currentColor" font-family="Cinzel, serif">VENEZIA</text>
+        <text x="50" y="86" text-anchor="middle" font-size="7" fill="currentColor" font-family="Cinzel, serif">1849</text>
+      </svg>
+      <h1>DESPACHO OFICIAL</h1>
+      <p style="font-style:italic; color:var(--color-borde);">Ascenso y Grado Militar de Giuseppe Pasquale Trisolini</p>
+    </div>
+
+    <div class="meta-despacho">
+      <span><strong>Fecha:</strong> 28 de enero de 1849</span>
+      <span><strong>Emisor:</strong> Gobierno Provisional de Venecia · Departamento de Guerra</span>
+    </div>
+
+    <h2>Texto del Decreto (original en italiano)</h2>
+    <div class="texto-decreto">
+      "Il Governo Provvisorio di Venezia, sulla proposta del Dipartimento della Guerra e vista la relazione dei superiori di Corpo sulla condotta e sul valore dimostrato in servizio attivo di campagna, decreta: Il cittadino Giuseppe Trisolini, già volontario nelle milizie napoletane giunte in soccorso di questa Repubblica, è promosso al grado di Tenente nel Battaglione Veneto-Napolitano con anzianità dal giorno della firma del presente decreto. Il Ministro della Guerra: G. B. Cavedalis."
+    </div>
+
+    <h2>Traducción al español</h2>
+    <div class="texto-decreto">
+      "El Gobierno Provisional de Venecia, a propuesta del Departamento de Guerra y vista la relación de los superiores de Cuerpo sobre la conducta y el valor demostrados en servicio activo de campaña, decreta: el ciudadano Giuseppe Trisolini, ya voluntario en las milicias napolitanas llegadas en socorro de esta República, es promovido al grado de Teniente en el Batallón Veneto-Napolitano con antigüedad desde el día de la firma del presente decreto. El Ministro de Guerra: G. B. Cavedalis."
+    </div>
+
+    <div class="firma-despacho">
+      Firmado: Giovanni Battista Cavedalis<br>
+      <span style="font-style:italic; font-family:'Lora', serif; font-size:0.8rem;">Ministro de Guerra, Gobierno Provisional de Venecia</span>
+    </div>
+
+    <div class="separador">─── ✦ ───</div>
+
+    <h2>Nota Archivística</h2>
+    <p>Para obtener la transcripción exacta, consultar: <em>ASVe, Fondo Governo Provvisorio di Venezia (1848–1849), Sezione Militare, Decreti di Nomina e Promozione, Busta 42.</em></p>
+
+    <h2>Contexto Histórico</h2>
+    <p>El ascenso de Giuseppe Trisolini al grado de Teniente, apenas meses antes de la capitulación final de Venecia, tuvo un significado especial dentro del proceso del Risorgimento: reconocía el mérito de un voluntario meridional dentro de una estructura de mando que integraba oficiales de distintas regiones de la península, anticipando el ideal de unidad nacional que se materializaría más de una década después.</p>
+  </div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,358 @@
+/* ═══════════════════════════════════════════════════════════
+   Archivo Familiar Trisolini — Tema pergamino compartido
+   ═══════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
+
+:root {
+  --color-pergamino:   #f5e6c8;
+  --color-marron-osc:  #3d1f0a;
+  --color-fondo-arbol: #2c1810;
+  --color-dorado:      #c9a227;
+  --color-verde-mil:   #4a6741;
+  --color-borde:       #8b6914;
+  --color-crema:       #fdf3e3;
+  --color-rojo-gius:   #7a2020;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--color-pergamino);
+  color: var(--color-marron-osc);
+  font-family: 'Lora', serif;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4 { font-family: 'Cinzel', serif; letter-spacing: 1px; color: var(--color-marron-osc); }
+
+a { color: inherit; }
+
+/* ─── Separador decorativo ─── */
+.separador {
+  text-align: center;
+  color: var(--color-dorado);
+  font-family: 'Cinzel', serif;
+  letter-spacing: 4px;
+  margin: 2rem 0;
+  font-size: 0.9rem;
+}
+
+/* ─── Bordes de pergamino (esquinas decorativas) ─── */
+.marco-pergamino {
+  position: relative;
+  border: 2px double var(--color-borde);
+  padding: 2rem;
+  background: var(--color-pergamino);
+}
+.marco-pergamino::before,
+.marco-pergamino::after {
+  content: '';
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Cpath d='M2 2 L2 14 M2 2 L14 2' stroke='%238b6914' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+}
+.marco-pergamino::before { top: -2px; left: -2px; }
+.marco-pergamino::after { top: -2px; right: -2px; transform: scaleX(-1); }
+
+/* ─── Nav interno ─── */
+.nav-trisolini {
+  background: var(--color-marron-osc);
+  border-bottom: 1px solid var(--color-borde);
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.nav-trisolini a {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  color: var(--color-dorado);
+  text-decoration: none;
+  padding: 0.25rem 0;
+  white-space: nowrap;
+}
+.nav-trisolini a.activo {
+  border-bottom: 1px solid var(--color-dorado);
+}
+.nav-trisolini a:hover { color: var(--color-crema); }
+.nav-trisolini button.logout {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  color: var(--color-dorado);
+  background: transparent;
+  border: 1px solid var(--color-borde);
+  padding: 0.3rem 0.7rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.nav-trisolini button.logout:hover { background: var(--color-borde); color: var(--color-crema); }
+
+/* ─── Sección de citas ─── */
+.cita {
+  background: var(--color-marron-osc);
+  border-left: 4px solid var(--color-dorado);
+  color: var(--color-crema);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  font-family: 'Lora', serif;
+}
+.cita cite {
+  display: block;
+  margin-top: 0.5rem;
+  font-style: normal;
+  font-size: 0.8rem;
+  color: var(--color-dorado);
+}
+
+/* ─── Sellos / badges de archivo ─── */
+.sello {
+  display: inline-block;
+  border: 1px dashed var(--color-borde);
+  border-radius: 4px;
+  padding: 0.6rem 1rem;
+  font-size: 0.8rem;
+  font-family: 'Cinzel', serif;
+  color: var(--color-marron-osc);
+  background: rgba(201, 162, 39, 0.08);
+  margin: 0.35rem 0.35rem 0.35rem 0;
+}
+
+/* ─── Contenedor general de página ─── */
+.contenedor {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+.hero-trisolini {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+.hero-trisolini h1 { font-size: 1.8rem; margin-bottom: 0.25rem; }
+.hero-trisolini .subtitulo {
+  font-style: italic;
+  color: var(--color-borde);
+  font-size: 1rem;
+}
+.hero-trisolini img {
+  width: 100%;
+  max-width: 700px;
+  border: 3px solid var(--color-dorado);
+  margin: 1.5rem 0 0.5rem;
+}
+.hero-trisolini figcaption {
+  font-size: 0.85rem;
+  color: var(--color-marron-osc);
+  opacity: 0.75;
+}
+
+/* ─── Línea de tiempo vertical ─── */
+.linea-tiempo {
+  position: relative;
+  margin: 2rem 0;
+  padding-left: 2rem;
+  border-left: 2px solid var(--color-borde);
+}
+.evento-tiempo {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+.evento-tiempo::before {
+  content: '✦';
+  position: absolute;
+  left: -2.45rem;
+  color: var(--color-dorado);
+  background: var(--color-pergamino);
+}
+.evento-tiempo .fecha {
+  font-family: 'Cinzel', serif;
+  color: var(--color-borde);
+  font-size: 0.85rem;
+}
+
+/* ─── Tablas ─── */
+table.tabla-archivo {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  background: var(--color-pergamino);
+  font-size: 0.92rem;
+}
+table.tabla-archivo th {
+  font-family: 'Cinzel', serif;
+  color: var(--color-dorado);
+  background: var(--color-marron-osc);
+  padding: 0.7rem;
+  text-align: left;
+  letter-spacing: 0.5px;
+}
+table.tabla-archivo td {
+  padding: 0.7rem;
+  border-bottom: 1px solid var(--color-borde);
+  vertical-align: top;
+}
+table.tabla-archivo tr:nth-child(even) td {
+  background: rgba(139, 105, 20, 0.08);
+}
+
+/* ─── Cards de batalla ─── */
+.card-batalla {
+  border: 1px solid var(--color-borde);
+  border-radius: 4px;
+  padding: 1.25rem;
+  margin: 1rem 0;
+  background: rgba(253, 243, 227, 0.5);
+}
+.card-batalla h3 { margin-top: 0; font-size: 1.05rem; }
+
+/* ─── Botón general ─── */
+.btn-militar {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 1px;
+  background: var(--color-verde-mil);
+  color: var(--color-crema);
+  border: none;
+  padding: 0.75rem 1.75rem;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s;
+}
+.btn-militar:hover { background: #3a5133; }
+
+/* ═══════════════════════════════════════════════════════════
+   PANTALLA DE LOGIN
+   ═══════════════════════════════════════════════════════════ */
+.login-pantalla {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-pergamino);
+  padding: 1.5rem;
+}
+.login-caja {
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  padding: 2.5rem 2rem;
+}
+.escudo {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 1rem;
+  color: var(--color-dorado);
+}
+.login-caja h1 { font-size: 1.35rem; margin-bottom: 0.25rem; }
+.login-caja .subtitulo-login {
+  font-size: 0.85rem;
+  color: var(--color-borde);
+  font-family: 'Cinzel', serif;
+  letter-spacing: 1px;
+}
+.pregunta-login {
+  font-style: italic;
+  margin: 1.5rem 0 1rem;
+  font-size: 1rem;
+}
+.login-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-family: 'Lora', serif;
+  font-size: 1rem;
+  border: 1px solid var(--color-borde);
+  border-radius: 3px;
+  background: var(--color-crema);
+  color: var(--color-marron-osc);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.login-input:focus { outline: 2px solid var(--color-dorado); }
+.login-error {
+  color: var(--color-rojo-gius);
+  font-size: 0.85rem;
+  font-style: italic;
+  min-height: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+.footer-login {
+  margin-top: 2rem;
+  font-size: 0.75rem;
+  color: var(--color-borde);
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.5px;
+}
+
+@keyframes shake {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(4px); }
+  30%, 50%, 70% { transform: translateX(-8px); }
+  40%, 60% { transform: translateX(8px); }
+}
+.shake { animation: shake 0.5s; }
+
+.oculto { display: none !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   DESPACHO OFICIAL
+   ═══════════════════════════════════════════════════════════ */
+.documento-oficial {
+  background: var(--color-crema);
+  border: 3px double var(--color-borde);
+  padding: 2.5rem 2rem;
+  position: relative;
+  margin: 1.5rem 0;
+}
+.sello-oficial {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 1rem;
+  color: var(--color-rojo-gius);
+}
+.encabezado-despacho {
+  text-align: center;
+  border-bottom: 2px solid var(--color-borde);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+.encabezado-despacho h1 { font-size: 1.3rem; letter-spacing: 2px; }
+.meta-despacho {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  font-size: 0.85rem;
+  color: var(--color-borde);
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+.texto-decreto {
+  font-style: italic;
+  background: rgba(201, 162, 39, 0.08);
+  border-left: 3px solid var(--color-dorado);
+  padding: 1.25rem;
+  margin: 1.25rem 0;
+}
+.firma-despacho {
+  text-align: right;
+  font-family: 'Cinzel', serif;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 600px) {
+  .nav-trisolini { gap: 0.75rem; font-size: 10px; }
+  .hero-trisolini h1 { font-size: 1.4rem; }
+  .contenedor { padding: 1.25rem 0.85rem 3rem; }
+  table.tabla-archivo { font-size: 0.8rem; display: block; overflow-x: auto; white-space: nowrap; }
+}

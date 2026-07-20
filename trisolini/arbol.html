@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Árbol Genealógico · Archivo Familiar Trisolini</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="style.css">
+<script>
+  // Protección de acceso — se ejecuta antes de renderizar el contenido
+  if (!sessionStorage.getItem('trisolini_access')) {
+    window.location.href = 'index.html';
+  }
+</script>
+<script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+<style>
+  #arbol-contenedor {
+    background: var(--color-fondo-arbol);
+    min-height: calc(100vh - 56px);
+    display: flex;
+    flex-wrap: wrap;
+  }
+  #red-familiar {
+    flex: 1 1 60%;
+    min-width: 300px;
+    height: 70vh;
+  }
+  #panel-info {
+    flex: 1 1 320px;
+    background: var(--color-marron-osc);
+    color: var(--color-crema);
+    padding: 1.5rem;
+    border-left: 1px solid var(--color-borde);
+  }
+  #panel-info h2 { color: var(--color-dorado); font-size: 1.1rem; margin-top: 0; }
+  #panel-info .rol { font-style: italic; color: var(--color-dorado); margin-bottom: 1rem; }
+  #panel-info .campo { margin-bottom: 0.6rem; font-size: 0.9rem; }
+  #panel-info .campo strong { color: var(--color-dorado); display: block; font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 1px; }
+  #panel-info a.doc-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+    color: var(--color-crema);
+    background: var(--color-verde-mil);
+    padding: 0.4rem 0.9rem;
+    border-radius: 3px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-family: 'Cinzel', serif;
+  }
+  #panel-info .placeholder { opacity: 0.6; font-style: italic; }
+  .leyenda {
+    padding: 0.75rem 1.5rem;
+    background: var(--color-fondo-arbol);
+    color: var(--color-crema);
+    font-size: 0.8rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .leyenda span { display: flex; align-items: center; gap: 0.4rem; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+</style>
+</head>
+<body>
+
+<nav class="nav-trisolini">
+  <a href="index.html">🌳 Familia Trisolini</a>
+  <a href="biografia.html">📖 Biografía</a>
+  <a href="arbol.html" class="activo">🌿 Árbol</a>
+  <a href="batallon.html">⚓ Batallón</a>
+  <a href="trayectoria.html">📅 Trayectoria</a>
+  <a href="despacho.html">📜 Despacho</a>
+  <button class="logout" onclick="cerrarSesion()">🔒 Salir</button>
+</nav>
+
+<div class="leyenda">
+  <span><span class="dot" style="background:#4a6741"></span> Generación 0 (bisabuelos)</span>
+  <span><span class="dot" style="background:#7a2020"></span> Giuseppe Trisolini</span>
+  <span><span class="dot" style="background:#c9a227"></span> Generación 1</span>
+</div>
+
+<div id="arbol-contenedor">
+  <div id="red-familiar"></div>
+  <div id="panel-info">
+    <p class="placeholder">Selecciona un nodo del árbol para ver su información.</p>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script src="familia.js"></script>
+<script>
+  // Construcción del árbol genealógico con vis-network
+  const nodosVis = familiaData.nodes.map(n => {
+    let color = '#c9a227'; // gen 1 por defecto
+    if (n.id === 2) color = '#7a2020'; // Giuseppe
+    else if (n.gen === 0) color = '#4a6741'; // bisabuelos
+
+    return {
+      id: n.id,
+      label: n.label,
+      shape: 'box',
+      margin: 12,
+      color: {
+        background: color,
+        border: n.id === 2 ? '#c9a227' : '#8b6914',
+        highlight: { background: color, border: '#fdf3e3' }
+      },
+      borderWidth: n.id === 2 ? 3 : 1.5,
+      font: { color: '#fdf3e3', face: 'Cinzel', size: 13, multi: false }
+    };
+  });
+
+  const data = {
+    nodes: new vis.DataSet(nodosVis),
+    edges: new vis.DataSet(familiaData.edges.map(e => ({
+      ...e,
+      color: { color: '#8b6914' },
+      font: { color: '#c9a227', size: 10, strokeWidth: 0, background: '#2c1810' }
+    })))
+  };
+
+  const opciones = {
+    layout: { hierarchical: { direction: 'UD', sortMethod: 'directed', levelSeparation: 150, nodeSpacing: 180 } },
+    physics: false,
+    interaction: { dragNodes: false, zoomView: true },
+    edges: { arrows: { to: { enabled: false } }, smooth: { type: 'cubicBezier', roundness: 0.4 } }
+  };
+
+  const red = new vis.Network(document.getElementById('red-familiar'), data, opciones);
+
+  const panel = document.getElementById('panel-info');
+
+  red.on('click', function (params) {
+    if (params.nodes.length === 0) return;
+    const persona = familiaData.nodes.find(n => n.id === params.nodes[0]);
+    if (!persona) return;
+
+    let camposHtml = '';
+    if (persona.nacimiento) camposHtml += `<div class="campo"><strong>Nacimiento</strong>${persona.nacimiento}</div>`;
+    if (persona.profesion) camposHtml += `<div class="campo"><strong>Profesión</strong>${persona.profesion}</div>`;
+    if (persona.grado) camposHtml += `<div class="campo"><strong>Grado</strong>${persona.grado}</div>`;
+    if (persona.unidad) camposHtml += `<div class="campo"><strong>Unidad</strong>${persona.unidad}</div>`;
+
+    let docsHtml = '';
+    if (persona.docs && persona.docs.length) {
+      docsHtml = persona.docs.map(d => `<a class="doc-link" href="${d}">Ver documento →</a>`).join('');
+    }
+
+    panel.innerHTML = `
+      <h2>${persona.label.replace('\n', ' ')}</h2>
+      <div class="rol">${persona.rol}</div>
+      ${camposHtml}
+      <div class="campo"><strong>Reseña</strong>${persona.info}</div>
+      ${docsHtml}
+    `;
+  });
+</script>
+</body>
+</html>

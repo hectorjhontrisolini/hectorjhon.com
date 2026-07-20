@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biografía Militar · Archivo Familiar Trisolini</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="style.css">
+<script>
+  if (!sessionStorage.getItem('trisolini_access')) {
+    window.location.href = 'index.html';
+  }
+</script>
+</head>
+<body>
+
+<nav class="nav-trisolini">
+  <a href="index.html">🌳 Familia Trisolini</a>
+  <a href="biografia.html" class="activo">📖 Biografía</a>
+  <a href="arbol.html">🌿 Árbol</a>
+  <a href="batallon.html">⚓ Batallón</a>
+  <a href="trayectoria.html">📅 Trayectoria</a>
+  <a href="despacho.html">📜 Despacho</a>
+  <button class="logout" onclick="cerrarSesion()">🔒 Salir</button>
+</nav>
+
+<div class="contenedor">
+
+  <div class="hero-trisolini">
+    <h1>Biografía Militar de Giuseppe Pasquale Trisolini Portanova</h1>
+  </div>
+
+  <div class="separador">─── ✦ ───</div>
+
+  <!-- 1. Identidad -->
+  <section class="marco-pergamino">
+    <h2>1. Identidad y Genealogía</h2>
+    <p><strong>Nacimiento:</strong> 17 de agosto de 1829, Distrito de Stella, Nápoles.</p>
+    <p><strong>Padre:</strong> Giosuè Trisolini (n. 1784, Carovigno, Brindisi) — cirujano en el Ospedale della Trinità de Nápoles y activista liberal.<br>
+    <strong>Madre:</strong> Maria Raffaela Portanova (n. 1799) — matrimonio celebrado el 24 de marzo de 1819 en la parroquia de Avvocata, Nápoles.<br>
+    <strong>Hermano:</strong> Tito Antonino Pasquale Trisolini (n. 20 de diciembre de 1824) — médico, conspirador mazziniano y garibaldino.</p>
+  </section>
+
+  <!-- 2. Ficha militar -->
+  <section class="marco-pergamino" style="margin-top:2rem;">
+    <h2>2. Ficha Militar</h2>
+    <table class="tabla-archivo">
+      <tbody>
+        <tr><th>Nombre</th><td>Giuseppe Pasquale Trisolini Portanova</td></tr>
+        <tr><th>Unidad</th><td>Batallón Veneto-Napoletano</td></tr>
+        <tr><th>Rangos</th><td>Subteniente (1848) → Teniente (28 de enero de 1849)</td></tr>
+        <tr><th>Comandantes</th><td>Guglielmo Pepe / Giovanni Battista Cavedalis / Daniele Manin</td></tr>
+        <tr><th>Teatro de operaciones</th><td>Lombardía, Véneto, Laguna de Venecia</td></tr>
+        <tr><th>Situación final</th><td>Exiliado tras la capitulación, 22 de agosto de 1849</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 3. Batallas -->
+  <section style="margin-top:2rem;">
+    <h2>3. Relación de Batallas</h2>
+
+    <div class="card-batalla">
+      <h3>Batalla de Mestre — 27 de octubre de 1848</h3>
+      <p><strong>Resultado:</strong> Victoria táctica de las fuerzas napolitano-venecianas mediante un asalto en tres columnas.</p>
+    </div>
+
+    <div class="card-batalla">
+      <h3>Defensa de Forte Marghera — mayo de 1849</h3>
+      <p><strong>Resultado:</strong> Resistencia sostenida bajo fuego de más de 150 cañones austríacos, seguida de evacuación nocturna ordenada.</p>
+    </div>
+
+    <div class="card-batalla">
+      <h3>Resistencia Final y Caída de Venecia — julio – 22 de agosto de 1849</h3>
+      <p><strong>Resultado:</strong> Capitulación de la ciudad. Nota histórica: durante este período Venecia sufrió el primer bombardeo aéreo registrado de la historia militar, mediante globos aerostáticos austríacos cargados de explosivos.</p>
+    </div>
+  </section>
+
+  <!-- 4. Análisis -->
+  <section class="marco-pergamino" style="margin-top:2rem;">
+    <h2>4. Análisis Contextual — Su Papel en la Unificación Italiana</h2>
+    <p>Giuseppe Pasquale Trisolini Portanova representa el arquetipo del patriota meridional del primer Risorgimento: hijo de una familia napolitana educada y políticamente subversiva, cruzó la península para sumarse a la defensa de una república hermana en el norte, mucho antes de que la unidad italiana fuera un proyecto viable. Su trayectoria —del alistamiento voluntario al ascenso por mérito en combate— ilustra cómo, incluso en la derrota de 1849, se sembraron los vínculos personales y simbólicos que más tarde alimentarían la unificación nacional de 1861.</p>
+  </section>
+
+  <!-- 5. Fuentes -->
+  <section class="marco-pergamino" style="margin-top:2rem;">
+    <h2>5. Fuentes Archivísticas Documentadas</h2>
+    <span class="sello">ASNa — Stato Civile (nacimientos Stella 1829, Avvocata 1819)</span>
+    <span class="sello">ASNa — Ministero della Guerra y Alta Polizia</span>
+    <span class="sello">ASVe — Fondo Governo Provvisorio di Venezia (1848–1849)</span>
+    <span class="sello">ASVe — Ruoli del Batallón Veneto-Napoletano</span>
+    <span class="sello">Portale Antenati / FamilySearch</span>
+  </section>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

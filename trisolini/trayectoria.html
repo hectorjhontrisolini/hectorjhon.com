@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trayectoria Militar · Archivo Familiar Trisolini</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="style.css">
+<script>
+  if (!sessionStorage.getItem('trisolini_access')) {
+    window.location.href = 'index.html';
+  }
+</script>
+</head>
+<body>
+
+<nav class="nav-trisolini">
+  <a href="index.html">🌳 Familia Trisolini</a>
+  <a href="biografia.html">📖 Biografía</a>
+  <a href="arbol.html">🌿 Árbol</a>
+  <a href="batallon.html">⚓ Batallón</a>
+  <a href="trayectoria.html" class="activo">📅 Trayectoria</a>
+  <a href="despacho.html">📜 Despacho</a>
+  <button class="logout" onclick="cerrarSesion()">🔒 Salir</button>
+</nav>
+
+<div class="contenedor">
+
+  <div class="hero-trisolini">
+    <h1>Trayectoria Militar de Giuseppe Pasquale Trisolini Portanova en el Risorgimento</h1>
+  </div>
+
+  <div class="separador">─── ✦ ───</div>
+
+  <div style="overflow-x:auto;">
+    <table class="tabla-archivo">
+      <thead>
+        <tr>
+          <th>Cronología</th>
+          <th>Ficha militar</th>
+          <th>Batalla / Operación</th>
+          <th>Cita textual</th>
+          <th>Fuente archivística</th>
+          <th>Análisis contextual</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1848</strong><br>Primavera</td>
+          <td>Voluntario, milicias napolitanas en apoyo a Venecia</td>
+          <td>Despliegue inicial en la laguna de Venecia</td>
+          <td class="cita" style="margin:0;">"Giunti in soccorso della Repubblica Veneta, i volontari napoletani furono destinati alla difesa della laguna."</td>
+          <td>ASVe, Fondo Governo Provvisorio</td>
+          <td>Inicio del compromiso de Giuseppe con la causa republicana veneciana.</td>
+        </tr>
+        <tr>
+          <td><strong>1848</strong><br>27 de octubre</td>
+          <td>Soldado raso, columna de asalto</td>
+          <td>Batalla de Mestre</td>
+          <td class="cita" style="margin:0;">"Divisi in tre colonne, 2.000 uomini mossero all'alba contro Mestre, riportando una vittoria tattica."</td>
+          <td>ASVe, Ruoli del Batallón Veneto-Napoletano</td>
+          <td>Primera acción de combate documentada; consolidó su reputación dentro de la unidad.</td>
+        </tr>
+        <tr>
+          <td><strong>1849</strong><br>28 de enero</td>
+          <td>Ascenso a Teniente por decreto</td>
+          <td>Decreto de Ascenso a Teniente</td>
+          <td class="cita" style="margin:0;">"È promosso al grado di Tenente nel Battaglione Veneto-Napolitano con anzianità dal giorno della firma del presente decreto."</td>
+          <td>ASVe, Decreti di Nomina e Promozione, Busta 42</td>
+          <td>Reconocimiento formal de su valor en campaña; hito central de su carrera militar.</td>
+        </tr>
+        <tr>
+          <td><strong>1849</strong><br>Mayo</td>
+          <td>Teniente, guarnición de trincheras avanzadas</td>
+          <td>Defensa del Fuerte de Marghera</td>
+          <td class="cita" style="margin:0;">"El batallón resistió el fuego de más de 150 cañones austríacos hasta la orden de evacuación nocturna."</td>
+          <td>ASVe, Fondo Governo Provvisorio</td>
+          <td>Episodio de mayor exposición al riesgo dentro de su trayectoria militar.</td>
+        </tr>
+        <tr>
+          <td><strong>1849</strong><br>Julio – 22 agosto</td>
+          <td>Teniente, resistencia final</td>
+          <td>Resistencia Final y Caída de Venecia</td>
+          <td class="cita" style="margin:0;">"La città fu sottoposta a bombardamento aereo mediante palloni aerostatici, tra i primi della storia militare."</td>
+          <td>ASVe, Fondo Governo Provvisorio</td>
+          <td>Nota: este episodio incluye el primer bombardeo aéreo registrado en la historia militar, mediante globos aerostáticos austríacos. La capitulación del 22 de agosto marcó el fin de la campaña y el inicio del exilio de Giuseppe hacia el Perú.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

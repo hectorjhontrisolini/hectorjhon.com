@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Archivo Familiar Trisolini</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ═══ PANTALLA DE LOGIN ═══ -->
+<div id="login-pantalla" class="login-pantalla">
+  <div class="login-caja marco-pergamino">
+    <!-- Escudo con cruz y laureles -->
+    <svg class="escudo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 8 L82 20 V48 C82 70 68 85 50 92 C32 85 18 70 18 48 V20 Z" stroke="currentColor" stroke-width="2.5"/>
+      <path d="M50 30 V66 M36 48 H64" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      <path d="M22 30 C16 40 16 55 22 66" stroke="currentColor" stroke-width="1.5" fill="none"/>
+      <path d="M78 30 C84 40 84 55 78 66" stroke="currentColor" stroke-width="1.5" fill="none"/>
+    </svg>
+    <h1>Archivo Familiar Trisolini</h1>
+    <p class="subtitulo-login">REGISTRO GENEALÓGICO · ACCESO PRIVADO</p>
+    <div class="separador">─── ✦ ───</div>
+    <p class="pregunta-login">Ingresa el nombre del Tatarabuelo</p>
+    <form id="form-login" autocomplete="off">
+      <input type="text" id="input-respuesta" class="login-input" placeholder="Nombre" autofocus required>
+      <div id="login-error" class="login-error"></div>
+      <button type="submit" class="btn-militar">INGRESAR AL ARCHIVO</button>
+    </form>
+    <p class="footer-login">─── Registro Trisolini-Portanova · Siglo XIX ───</p>
+  </div>
+</div>
+
+<!-- ═══ CONTENIDO PRINCIPAL ═══ -->
+<div id="contenido-principal" class="oculto">
+
+  <nav class="nav-trisolini">
+    <a href="index.html" class="activo">🌳 Familia Trisolini</a>
+    <a href="biografia.html">📖 Biografía</a>
+    <a href="arbol.html">🌿 Árbol</a>
+    <a href="batallon.html">⚓ Batallón</a>
+    <a href="trayectoria.html">📅 Trayectoria</a>
+    <a href="despacho.html">📜 Despacho</a>
+    <button class="logout" onclick="cerrarSesion()">🔒 Salir</button>
+  </nav>
+
+  <div class="contenedor">
+
+    <!-- HERO -->
+    <section class="hero-trisolini">
+      <h1>Giuseppe Pascuale Trisolini Portanova</h1>
+      <p class="subtitulo">De la Resistencia en Venecia al Linaje en el Perú</p>
+      <figure>
+        <img src="assets/images/biografia_infografia.png" alt="Infografía biográfica de Giuseppe Trisolini">
+        <figcaption>Infografía biográfica — síntesis documental de la vida y trayectoria militar de Giuseppe Pascuale Trisolini Portanova.</figcaption>
+      </figure>
+    </section>
+
+    <div class="separador">─── ✦ ───</div>
+
+    <!-- SECCIÓN I -->
+    <section class="marco-pergamino">
+      <h2>I. Identidad y Genealogía</h2>
+      <p><strong>Nombre completo:</strong> Giuseppe Pascuale Trisolini Portanova<br>
+      <strong>Nacimiento:</strong> 17 de agosto de 1829, Distrito de Stella, Nápoles</p>
+      <p><strong>Padre:</strong> Giosuè Trisolini (n. 1784, Carovigno, Brindisi) — cirujano militar y activista liberal.<br>
+      <strong>Madre:</strong> Maria Raffaela Portanova (n. 1799) — matrimonio celebrado el 24 de marzo de 1819 en la parroquia de Avvocata, Nápoles.<br>
+      <strong>Hermano:</strong> Tito Antonino Pasquale Trisolini (n. 20 de diciembre de 1824) — médico, conspirador mazziniano y voluntario garibaldino.</p>
+
+      <div class="cita">
+        "Il giorno 17 agosto 1829, nel distretto di Stella, è nato Giuseppe Pascuale Trisolini, figlio legittimo di Giosuè Trisolini e di Maria Raffaela Portanova."
+        <cite>— Registro Civil, Stato Civile, Sezione Stella, Nati 1829</cite>
+      </div>
+    </section>
+
+    <!-- SECCIÓN II -->
+    <section class="marco-pergamino" style="margin-top:2rem;">
+      <h2>II. Cronología Militar (1848–1849)</h2>
+      <div class="linea-tiempo">
+        <div class="evento-tiempo">
+          <div class="fecha">Primavera de 1848</div>
+          <div>Alistamiento en la expedición napolitana en apoyo a Venecia.</div>
+        </div>
+        <div class="evento-tiempo">
+          <div class="fecha">27 de octubre de 1848</div>
+          <div>Batalla de Mestre — victoria táctica de las fuerzas napolitano-venecianas.</div>
+        </div>
+        <div class="evento-tiempo">
+          <div class="fecha">28 de enero de 1849</div>
+          <div>Ascenso oficial a <strong>Teniente</strong> ★ por decreto del Gobierno Provisional de Venecia.</div>
+        </div>
+        <div class="evento-tiempo">
+          <div class="fecha">Mayo de 1849</div>
+          <div>Defensa de Forte Marghera bajo intenso bombardeo austríaco.</div>
+        </div>
+        <div class="evento-tiempo">
+          <div class="fecha">22 de agosto de 1849</div>
+          <div>Capitulación de Venecia. Inicio del exilio hacia el Perú.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN III -->
+    <section class="marco-pergamino" style="margin-top:2rem;">
+      <h2>III. Exilio y Legado en el Perú</h2>
+      <p>Tras la capitulación de Venecia en agosto de 1849, Giuseppe emigró hacia el Perú, asentándose sucesivamente en Ayacucho y Lima. En los registros locales aparece bajo la forma castellanizada <strong>"Jose Trisollini Portanova"</strong>.</p>
+      <p>Contrajo matrimonio con <strong>María Mercedes Tello</strong>, dando origen al linaje familiar Trisolini en territorio peruano.</p>
+    </section>
+
+    <!-- SECCIÓN IV -->
+    <section class="marco-pergamino" style="margin-top:2rem;">
+      <h2>IV. Fuentes Archivísticas</h2>
+      <span class="sello">ASNa — Stato Civile, Sezione Stella, Nati 1829</span>
+      <span class="sello">ASNa — Matrimoni 1819, Sezione Avvocata</span>
+      <span class="sello">ASVe — Fondo Governo Provvisorio di Venezia (1848–1849)</span>
+      <span class="sello">ASVe — Ruoli del Batallón Veneto-Napoletano</span>
+      <span class="sello">Portale Antenati / FamilySearch</span>
+    </section>
+
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+  if (tieneAcceso()) {
+    document.getElementById('login-pantalla').classList.add('oculto');
+    document.getElementById('contenido-principal').classList.remove('oculto');
+  }
+  inicializarLogin();
+</script>
+</body>
+</html>
