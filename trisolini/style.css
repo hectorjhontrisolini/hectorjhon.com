@@ -350,9 +350,78 @@ table.tabla-archivo tr:nth-child(even) td {
 }
 
 /* ─── Responsive ─── */
-@media (max-width: 600px) {
-  .nav-trisolini { gap: 0.75rem; font-size: 10px; }
-  .hero-trisolini h1 { font-size: 1.4rem; }
-  .contenedor { padding: 1.25rem 0.85rem 3rem; }
-  table.tabla-archivo { font-size: 0.8rem; display: block; overflow-x: auto; white-space: nowrap; }
+@media (max-width: 768px) {
+  html { font-size: 16px; }
+  body { font-size: 1rem; line-height: 1.6; }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.4rem; margin: 1.5rem 0 1rem; }
+  h3 { font-size: 1.1rem; margin: 1rem 0 0.75rem; }
+
+  .nav-trisolini {
+    gap: 0.75rem;
+    font-size: 11px;
+    padding: 0.5rem 0.75rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-trisolini a,
+  .nav-trisolini button {
+    font-size: 12px;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .hero-trisolini { padding: 1.5rem 1rem; }
+  .hero-trisolini h1 { font-size: 1.6rem; }
+  .hero-trisolini .subtitulo { font-size: 1rem; }
+
+  .contenedor {
+    padding: 1.5rem 1rem 3rem;
+    max-width: 100%;
+  }
+
+  .marco-pergamino {
+    padding: 1.5rem 1rem;
+    margin: 1rem 0;
+  }
+
+  .marco-pergamino h2 { font-size: 1.3rem; }
+  .marco-pergamino h3 { font-size: 1.05rem; }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 0.75rem 0;
+  }
+
+  ul, ol {
+    margin: 0.75rem 0;
+    padding-left: 1.5rem;
+  }
+
+  li {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+  }
+
+  .cita {
+    font-size: 0.95rem;
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+
+  .separador {
+    margin: 1rem 0;
+    font-size: 0.9rem;
+  }
+
+  table.tabla-archivo {
+    font-size: 0.85rem;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  strong { font-weight: 600; }
 }
