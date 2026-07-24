@@ -574,6 +574,7 @@
     </div>
 
     <!-- Modal simple para Árbol con Scroll y Zoom -->
+    <div id="arbol-genealogico" style="display:none;"></div>
     <div id="modalArbolImg" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.9);padding:20px;flex-direction:column;align-items:center;">
       <button onclick="document.getElementById('modalArbolImg').style.display='none'" style="position:absolute;top:20px;right:30px;background:#c9a227;border:none;color:#3d1f0a;font-size:28px;cursor:pointer;width:40px;height:40px;border-radius:50%;z-index:10000;">✕</button>
       <div style="background:#f5e6c8;padding:15px;text-align:center;margin-bottom:10px;border-radius:4px;max-width:1000px;font-size:14px;">
@@ -633,6 +634,11 @@
         img.style.cursor = 'grab';
       });
     })();
+
+    // Abrir modal si se accede con #arbol-genealogico
+    if (window.location.hash === '#arbol-genealogico') {
+      document.getElementById('modalArbolImg').style.display = 'flex';
+    }
     </script>
 
     <div style="text-align: center; margin: 2rem 0;">
