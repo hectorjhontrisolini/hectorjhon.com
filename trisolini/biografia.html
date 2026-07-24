@@ -573,16 +573,67 @@
       </figure>
     </div>
 
-    <!-- Modal simple para Árbol -->
-    <div id="modalArbolImg" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.9);align-items:center;justify-content:center;padding:20px;flex-direction:column;">
-      <button onclick="document.getElementById('modalArbolImg').style.display='none'" style="position:absolute;top:20px;right:30px;background:#c9a227;border:none;color:#3d1f0a;font-size:28px;cursor:pointer;width:40px;height:40px;border-radius:50%;">✕</button>
-      <div style="background:#f5e6c8;padding:15px;text-align:center;margin-bottom:10px;border-radius:4px;max-width:1000px;">
-        🔍 Scroll para zoom | Arrastra para ver toda la imagen
+    <!-- Modal simple para Árbol con Scroll y Zoom -->
+    <div id="modalArbolImg" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.9);padding:20px;flex-direction:column;align-items:center;">
+      <button onclick="document.getElementById('modalArbolImg').style.display='none'" style="position:absolute;top:20px;right:30px;background:#c9a227;border:none;color:#3d1f0a;font-size:28px;cursor:pointer;width:40px;height:40px;border-radius:50%;z-index:10000;">✕</button>
+      <div style="background:#f5e6c8;padding:15px;text-align:center;margin-bottom:10px;border-radius:4px;max-width:1000px;font-size:14px;">
+        📱 Scroll para ZOOM | Arrastra para DESPLAZARTE
       </div>
-      <div style="flex:1;overflow:auto;width:100%;display:flex;align-items:center;justify-content:center;">
-        <img id="arbolZoomImg" src="assets/images/Arbol Genealogico Trisolini (completo) Ver04.webp" alt="Árbol Genealógico completo" style="max-width:100%;max-height:100%;object-fit:contain;">
+      <div id="arbolContenedor" style="flex:1;width:100%;max-width:90vw;max-height:85vh;overflow:auto;background:#2c1810;border:3px solid #c9a227;border-radius:4px;display:flex;align-items:center;justify-content:center;position:relative;">
+        <img id="arbolZoomImg" src="assets/images/Arbol Genealogico Trisolini (completo) Ver04.webp" alt="Árbol Genealógico completo" style="width:100%;height:auto;cursor:grab;user-select:none;">
       </div>
     </div>
+
+    <script>
+    // Zoom y Pan para Árbol Genealógico
+    (function() {
+      let scale = 1;
+      let panX = 0;
+      let panY = 0;
+      let isDragging = false;
+      let startX = 0;
+      let startY = 0;
+
+      const img = document.getElementById('arbolZoomImg');
+      const contenedor = document.getElementById('arbolContenedor');
+
+      if (!img || !contenedor) return;
+
+      // Zoom con scroll
+      contenedor.addEventListener('wheel', function(e) {
+        e.preventDefault();
+        const paso = 0.2;
+        scale += e.deltaY > 0 ? -paso : paso;
+        scale = Math.max(1, Math.min(scale, 4));
+        img.style.transform = `scale(${scale})`;
+        img.style.transformOrigin = 'center center';
+      });
+
+      // Arrastrar
+      img.addEventListener('mousedown', function(e) {
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        img.style.cursor = 'grabbing';
+      });
+
+      document.addEventListener('mousemove', function(e) {
+        if (isDragging && scale > 1) {
+          const dx = e.clientX - startX;
+          const dy = e.clientY - startY;
+          contenedor.scrollLeft -= dx;
+          contenedor.scrollTop -= dy;
+          startX = e.clientX;
+          startY = e.clientY;
+        }
+      });
+
+      document.addEventListener('mouseup', function() {
+        isDragging = false;
+        img.style.cursor = 'grab';
+      });
+    })();
+    </script>
 
     <div style="text-align: center; margin: 2rem 0;">
       <figure style="margin: 0;">
