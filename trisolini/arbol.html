@@ -74,7 +74,12 @@
   <button class="logout" onclick="cerrarSesion()">🔒 Salir</button>
 </nav>
 
-<div class="leyenda">
+<div style="background: var(--color-fondo-arbol); padding: 1rem; display: flex; gap: 1rem; justify-content: center;">
+  <button onclick="mostrarVista('red')" id="btnRed" style="background:#c9a227;color:#3d1f0a;border:none;padding:10px 20px;border-radius:4px;cursor:pointer;font-weight:bold;">🌳 Vista de Red</button>
+  <button onclick="mostrarVista('zoom')" id="btnZoom" style="background:#8b6914;color:#fdf3e3;border:none;padding:10px 20px;border-radius:4px;cursor:pointer;font-weight:bold;">🔍 Imagen Zoom</button>
+</div>
+
+<div class="leyenda" id="leyendaRed">
   <span><span class="dot" style="background:#4a6741"></span> Generación 0 (bisabuelos)</span>
   <span><span class="dot" style="background:#7a2020"></span> Giuseppe Trisolini</span>
   <span><span class="dot" style="background:#c9a227"></span> Generación 1</span>
@@ -84,6 +89,16 @@
   <div id="red-familiar"></div>
   <div id="panel-info">
     <p class="placeholder">Selecciona un nodo del árbol para ver su información.</p>
+  </div>
+</div>
+
+<!-- Vista de Zoom del Árbol Genealógico -->
+<div id="zoom-contenedor" style="display:none;background:var(--color-fondo-arbol);min-height:calc(100vh - 180px);flex-direction:column;align-items:center;">
+  <div style="background:#f5e6c8;padding:15px;text-align:center;margin:20px 0;border-radius:4px;max-width:1000px;font-size:14px;color:#3d1f0a;">
+    📱 Scroll para ZOOM | Arrastra para DESPLAZARTE
+  </div>
+  <div id="zoomContenedor" style="flex:1;width:100%;max-width:90vw;max-height:70vh;overflow:auto;background:#2c1810;border:3px solid #c9a227;border-radius:4px;display:flex;align-items:center;justify-content:center;">
+    <img id="zoomImg" src="assets/images/Arbol Genealogico Trisolini (completo) Ver04.webp" alt="Árbol Genealógico Zoom" style="width:100%;height:auto;cursor:grab;user-select:none;">
   </div>
 </div>
 
@@ -155,6 +170,79 @@
       ${docsHtml}
     `;
   });
+
+  // Cambiar entre vistas
+  function mostrarVista(vista) {
+    const red = document.getElementById('arbol-contenedor');
+    const zoom = document.getElementById('zoom-contenedor');
+    const btnRed = document.getElementById('btnRed');
+    const btnZoom = document.getElementById('btnZoom');
+    const leyenda = document.getElementById('leyendaRed');
+
+    if (vista === 'red') {
+      red.style.display = 'flex';
+      zoom.style.display = 'none';
+      leyenda.style.display = 'flex';
+      btnRed.style.background = '#c9a227';
+      btnRed.style.color = '#3d1f0a';
+      btnZoom.style.background = '#8b6914';
+      btnZoom.style.color = '#fdf3e3';
+    } else {
+      red.style.display = 'none';
+      zoom.style.display = 'flex';
+      leyenda.style.display = 'none';
+      btnRed.style.background = '#8b6914';
+      btnRed.style.color = '#fdf3e3';
+      btnZoom.style.background = '#c9a227';
+      btnZoom.style.color = '#3d1f0a';
+      inicializarZoomArbol();
+    }
+  }
+
+  // Zoom y Pan para imagen
+  function inicializarZoomArbol() {
+    let scale = 1;
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+
+    const img = document.getElementById('zoomImg');
+    const contenedor = document.getElementById('zoomContenedor');
+
+    if (!img || !contenedor) return;
+
+    contenedor.onwheel = function(e) {
+      e.preventDefault();
+      const paso = 0.3;
+      scale += e.deltaY > 0 ? -paso : paso;
+      scale = Math.max(1, Math.min(scale, 10));
+      img.style.transform = `scale(${scale})`;
+      img.style.transformOrigin = '0 0';
+    };
+
+    img.onmousedown = function(e) {
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      img.style.cursor = 'grabbing';
+    };
+
+    document.onmousemove = function(e) {
+      if (isDragging && scale > 1) {
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        contenedor.scrollLeft -= dx;
+        contenedor.scrollTop -= dy;
+        startX = e.clientX;
+        startY = e.clientY;
+      }
+    };
+
+    document.onmouseup = function() {
+      isDragging = false;
+      if (img) img.style.cursor = 'grab';
+    };
+  }
 </script>
 </body>
 </html>

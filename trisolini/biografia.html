@@ -634,11 +634,28 @@
         img.style.cursor = 'grab';
       });
     })();
+    </script>
 
-    // Abrir modal si se accede con #arbol-genealogico
-    if (window.location.hash === '#arbol-genealogico') {
-      document.getElementById('modalArbolImg').style.display = 'flex';
-    }
+    <script>
+    // Abrir modal si se accede con #arbol-genealogico (se ejecuta al cargar)
+    window.addEventListener('load', function() {
+      if (window.location.hash === '#arbol-genealogico') {
+        const modal = document.getElementById('modalArbolImg');
+        if (modal) {
+          modal.style.display = 'flex';
+        }
+      }
+    });
+
+    // También ejecutar inmediatamente por si acaso
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.location.hash === '#arbol-genealogico') {
+        const modal = document.getElementById('modalArbolImg');
+        if (modal) {
+          modal.style.display = 'flex';
+        }
+      }
+    });
     </script>
 
     <div style="text-align: center; margin: 2rem 0;">
