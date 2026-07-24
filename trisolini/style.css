@@ -522,17 +522,22 @@ table.tabla-archivo tr:nth-child(even) td {
   h3 { font-size: 1.1rem; margin: 1rem 0 0.75rem; }
 
   .nav-trisolini {
-    gap: 0.75rem;
-    font-size: 11px;
-    padding: 0.5rem 0.75rem;
-    flex-direction: column;
-    align-items: flex-start;
+    gap: 0.4rem;
+    font-size: 10px;
+    padding: 0.3rem 0.4rem;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-x: auto;
+    flex-wrap: nowrap;
   }
 
   .nav-trisolini a,
   .nav-trisolini button {
-    font-size: 12px;
-    padding: 0.5rem 0.75rem;
+    font-size: 10px;
+    padding: 0.3rem 0.4rem;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .hero-trisolini { padding: 1.5rem 1rem; }
