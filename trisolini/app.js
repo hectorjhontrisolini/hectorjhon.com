@@ -76,22 +76,28 @@ function protegerPagina() {
 // Modal con Zoom Interactivo para Árbol Genealógico
 // ═══════════════════════════════════════════════════════════
 
-let zoomLevel = 1;
-let panX = 0;
-let panY = 0;
-let isDragging = false;
-let startX = 0;
-let startY = 0;
+let arbolZoom = {
+  zoom: 1,
+  panX: 0,
+  panY: 0,
+  isDragging: false,
+  startX: 0,
+  startY: 0,
+  initialized: false
+};
 
 function abrirModalArbol() {
   const modal = document.getElementById('modalArbol');
   if (modal) {
     modal.classList.remove('oculto');
-    zoomLevel = 1;
-    panX = 0;
-    panY = 0;
-    actualizarTransformacion();
-    inicializarEventosZoom();
+    arbolZoom.zoom = 1;
+    arbolZoom.panX = 0;
+    arbolZoom.panY = 0;
+    actualizarArbol();
+    if (!arbolZoom.initialized) {
+      inicializarArbol();
+      arbolZoom.initialized = true;
+    }
   }
 }
 
@@ -102,96 +108,52 @@ function cerrarModalArbol() {
   }
 }
 
-function actualizarTransformacion() {
+function actualizarArbol() {
   const img = document.getElementById('arbolZoom');
   if (img) {
-    img.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+    img.style.transform = `translate(${arbolZoom.panX}px, ${arbolZoom.panY}px) scale(${arbolZoom.zoom})`;
   }
 }
 
-function inicializarEventosZoom() {
-  const modal = document.getElementById('modalArbol');
-  const contenedor = document.querySelector('.modal-arbol-contenedor');
+function inicializarArbol() {
   const img = document.getElementById('arbolZoom');
+  const contenedor = document.querySelector('.modal-arbol-contenedor');
+  const modal = document.getElementById('modalArbol');
 
   if (!img || !contenedor) return;
 
-  // Cerrar modal al hacer clic afuera de la imagen
-  modal.addEventListener('click', function(e) {
-    if (e.target === modal) {
-      cerrarModalArbol();
-    }
-  });
+  // Cerrar al hacer clic en el fondo
+  if (modal) {
+    modal.onclick = function(e) {
+      if (e.target === modal) cerrarModalArbol();
+    };
+  }
 
-  // Zoom con scroll
-  contenedor.addEventListener('wheel', function(e) {
+  // Zoom con rueda del mouse
+  contenedor.onwheel = function(e) {
     e.preventDefault();
-    const oldZoom = zoomLevel;
-    const zoomSpeed = 0.1;
-    zoomLevel += e.deltaY > 0 ? -zoomSpeed : zoomSpeed;
-    zoomLevel = Math.max(1, Math.min(zoomLevel, 5));
+    const paso = 0.1;
+    arbolZoom.zoom += e.deltaY > 0 ? -paso : paso;
+    arbolZoom.zoom = Math.max(1, Math.min(arbolZoom.zoom, 5));
+    actualizarArbol();
+  };
 
-    if (zoomLevel !== oldZoom) {
-      actualizarTransformacion();
+  // Arrastrar con mouse
+  img.onmousedown = function(e) {
+    arbolZoom.isDragging = true;
+    arbolZoom.startX = e.clientX - arbolZoom.panX;
+    arbolZoom.startY = e.clientY - arbolZoom.panY;
+  };
+
+  document.onmousemove = function(e) {
+    if (arbolZoom.isDragging && arbolZoom.zoom > 1) {
+      arbolZoom.panX = e.clientX - arbolZoom.startX;
+      arbolZoom.panY = e.clientY - arbolZoom.startY;
+      actualizarArbol();
     }
-  }, { passive: false });
+  };
 
-  // Pan (arrastrar) con mouse
-  img.addEventListener('mousedown', function(e) {
-    isDragging = true;
-    startX = e.clientX - panX;
-    startY = e.clientY - panY;
-    img.style.cursor = 'grabbing';
-  });
-
-  document.addEventListener('mousemove', function(e) {
-    if (isDragging && zoomLevel > 1) {
-      panX = e.clientX - startX;
-      panY = e.clientY - startY;
-      actualizarTransformacion();
-    }
-  });
-
-  document.addEventListener('mouseup', function() {
-    isDragging = false;
-    const img = document.getElementById('arbolZoom');
-    if (img) img.style.cursor = 'grab';
-  });
-
-  // Touch support para móvil
-  let lastDistance = 0;
-  img.addEventListener('touchstart', function(e) {
-    if (e.touches.length === 2) {
-      lastDistance = Math.hypot(
-        e.touches[0].clientX - e.touches[1].clientX,
-        e.touches[0].clientY - e.touches[1].clientY
-      );
-    } else if (e.touches.length === 1) {
-      isDragging = true;
-      startX = e.touches[0].clientX - panX;
-      startY = e.touches[0].clientY - panY;
-    }
-  }, { passive: true });
-
-  img.addEventListener('touchmove', function(e) {
-    if (e.touches.length === 2 && lastDistance > 0) {
-      const distance = Math.hypot(
-        e.touches[0].clientX - e.touches[1].clientX,
-        e.touches[0].clientY - e.touches[1].clientY
-      );
-      zoomLevel *= distance / lastDistance;
-      zoomLevel = Math.max(1, Math.min(zoomLevel, 5));
-      lastDistance = distance;
-      actualizarTransformacion();
-    } else if (e.touches.length === 1 && isDragging && zoomLevel > 1) {
-      panX = e.touches[0].clientX - startX;
-      panY = e.touches[0].clientY - startY;
-      actualizarTransformacion();
-    }
-  }, { passive: true });
-
-  img.addEventListener('touchend', function() {
-    isDragging = false;
-    lastDistance = 0;
-  }, { passive: true });
+  document.onmouseup = function() {
+    arbolZoom.isDragging = false;
+  };
 }
