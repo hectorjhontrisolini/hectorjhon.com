@@ -606,7 +606,7 @@
         scale += e.deltaY > 0 ? -paso : paso;
         scale = Math.max(1, Math.min(scale, 10));
         img.style.transform = `scale(${scale})`;
-        img.style.transformOrigin = 'center center';
+        img.style.transformOrigin = '0 0';
       });
 
       // Arrastrar
