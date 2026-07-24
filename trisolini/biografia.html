@@ -568,9 +568,22 @@
 
     <div style="text-align: center; margin: 2rem 0;">
       <figure style="margin: 0;">
-        <img src="assets/images/Arbol Genealogico Trisolini (completo) Ver04.webp" alt="Árbol Genealógico de la familia Trisolini" style="max-width: 100%; height: auto; border: 2px solid var(--color-borde); border-radius: 4px;">
-        <figcaption style="font-size: 0.85rem; margin-top: 0.5rem; font-style: italic; color: var(--color-borde);">Árbol Genealógico de la Familia Trisolini<br>La descendencia de Giuseppe Trisolini en Perú y sus generaciones posteriores</figcaption>
+        <img src="assets/images/Arbol Genealogico Trisolini (completo) Ver04.webp" alt="Árbol Genealógico de la familia Trisolini" style="max-width: 400px; height: auto; border: 2px solid var(--color-borde); border-radius: 4px; cursor: pointer;" onclick="abrirModalArbol()" title="Haz clic para ver en pantalla completa">
+        <figcaption style="font-size: 0.85rem; margin-top: 0.5rem; font-style: italic; color: var(--color-borde);">Árbol Genealógico de la Familia Trisolini<br><span style="font-size: 0.75rem; color: #999;">(Haz clic para ampliar y explorar)</span></figcaption>
       </figure>
+    </div>
+
+    <!-- Modal para Árbol Genealógico -->
+    <div id="modalArbol" class="modal-arbol oculto">
+      <div class="modal-arbol-contenido">
+        <button class="modal-arbol-cerrar" onclick="cerrarModalArbol()">✕</button>
+        <div class="modal-arbol-instrucciones">
+          🔍 Usa el scroll para zoom | Arrastra para desplazarte
+        </div>
+        <div class="modal-arbol-contenedor">
+          <img id="arbolZoom" src="assets/images/Arbol Genealogico Trisolini (completo) Ver04.webp" alt="Árbol Genealógico" class="modal-arbol-imagen">
+        </div>
+      </div>
     </div>
 
     <div style="text-align: center; margin: 2rem 0;">
