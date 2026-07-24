@@ -602,9 +602,9 @@
       // Zoom con scroll
       contenedor.addEventListener('wheel', function(e) {
         e.preventDefault();
-        const paso = 0.2;
+        const paso = 0.3;
         scale += e.deltaY > 0 ? -paso : paso;
-        scale = Math.max(1, Math.min(scale, 4));
+        scale = Math.max(1, Math.min(scale, 10));
         img.style.transform = `scale(${scale})`;
         img.style.transformOrigin = 'center center';
       });
