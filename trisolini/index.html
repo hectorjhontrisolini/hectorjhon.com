@@ -2,6 +2,21 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<style>
+  .image-container {
+    position: relative;
+    display: inline-block;
+  }
+  .image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 10;
+  }
+</style>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cronología - Archivo Familiar Trisolini</title>
 <meta name="robots" content="noindex, nofollow">
@@ -115,7 +130,7 @@
             <h3>A las Murallas de Venecia</h3>
             <div style="text-align: center; margin: 1rem 0;">
               <a href="biografia.html#capitulo-viii" title="Ver Capítulo VIII - A las Murallas de Venecia">
-                <img src="assets/images/Mapa Venecia 1849.JPG" alt="Mapa de Venecia 1849" style="max-width: 150px; height: auto; border: 1px solid var(--color-borde); border-radius: 3px; cursor: pointer;">
+                <img src="assets/images/Mapa Venecia 1849.JPG" alt="Mapa de Venecia 1849" style="max-width: 150px; height: auto; border: 1px solid var(--color-borde); border-radius: 3px; cursor: pointer;" draggable="false">
               </a>
             </div>
             <p>Giuseppe llega a Venecia con el General Pepe y sus tropas napolitanas que desafiaron al rey. Es recibido como héroe. Comienza la defensa de la República de San Marco bajo asedio austriaco.</p>
@@ -131,7 +146,7 @@
             <h3>Sangre y Pólvora en el Véneto</h3>
             <div style="text-align: center; margin: 1rem 0;">
               <a href="biografia.html#capitulo-ix" title="Ver Capítulo IX - Sangre y Pólvora en el Véneto">
-                <img src="assets/images/Despacho - Medalla.jpg" alt="Medalla de Honor" style="max-width: 120px; height: auto; border: 1px solid var(--color-borde); border-radius: 3px; cursor: pointer;">
+                <img src="assets/images/Despacho - Medalla.jpg" alt="Medalla de Honor" style="max-width: 120px; height: auto; border: 1px solid var(--color-borde); border-radius: 3px; cursor: pointer;" draggable="false">
               </a>
             </div>
             <p>Durante cinco meses, Giuseppe participa en la defensa de Venecia. Se forma el Batallón Veneto Napolitano, unidad de élite de revolucionarios que sacrificaron todo por Italia.</p>
@@ -147,7 +162,7 @@
             <h3>🎖️ La Sortita de Mestre: Victoria Ofensiva</h3>
             <div style="text-align: center; margin: 1rem 0;">
               <a href="biografia.html#capitulo-x" title="Ver Capítulo X - La Sortita de Mestre">
-                <img src="assets/images/Mapa - Ruta Roma - Carovignio.png" alt="Mapa Sortita Mestre" style="max-width: 150px; height: auto; border: 1px solid var(--color-borde); border-radius: 3px; cursor: pointer;">
+                <img src="assets/images/Mapa - Ruta Roma - Carovignio.png" alt="Mapa Sortita Mestre" style="max-width: 150px; height: auto; border: 1px solid var(--color-borde); border-radius: 3px; cursor: pointer;" draggable="false">
               </a>
             </div>
             <p>Giuseppe y el Batallón Veneto Napolitano capturan Mestre en un ataque sorpresa. Derrotan austriacos, toman 3 cañones, 500 prisioneros. Único acto ofensivo exitoso antes del asedio final.</p>
@@ -163,7 +178,7 @@
             <h3>⭐ Ascenso a Teniente</h3>
             <div style="text-align: center; margin: 1rem 0;">
               <a href="biografia.html#capitulo-xi" title="Ver Capítulo XI - La Ascensión del Héroe">
-                <img src="assets/images/Despacho.webp" alt="Despacho de Ascenso a Teniente" style="max-width: 120px; height: auto; border: 1px solid var(--color-borde); border-radius: 3px; cursor: pointer;">
+                <img src="assets/images/Despacho.webp" alt="Despacho de Ascenso a Teniente" style="max-width: 120px; height: auto; border: 1px solid var(--color-borde); border-radius: 3px; cursor: pointer;" draggable="false">
               </a>
             </div>
             <p>Por su arrojo en combate durante meses de lucha, Giuseppe es promovido formalmente a Teniente de la República de San Marco. Honor imposible en el ejército napolitano.</p>
@@ -223,7 +238,7 @@
             <h3>Matrimonio en Ayacucho</h3>
             <div style="text-align: center; margin: 1rem 0;">
               <a href="biografia.html#arbol-genealogico" title="Ver Árbol Genealógico - Zoom Interactivo">
-                <img src="assets/images/Arbol Genealogico Trisolini (completo) Ver04.webp" alt="Árbol Genealógico Trisolini" style="max-width: 150px; height: auto; border: 1px solid var(--color-borde); border-radius: 3px; cursor: pointer;">
+                <img src="assets/images/Arbol Genealogico Trisolini (completo) Ver04.webp" alt="Árbol Genealógico Trisolini" style="max-width: 150px; height: auto; border: 1px solid var(--color-borde); border-radius: 3px; cursor: pointer;" draggable="false">
               </a>
             </div>
             <p>Giuseppe contrae matrimonio con María Mercedes Tello Inchaústegui. Celebrado en la Parroquia de Santa Ana. Comienza la dinastía Trisolini en América.</p>
@@ -261,6 +276,13 @@
 
 <script src="app.js"></script>
 <script>
+  // Desactivar clic derecho en imágenes
+  document.addEventListener('contextmenu', function(e) {
+    if (e.target.nodeName === 'IMG') {
+      e.preventDefault();
+    }
+  });
+
   if (tieneAcceso()) {
     document.getElementById('login-pantalla').classList.add('oculto');
     document.getElementById('contenido-principal').classList.remove('oculto');
