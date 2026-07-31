@@ -1,0 +1,124 @@
+/* 
+   SAT Hidrológico - Estilos Globales
+   Paleta de colores institucional
+*/
+
+:root {
+  --azul-institucional: #003366;
+  --celeste: #0099CC;
+  --verde: #009966;
+  --naranja: #FF9933;
+  --rojo: #CC3333;
+  --gris: #666666;
+  --blanco: #ffffff;
+  --negro: #333333;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  line-height: 1.6;
+  color: var(--negro);
+  background-color: var(--blanco);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Componentes */
+
+.sat-header {
+  background-color: var(--azul-institucional);
+  color: var(--blanco);
+  padding: 1rem 2rem;
+  text-align: center;
+  width: 100%;
+}
+
+.sat-header.rojo { background-color: var(--rojo); }
+.sat-header.naranja { background-color: var(--naranja); }
+.sat-header.verde { background-color: var(--verde); }
+
+.sat-hero {
+  position: relative;
+  height: 60vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--blanco);
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.sat-section {
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sat-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  align-items: center;
+}
+
+.sat-img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.sat-icons {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 3rem 0;
+}
+
+.sat-icon {
+  text-align: center;
+  width: 150px;
+  transition: transform 0.3s ease;
+}
+
+.sat-icon:hover {
+  transform: translateY(-10px);
+}
+
+.sat-icon img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1rem;
+}
+
+.sat-icon a {
+  text-decoration: none;
+  color: var(--azul-institucional);
+  font-weight: bold;
+}
+
+.sat-footer {
+  background-color: var(--negro);
+  color: var(--blanco);
+  text-align: center;
+  padding: 2rem;
+  margin-top: 4rem;
+}
+
+/* Utilidades */
+.text-center { text-align: center; }
+.mt-2 { margin-top: 2rem; }
+</task_progress>
+</write_to_file>
