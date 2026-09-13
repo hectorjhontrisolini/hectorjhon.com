@@ -4,16 +4,14 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'TEXTIL_COILL/**'
-      - '.github/workflows/build-textil-coill.yml'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -28,9 +26,10 @@ jobs:
         working-directory: TEXTIL_COILL
         run: npm run build
       
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./TEXTIL_COILL/dist
           cname: hectorjhon.com
+          force_orphan: true
