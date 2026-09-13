@@ -1,0 +1,41 @@
+name: Build and Deploy TEXTIL_COILL
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'TEXTIL_COILL/**'
+      - '.github/workflows/build-textil-coill.yml'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        working-directory: TEXTIL_COILL
+        run: npm ci
+      
+      - name: Build
+        working-directory: TEXTIL_COILL
+        run: npm run build
+      
+      - name: Copy dist to root
+        run: |
+          cp -r TEXTIL_COILL/dist/* ./
+          rm -rf TEXTIL_COILL/dist
+      
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          cname: hectorjhon.com
