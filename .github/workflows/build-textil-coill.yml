@@ -9,14 +9,14 @@ on:
       - '.github/workflows/build-textil-coill.yml'
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
       
@@ -28,14 +28,9 @@ jobs:
         working-directory: TEXTIL_COILL
         run: npm run build
       
-      - name: Copy dist to root
-        run: |
-          cp -r TEXTIL_COILL/dist/* ./
-          rm -rf TEXTIL_COILL/dist
-      
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
+          publish_dir: ./TEXTIL_COILL/dist
           cname: hectorjhon.com
