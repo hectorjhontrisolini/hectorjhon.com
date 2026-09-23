@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.29.0/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<style>
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:#07071a; color:#dde2f8; font-family:'Inter',sans-serif; overflow-x:hidden; line-height:1.6; }
+  a { color:inherit; text-decoration:none; transition:color 0.2s; }
+  a:hover { color:#4f8ef7; }
+  ::-webkit-scrollbar { width:5px; }
+  ::-webkit-scrollbar-track { background:#07071a; }
+  ::-webkit-scrollbar-thumb { background:#4f8ef7; border-radius:3px; }
+
+  @keyframes fadeInUp { from { opacity:0; transform:translateY(40px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes pulse { 0%,100% { opacity:.4; transform:scale(1); } 50% { opacity:.7; transform:scale(1.05); } }
+  @keyframes pulseGlow { 0%,100% { transform:scale(1); } 50% { transform:scale(1.15); } }
+  @keyframes bounce { 0%,100% { transform:translateX(-50%) translateY(0); } 50% { transform:translateX(-50%) translateY(10px); } }
+  @keyframes blink { 0%,100% { opacity:1; } 50% { opacity:0; } }
+  @keyframes gradientFlow { 0% { background-position:0% 50%; } 50% { background-position:100% 50%; } 100% { background-position:0% 50%; } }
+
+  .gradient-text { background:linear-gradient(135deg,#4f8ef7 0%,#8b5cf6 100%); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; background-size:200% 200%; animation:gradientFlow 4s ease infinite; }
+  .typed-cursor { display:inline-block; animation:blink 1s infinite; color:#4f8ef7; }
+
+  .nav-link { position:relative; transition:color 0.25s; font-size:14px; font-weight:500; }
+  .nav-link::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:1.5px; background:linear-gradient(90deg,#4f8ef7,#8b5cf6); transition:width 0.3s ease; border-radius:1px; }
+  .nav-link:hover { color:#4f8ef7 !important; }
+  .nav-link:hover::after { width:100%; }
+
+  .btn-primary { transition:all 0.3s ease; }
+  .btn-primary:hover { transform:translateY(-3px); box-shadow:0 12px 40px rgba(79,142,247,.4) !important; filter:brightness(1.1); }
+  .btn-outline { transition:all 0.3s ease; }
+  .btn-outline:hover { background:rgba(79,142,247,.1) !important; border-color:#4f8ef7 !important; transform:translateY(-2px); }
+
+  .project-card { transition:all 0.35s cubic-bezier(.4,0,.2,1); }
+  .project-card:hover { transform:translateY(-10px); box-shadow:0 30px 80px rgba(79,142,247,.12) !important; border-color:rgba(79,142,247,.3) !important; }
+
+  .service-card { transition:all 0.3s ease; }
+  .service-card:hover { transform:translateY(-6px); background:rgba(79,142,247,.05) !important; border-color:rgba(79,142,247,.25) !important; }
+  .service-card:hover .svc-icon { background:linear-gradient(135deg,#4f8ef7,#8b5cf6) !important; color:white !important; }
+  .svc-icon { transition:all 0.3s ease; }
+
+  .skill-tag { transition:all 0.2s ease; cursor:default; }
+  .skill-tag:hover { transform:scale(1.06); }
+
+  .contact-item { transition:all 0.3s ease; }
+  .contact-item:hover { transform:translateX(8px); background:rgba(79,142,247,.06) !important; border-color:rgba(79,142,247,.25) !important; }
+
+  .social-btn { transition:all 0.3s ease; }
+  .social-btn:hover { background:linear-gradient(135deg,#4f8ef7,#8b5cf6) !important; border-color:transparent !important; transform:translateY(-4px); color:white !important; }
+
+  .app-feature { transition:all 0.3s ease; }
+  .app-feature:hover { background:rgba(79,142,247,.08) !important; border-left-color:#4f8ef7 !important; }
+
+  .stat-card { transition:all 0.3s ease; }
+  .stat-card:hover { border-color:rgba(79,142,247,.3) !important; transform:translateY(-4px); }
+
+  .form-input { transition:all 0.3s ease; }
+  .form-input:focus { outline:none; border-color:#4f8ef7 !important; box-shadow:0 0 0 3px rgba(79,142,247,.15) !important; }
+
+  .tech-tag { transition:all 0.2s ease; }
+  .tech-tag:hover { background:rgba(79,142,247,.15) !important; color:#4f8ef7 !important; }
+
+  @media (max-width:900px) {
+    .hero-split { flex-direction:column !important; }
+    .hero-terminal { display:none !important; }
+    .about-split { flex-direction:column !important; }
+    .about-photo { flex:0 0 auto !important; width:100% !important; max-width:360px; margin:0 auto; }
+    .stats-grid { grid-template-columns:repeat(2,1fr) !important; }
+    .services-grid { grid-template-columns:repeat(2,1fr) !important; }
+    .skills-cols { grid-template-columns:1fr !important; }
+    .app-feature-split { flex-direction:column !important; }
+    .app-desc { flex:0 0 auto !important; width:100% !important; }
+    .contact-split { flex-direction:column !important; }
+    .contact-info { flex:0 0 auto !important; width:100% !important; }
+    .footer-grid { flex-direction:column !important; gap:36px !important; }
+    .projects-grid { grid-template-columns:1fr !important; }
+    .nav-desktop { display:none !important; }
+    .mobile-menu-btn { display:flex !important; }
+  }
+  @media (min-width:901px) {
+    .mobile-menu-btn { display:none !important; }
+    .mobile-nav { display:none !important; }
+  }
+</style>
+</helmet>
+
+<!-- ═══ NAV ═══ -->
+<nav style="position:fixed;top:0;left:0;right:0;z-index:1000;transition:all 0.4s ease;background:{{ navBg }};backdrop-filter:{{ navBlur }};-webkit-backdrop-filter:{{ navBlur }};border-bottom:{{ navBorder }};">
+  <div style="max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:68px;">
+    <a href="#hero" style="display:flex;align-items:center;gap:12px;">
+      <div style="width:38px;height:38px;background:linear-gradient(135deg,#4f8ef7,#8b5cf6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:white;letter-spacing:-.5px;flex-shrink:0;">HJ</div>
+      <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:17px;color:#dde2f8;letter-spacing:-.3px;">Héctor Jhon</span>
+    </a>
+
+    <div class="nav-desktop" style="display:flex;align-items:center;gap:32px;">
+      <a href="#about" class="nav-link" style="color:#8892b0;">Sobre mí</a>
+      <a href="#projects" class="nav-link" style="color:#8892b0;">Proyectos</a>
+      <a href="#skills" class="nav-link" style="color:#8892b0;">Habilidades</a>
+      <a href="#stfondes" class="nav-link" style="color:#8892b0;">ST-FONDES</a>
+      <a href="#contact" class="nav-link" style="color:#8892b0;">Contacto</a>
+      <a href="#contact" class="btn-primary" style="background:linear-gradient(135deg,#4f8ef7,#8b5cf6);color:white;padding:9px 22px;border-radius:8px;font-size:14px;font-weight:600;letter-spacing:.02em;">Contratar</a>
+    </div>
+
+    <button class="mobile-menu-btn" onClick="{{ toggleMenu }}" style="background:none;border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:8px;color:#dde2f8;cursor:pointer;align-items:center;justify-content:center;">
+      <i class="{{ menuIcon }}" style="font-size:20px;"></i>
+    </button>
+  </div>
+  <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+    <div class="mobile-nav" style="background:rgba(10,10,27,.98);border-top:1px solid rgba(255,255,255,.08);padding:16px 24px 24px;display:flex;flex-direction:column;gap:4px;">
+      <a href="#about" class="nav-link" onClick="{{ closeMenu }}" style="color:#8892b0;padding:12px 16px;border-radius:8px;display:block;">Sobre mí</a>
+      <a href="#projects" class="nav-link" onClick="{{ closeMenu }}" style="color:#8892b0;padding:12px 16px;border-radius:8px;display:block;">Proyectos</a>
+      <a href="#skills" class="nav-link" onClick="{{ closeMenu }}" style="color:#8892b0;padding:12px 16px;border-radius:8px;display:block;">Habilidades</a>
+      <a href="#stfondes" class="nav-link" onClick="{{ closeMenu }}" style="color:#8892b0;padding:12px 16px;border-radius:8px;display:block;">ST-FONDES</a>
+      <a href="#contact" class="nav-link" onClick="{{ closeMenu }}" style="color:#8892b0;padding:12px 16px;border-radius:8px;display:block;">Contacto</a>
+    </div>
+  </sc-if>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero" style="min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:120px 0 80px;">
+  <div style="position:absolute;top:-200px;left:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(79,142,247,.14),transparent 70%);border-radius:50%;animation:pulse 8s ease infinite;pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-150px;right:-80px;width:500px;height:500px;background:radial-gradient(circle,rgba(139,92,246,.11),transparent 70%);border-radius:50%;animation:pulse 10s ease infinite 3s;pointer-events:none;"></div>
+  <div style="position:absolute;inset:0;background-image:radial-gradient(rgba(79,142,247,.1) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;"></div>
+
+  <div style="max-width:1200px;margin:0 auto;padding:0 24px;width:100%;display:flex;align-items:center;gap:64px;" class="hero-split">
+    <div style="flex:1;min-width:0;">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.25);border-radius:100px;padding:6px 16px;margin-bottom:28px;animation:fadeInUp .6s ease both;">
+        <span style="width:6px;height:6px;background:#4f8ef7;border-radius:50%;display:inline-block;animation:pulseGlow 2s infinite;"></span>
+        <span style="font-size:13px;color:#4f8ef7;font-weight:500;letter-spacing:.05em;font-family:'JetBrains Mono',monospace;">Disponible para proyectos</span>
+      </div>
+
+      <h1 style="font-family:'Space Grotesk',sans-serif;font-size:clamp(40px,5.5vw,72px);font-weight:700;line-height:1.08;letter-spacing:-2px;margin-bottom:18px;animation:fadeInUp .7s ease .1s both;">
+        <span style="display:block;color:#dde2f8;">Hector Hernan</span>
+        <span class="gradient-text">Jhon Trisolini</span>
+      </h1>
+
+      <div style="font-size:clamp(18px,2.2vw,26px);color:#8892b0;font-weight:400;margin-bottom:24px;min-height:40px;animation:fadeInUp .7s ease .2s both;font-family:'Space Grotesk',sans-serif;">
+        Soy <span id="typed-text" style="color:#dde2f8;font-weight:600;"></span><span class="typed-cursor">|</span>
+      </div>
+
+      <p style="font-size:17px;color:#6b7299;max-width:520px;line-height:1.8;margin-bottom:40px;animation:fadeInUp .7s ease .3s both;">
+        Especialista en análisis de datos, desarrollo de aplicaciones inteligentes y consultoría tecnológica. Transformo datos complejos en decisiones estratégicas de alto impacto.
+      </p>
+
+      <div style="display:flex;gap:16px;flex-wrap:wrap;animation:fadeInUp .7s ease .4s both;">
+        <a href="#projects" class="btn-primary" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#4f8ef7,#8b5cf6);color:white;padding:14px 28px;border-radius:10px;font-weight:600;font-size:15px;">
+          <i class="ti ti-rocket" style="font-size:18px;"></i> Ver Proyectos
+        </a>
+        <a href="#contact" class="btn-outline" style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:#dde2f8;padding:14px 28px;border-radius:10px;font-weight:600;font-size:15px;border:1px solid rgba(255,255,255,.15);">
+          <i class="ti ti-mail" style="font-size:18px;"></i> Contactar
+        </a>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:16px;margin-top:40px;animation:fadeInUp .7s ease .5s both;">
+        <span style="font-size:12px;color:#6b7299;font-family:'JetBrains Mono',monospace;letter-spacing:.06em;">SÍGUEME</span>
+        <div style="height:1px;width:36px;background:rgba(255,255,255,.1);"></div>
+        <a href="https://github.com/hectorjhon" target="_blank" class="social-btn" style="width:38px;height:38px;border:1px solid rgba(255,255,255,.12);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#8892b0;">
+          <i class="ti ti-brand-github" style="font-size:18px;"></i>
+        </a>
+        <a href="https://linkedin.com/in/hectorjhon" target="_blank" class="social-btn" style="width:38px;height:38px;border:1px solid rgba(255,255,255,.12);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#8892b0;">
+          <i class="ti ti-brand-linkedin" style="font-size:18px;"></i>
+        </a>
+        <a href="mailto:admin@hectorjhon.com" class="social-btn" style="width:38px;height:38px;border:1px solid rgba(255,255,255,.12);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#8892b0;">
+          <i class="ti ti-mail" style="font-size:18px;"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Terminal panel -->
+    <div class="hero-terminal" style="flex:0 0 460px;animation:fadeInUp .8s ease .3s both;">
+      <div style="background:rgba(10,10,27,.95);border:1px solid rgba(255,255,255,.1);border-radius:16px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.5);">
+        <div style="background:rgba(255,255,255,.04);padding:13px 18px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.07);">
+          <div style="width:12px;height:12px;border-radius:50%;background:#ff5f57;"></div>
+          <div style="width:12px;height:12px;border-radius:50%;background:#febc2e;"></div>
+          <div style="width:12px;height:12px;border-radius:50%;background:#28c840;"></div>
+          <span style="margin-left:12px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#6b7299;">hectorjhon ~ analytics</span>
+        </div>
+        <div style="padding:24px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:2;">
+          <div><span style="color:#4f8ef7;">$</span> <span style="color:#dde2f8;">python</span> <span style="color:#f8c555;">st_fondes.py</span> <span style="color:#22d3ee;">--analyze</span></div>
+          <div style="color:#6b7299;">&gt; Cargando dataset FONDES...</div>
+          <div style="color:#6b7299;">&gt; Iniciando pipeline ML...</div>
+          <div style="color:#6b7299;">&gt; Procesando <span style="color:#dde2f8;">12,847</span> registros</div>
+          <div style="margin-top:4px;color:#6b7299;">&gt; Entrenando XGBoost...</div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span style="color:#6b7299;">&gt; Accuracy:</span>
+            <span style="color:#10b981;font-weight:600;">97.3%</span>
+            <span style="color:#28c840;letter-spacing:-1px;">████████████</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span style="color:#6b7299;">&gt; F1-Score:</span>
+            <span style="color:#10b981;font-weight:600;">0.964</span>
+            <span style="color:#28c840;letter-spacing:-1px;">███████████░</span>
+          </div>
+          <div style="color:#10b981;margin-top:8px;">✓ <span style="color:#dde2f8;">Análisis completado</span></div>
+          <div style="color:#6b7299;margin-top:10px;"><span style="color:#4f8ef7;">$</span> streamlit run app.py<span style="color:#4f8ef7;animation:blink 1s infinite;">▋</span></div>
+          <div style="display:flex;gap:12px;margin-top:18px;padding-top:16px;border-top:1px solid rgba(255,255,255,.06);">
+            <div style="flex:1;background:rgba(79,142,247,.08);border:1px solid rgba(79,142,247,.15);border-radius:8px;padding:12px;text-align:center;">
+              <div style="font-size:20px;font-weight:700;color:#4f8ef7;font-family:'Space Grotesk',sans-serif;">97.3%</div>
+              <div style="font-size:10px;color:#6b7299;margin-top:2px;">Accuracy</div>
+            </div>
+            <div style="flex:1;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.15);border-radius:8px;padding:12px;text-align:center;">
+              <div style="font-size:20px;font-weight:700;color:#8b5cf6;font-family:'Space Grotesk',sans-serif;">12.8K</div>
+              <div style="font-size:10px;color:#6b7299;margin-top:2px;">Registros</div>
+            </div>
+            <div style="flex:1;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.15);border-radius:8px;padding:12px;text-align:center;">
+              <div style="font-size:20px;font-weight:700;color:#10b981;font-family:'Space Grotesk',sans-serif;">Live</div>
+              <div style="font-size:10px;color:#6b7299;margin-top:2px;">Streamlit</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="position:absolute;bottom:36px;left:50%;animation:bounce 2s infinite;display:flex;flex-direction:column;align-items:center;gap:6px;">
+    <span style="font-size:10px;color:#6b7299;font-family:'JetBrains Mono',monospace;letter-spacing:.12em;">SCROLL</span>
+    <i class="ti ti-chevrons-down" style="color:#4f8ef7;font-size:20px;"></i>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ═══ -->
+<section id="about" style="padding:100px 0;position:relative;">
+  <div style="max-width:1200px;margin:0 auto;padding:0 24px;">
+    <div style="text-align:center;margin-bottom:64px;" data-aos="fade-up">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#4f8ef7;letter-spacing:.12em;display:block;margin-bottom:12px;">// 01. SOBRE MÍ</span>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,4vw,48px);font-weight:700;color:#dde2f8;letter-spacing:-1.5px;margin-bottom:20px;">Quién <span class="gradient-text">soy</span></h2>
+      <div style="width:60px;height:3px;background:linear-gradient(90deg,#4f8ef7,#8b5cf6);margin:0 auto;border-radius:2px;"></div>
+    </div>
+
+    <div style="display:flex;gap:64px;align-items:center;" class="about-split">
+      <div class="about-photo" style="flex:0 0 340px;" data-aos="fade-right">
+        <div style="position:relative;">
+          <div style="width:100%;padding-bottom:110%;position:relative;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.1);">
+            <img src="foto-perfil.png" alt="Hector Hernan Jhon Trisolini" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 15%;">
+          </div>
+          <div style="position:absolute;bottom:-18px;right:-18px;background:linear-gradient(135deg,#4f8ef7,#8b5cf6);border-radius:16px;padding:16px 20px;box-shadow:0 20px 60px rgba(79,142,247,.3);">
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:white;line-height:1;">5+</div>
+            <div style="font-size:12px;color:rgba(255,255,255,.8);margin-top:2px;">años exp.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex:1;min-width:0;" data-aos="fade-left">
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:600;color:#dde2f8;margin-bottom:18px;letter-spacing:-.5px;">Analista de Datos &amp; Consultor Tecnológico</h3>
+        <p style="color:#8892b0;line-height:1.85;margin-bottom:16px;font-size:16px;">Soy un profesional especializado en análisis de datos, desarrollo de aplicaciones inteligentes y consultoría tecnológica. Combino habilidades técnicas sólidas con pensamiento estratégico para transformar datos complejos en soluciones de alto impacto.</p>
+        <p style="color:#8892b0;line-height:1.85;margin-bottom:32px;font-size:16px;">Mi trabajo abarca desde el diseño de pipelines de datos y modelos de machine learning hasta el desarrollo de dashboards interactivos, como <strong style="color:#4f8ef7;">ST-FONDES</strong>, mi aplicación de análisis financiero en producción en Streamlit Cloud.</p>
+
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px;">
+          <span class="skill-tag" style="background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.2);color:#7db8ff;padding:6px 16px;border-radius:100px;font-size:13px;font-weight:500;">Python</span>
+          <span class="skill-tag" style="background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.2);color:#a78bfa;padding:6px 16px;border-radius:100px;font-size:13px;font-weight:500;">Machine Learning</span>
+          <span class="skill-tag" style="background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);color:#34d399;padding:6px 16px;border-radius:100px;font-size:13px;font-weight:500;">SQL</span>
+          <span class="skill-tag" style="background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.2);color:#7db8ff;padding:6px 16px;border-radius:100px;font-size:13px;font-weight:500;">Streamlit</span>
+          <span class="skill-tag" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);color:#fbbf24;padding:6px 16px;border-radius:100px;font-size:13px;font-weight:500;">Power BI</span>
+          <span class="skill-tag" style="background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.2);color:#22d3ee;padding:6px 16px;border-radius:100px;font-size:13px;font-weight:500;">Pandas</span>
+          <span class="skill-tag" style="background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);color:#f87171;padding:6px 16px;border-radius:100px;font-size:13px;font-weight:500;">XGBoost</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;" class="stats-grid">
+          <div class="stat-card" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:18px;text-align:center;">
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;color:#4f8ef7;line-height:1;">5+</div>
+            <div style="font-size:12px;color:#6b7299;margin-top:6px;">Años</div>
+          </div>
+          <div class="stat-card" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:18px;text-align:center;">
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;color:#8b5cf6;line-height:1;">20+</div>
+            <div style="font-size:12px;color:#6b7299;margin-top:6px;">Proyectos</div>
+          </div>
+          <div class="stat-card" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:18px;text-align:center;">
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;color:#10b981;line-height:1;">15+</div>
+            <div style="font-size:12px;color:#6b7299;margin-top:6px;">Clientes</div>
+          </div>
+          <div class="stat-card" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:18px;text-align:center;">
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;color:#f59e0b;line-height:1;">97%</div>
+            <div style="font-size:12px;color:#6b7299;margin-top:6px;">Satisfacción</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROJECTS ═══ -->
+<section id="projects" style="padding:100px 0;background:linear-gradient(180deg,#07071a 0%,#090917 50%,#07071a 100%);">
+  <div style="max-width:1200px;margin:0 auto;padding:0 24px;">
+    <div style="text-align:center;margin-bottom:64px;" data-aos="fade-up">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#4f8ef7;letter-spacing:.12em;display:block;margin-bottom:12px;">// 02. PROYECTOS</span>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,4vw,48px);font-weight:700;color:#dde2f8;letter-spacing:-1.5px;margin-bottom:20px;">Trabajo <span class="gradient-text">destacado</span></h2>
+      <div style="width:60px;height:3px;background:linear-gradient(90deg,#4f8ef7,#8b5cf6);margin:0 auto;border-radius:2px;"></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:24px;" class="projects-grid">
+      <!-- ST-FONDES -->
+      <div class="project-card" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;" data-aos="fade-up" data-aos-delay="0">
+        <div style="height:200px;background:linear-gradient(135deg,rgba(79,142,247,.18),rgba(139,92,246,.12));position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+          <i class="ti ti-chart-bar" style="font-size:72px;color:rgba(79,142,247,.45);"></i>
+          <div style="position:absolute;top:14px;left:14px;background:linear-gradient(135deg,#4f8ef7,#8b5cf6);color:white;font-size:11px;font-weight:700;padding:4px 12px;border-radius:100px;letter-spacing:.06em;">✦ DESTACADO</div>
+          <div style="position:absolute;top:14px;right:14px;background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:#34d399;font-size:11px;font-weight:600;padding:4px 12px;border-radius:100px;display:flex;align-items:center;gap:5px;">
+            <span style="width:6px;height:6px;background:#10b981;border-radius:50%;animation:pulseGlow 2s infinite;"></span>Live
+          </div>
+        </div>
+        <div style="padding:24px;">
+          <h3 style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:#dde2f8;margin-bottom:10px;">ST-FONDES</h3>
+          <p style="color:#8892b0;font-size:14px;line-height:1.75;margin-bottom:18px;">Aplicación web para análisis, seguimiento y predicción de datos FONDES. Dashboards interactivos, modelos ML y reportes automatizados.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;">
+            <span class="tech-tag" style="background:rgba(79,142,247,.08);color:#7db8ff;font-size:12px;padding:3px 10px;border-radius:6px;font-family:'JetBrains Mono',monospace;border:1px solid rgba(79,142,247,.15);">Python</span>
+            <span class="tech-tag" style="background:rgba(79,142,247,.08);color:#7db8ff;font-size:12px;padding:3px 10px;border-radius:6px;font-family:'JetBrains Mono',monospace;border:1px solid rgba(79,142,247,.15);">Streamlit</span>
+            <span class="tech-tag" style="background:rgba(79,142,247,.08);color:#7db8ff;font-size:12px;padding:3px 10px;border-radius:6px;font-family:'JetBrains Mono',monospace;border:1px solid rgba(79,142,247,.15);">XGBoost</span>
+            <span class="tech-tag" style="background:rgba(79,142,247,.08);color:#7db8ff;font-size:12px;padding:3px 10px;border-radius:6px;font-family:'JetBrains Mono',monospace;border:1px solid rgba(79,142,247,.15);">Pandas</span>
+          </div>
+          <div style="display:flex;gap:12px;">
+            <a href="https://ST-FONDES.streamlit.app" target="_blank" class="btn-primary" style="display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#4f8ef7,#8b5cf6);color:white;padding:9px 20px;border-radius:8px;font-size:14px;font-weight:600;">
+              <i class="ti ti-external-link" style="font-size:15px;"></i> Ver App
+            </a>
+            <a href="#" class="btn-outline" style="display:inline-flex;align-items:center;gap:6px;background:transparent;color:#8892b0;padding:9px 20px;border-radius:8px;font-size:14px;border:1px solid rgba(255,255,255,.1);">
+              <i class="ti ti-brand-github" style="font-size:15px;"></i> Código
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="project-card" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;" data-aos="fade-up" data-aos-delay="80">
+        <div style="height:200px;background:linear-gradient(135deg,rgba(16,185,129,.18),rgba(6,182,212,.1));position:relative;display:flex;align-items:center;justify-content:center;">
+          <i class="ti ti-database" style="font-size:72px;color:rgba(16,185,129,.45);"></i>
+        </div>
+        <div style="padding:24px;">
+          <h3 style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:#dde2f8;margin-bottom:10px;">Pipeline Analytics</h3>
+          <p style="color:#8892b0;font-size:14px;line-height:1.75;margin-bottom:18px;">Automatización de ETL y análisis de datos institucionales con alertas, reportes programados y monitoreo en tiempo real.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;">
+            <span class="tech-tag" style="background:rgba(16,185,129,.08);color:#34d399;font-size:12px;padding:3px 10px;border-radius:6px;font-family:'JetBrains Mono',monospace;border:1px solid rgba(16,185,129,.15);">Python</span>
+            <span class="tech-tag" style="background:rgba(16,185,129,.08);color:#34d399;font-size:12px;padding:3px 10px;border-radius:6px;font-family:'JetBrains Mono',monospace;border:1px solid rgba(16,185,129,.15);">SQL</span>
+            <span class="tech-tag" style="background:rgba(16,185,129,.08);color:#34d399;font-size:12px;padding:3px 10px;border-radius:6px;font-family:'JetBrains Mono',monospace;border:1px solid rgba(16,185,129,.15);">Airflow</span>
+          </div>
+          <a href="#" class="btn-outline" style="display:inline-flex;align-items:center;gap:6px;background:transparent;color:#8892b0;padding:9px 20px;border-radius:8px;font-size:14px;border:1px solid rgba(255,255,255,.1);">
+            <i class="ti ti-brand-github" style="font-size:15px;"></i> Código
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 3 -->
+      <div class="project-card" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;" data-aos="fade-up" data-aos-delay="140">
+        <div style="height:200px;background:linear-gradient(135deg,rgba(245,158,11,.18),rgba(239,68,68,.1));position:relative;display:flex;align-items:center;justify-content:center;">
+          <i class="ti ti-brain" style="font-size:72px;color:rgba(245,158,11,.45);"></i>
+        </div>
+        <div style="padding:24px;">
+          <h3 style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:#dde2f8;margin-bottom:10px;">Modelo Predictivo</h3>
+          <p style="color:#8892b0;font-size:14px;line-height:1.75;margin-bottom:18px;">Sistema de clasificación con ML para optimización de decisiones institucionales. Interpretabilidad con SHAP y explicaciones automáticas.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;">
+            <span class="tech-tag" style="background:rgba(245,158,11,.08);color:#fbbf24;font-size:12px;padding:3px 10px;border-radius:6px;font-family:'JetBrains Mono',monospace;border:1px solid rgba(245,158,11,.15);">Scikit-learn</span>
+            <span class="tech-tag" style="background:rgba(245,158,11,.08);color:#fbbf24;font-size:12px;padding:3px 10px;border-radius:6px;font-family:'JetBrains Mono',monospace;border:1px solid rgba(245,158,11,.15);">XGBoost</span>
+            <span class="tech-tag" style="background:rgba(245,158,11,.08);color:#fbbf24;font-size:12px;padding:3px 10px;border-radius:6px;font-family:'JetBrains Mono',monospace;border:1px solid rgba(245,158,11,.15);">SHAP</span>
+          </div>
+          <a href="#" class="btn-outline" style="display:inline-flex;align-items:center;gap:6px;background:transparent;color:#8892b0;padding:9px 20px;border-radius:8px;font-size:14px;border:1px solid rgba(255,255,255,.1);">
+            <i class="ti ti-brand-github" style="font-size:15px;"></i> Código
+          </a>
+        </div>
+      </div>
+
+      <!-- Project 4 -->
+      <div class="project-card" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden;" data-aos="fade-up" data-aos-delay="200">
+        <div style="height:200px;background:linear-gradient(135deg,rgba(139,92,246,.18),rgba(79,142,247,.1));position:relative;display:flex;align-items:center;justify-content:center;">
+          <i class="ti ti-layout-dashboard" style="font-size:72px;color:rgba(139,92,246,.45);"></i>
+        </div>
+        <div style="padding:24px;">
+          <h3 style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;color:#dde2f8;margin-bottom:10px;">Dashboard BI</h3>
+          <p style="color:#8892b0;font-size:14px;line-height:1.75;margin-bottom:18px;">Panel de control con KPIs en tiempo real, segmentación dinámica y análisis de tendencias para la toma de decisiones.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;">
+            <span class="tech-tag" style="background:rgba(139,92,246,.08);color:#a78bfa;font-size:12px;padding:3px 10px;border-radius:6px;font-family:'JetBrains Mono',monospace;border:1px solid rgba(139,92,246,.15);">Power BI</span>
+            <span class="tech-tag" style="background:rgba(139,92,246,.08);color:#a78bfa;font-size:12px;padding:3px 10px;border-radius:6px;font-family:'JetBrains Mono',monospace;border:1px solid rgba(139,92,246,.15);">DAX</span>
+            <span class="tech-tag" style="background:rgba(139,92,246,.08);color:#a78bfa;font-size:12px;padding:3px 10px;border-radius:6px;font-family:'JetBrains Mono',monospace;border:1px solid rgba(139,92,246,.15);">SQL</span>
+          </div>
+          <a href="#" class="btn-outline" style="display:inline-flex;align-items:center;gap:6px;background:transparent;color:#8892b0;padding:9px 20px;border-radius:8px;font-size:14px;border:1px solid rgba(255,255,255,.1);">
+            <i class="ti ti-eye" style="font-size:15px;"></i> Ver demo
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SKILLS ═══ -->
+<section id="skills" style="padding:100px 0;">
+  <div style="max-width:1200px;margin:0 auto;padding:0 24px;">
+    <div style="text-align:center;margin-bottom:64px;" data-aos="fade-up">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#4f8ef7;letter-spacing:.12em;display:block;margin-bottom:12px;">// 03. SERVICIOS</span>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,4vw,48px);font-weight:700;color:#dde2f8;letter-spacing:-1.5px;margin-bottom:20px;">Habilidades &amp; <span class="gradient-text">Servicios</span></h2>
+      <div style="width:60px;height:3px;background:linear-gradient(90deg,#4f8ef7,#8b5cf6);margin:0 auto;border-radius:2px;"></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:72px;" class="services-grid">
+      <div class="service-card" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:30px;" data-aos="fade-up" data-aos-delay="0">
+        <div class="svc-icon" style="width:54px;height:54px;background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.2);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;color:#4f8ef7;">
+          <i class="ti ti-chart-dots-3" style="font-size:26px;"></i>
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;color:#dde2f8;margin-bottom:10px;">Análisis de Datos</h3>
+        <p style="color:#8892b0;font-size:14px;line-height:1.7;margin-bottom:18px;">Exploración, limpieza y análisis estadístico de grandes volúmenes de datos para extraer insights accionables.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span style="font-size:11px;color:#6b7299;font-family:'JetBrains Mono',monospace;">Python · Pandas · SQL</span>
+        </div>
+      </div>
+
+      <div class="service-card" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:30px;" data-aos="fade-up" data-aos-delay="80">
+        <div class="svc-icon" style="width:54px;height:54px;background:rgba(139,92,246,.1);border:1px solid rgba(139,92,246,.2);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;color:#8b5cf6;">
+          <i class="ti ti-cpu" style="font-size:26px;"></i>
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;color:#dde2f8;margin-bottom:10px;">Machine Learning</h3>
+        <p style="color:#8892b0;font-size:14px;line-height:1.7;margin-bottom:18px;">Modelos predictivos y sistemas de clasificación para automatizar decisiones con alta precisión.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span style="font-size:11px;color:#6b7299;font-family:'JetBrains Mono',monospace;">Scikit-learn · XGBoost</span>
+        </div>
+      </div>
+
+      <div class="service-card" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:30px;" data-aos="fade-up" data-aos-delay="140">
+        <div class="svc-icon" style="width:54px;height:54px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.2);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;color:#10b981;">
+          <i class="ti ti-device-desktop-analytics" style="font-size:26px;"></i>
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;color:#dde2f8;margin-bottom:10px;">Visualización &amp; BI</h3>
+        <p style="color:#8892b0;font-size:14px;line-height:1.7;margin-bottom:18px;">Dashboards interactivos que comunican resultados de forma clara para la toma de decisiones.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span style="font-size:11px;color:#6b7299;font-family:'JetBrains Mono',monospace;">Power BI · Plotly</span>
+        </div>
+      </div>
+
+      <div class="service-card" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:30px;" data-aos="fade-up" data-aos-delay="180">
+        <div class="svc-icon" style="width:54px;height:54px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;color:#f59e0b;">
+          <i class="ti ti-code" style="font-size:26px;"></i>
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;color:#dde2f8;margin-bottom:10px;">Apps &amp; Automatización</h3>
+        <p style="color:#8892b0;font-size:14px;line-height:1.7;margin-bottom:18px;">Aplicaciones web interactivas y automatización de procesos con Python y Streamlit.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span style="font-size:11px;color:#6b7299;font-family:'JetBrains Mono',monospace;">Streamlit · FastAPI</span>
+        </div>
+      </div>
+
+      <div class="service-card" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:30px;" data-aos="fade-up" data-aos-delay="220">
+        <div class="svc-icon" style="width:54px;height:54px;background:rgba(6,182,212,.1);border:1px solid rgba(6,182,212,.2);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;color:#06b6d4;">
+          <i class="ti ti-database" style="font-size:26px;"></i>
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;color:#dde2f8;margin-bottom:10px;">Bases de Datos</h3>
+        <p style="color:#8892b0;font-size:14px;line-height:1.7;margin-bottom:18px;">Diseño, optimización y gestión de bases de datos relacionales para aplicaciones de alto rendimiento.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span style="font-size:11px;color:#6b7299;font-family:'JetBrains Mono',monospace;">PostgreSQL · MongoDB</span>
+        </div>
+      </div>
+
+      <div class="service-card" style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:30px;" data-aos="fade-up" data-aos-delay="260">
+        <div class="svc-icon" style="width:54px;height:54px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;color:#ef4444;">
+          <i class="ti ti-presentation-analytics" style="font-size:26px;"></i>
+        </div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;color:#dde2f8;margin-bottom:10px;">Consultoría Tecnológica</h3>
+        <p style="color:#8892b0;font-size:14px;line-height:1.7;margin-bottom:18px;">Asesoría estratégica en arquitectura de datos, selección de herramientas y transformación digital.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span style="font-size:11px;color:#6b7299;font-family:'JetBrains Mono',monospace;">Estrategia · Arquitectura</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stack Tecnológico -->
+    <div style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:20px;padding:48px;" data-aos="fade-up">
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:#dde2f8;text-align:center;margin-bottom:40px;">Stack Tecnológico</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:48px;" class="skills-cols">
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:22px;">
+            <div style="width:3px;height:20px;background:linear-gradient(180deg,#4f8ef7,#8b5cf6);border-radius:2px;"></div>
+            <span style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:#dde2f8;">Data Science</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:#8892b0;font-family:'JetBrains Mono',monospace;">Python</span><span style="font-size:12px;color:#4f8ef7;">95%</span></div>
+              <div style="height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;"><div style="height:100%;background:linear-gradient(90deg,#4f8ef7,#8b5cf6);border-radius:2px;width:95%;"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:#8892b0;font-family:'JetBrains Mono',monospace;">Machine Learning</span><span style="font-size:12px;color:#4f8ef7;">88%</span></div>
+              <div style="height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;"><div style="height:100%;background:linear-gradient(90deg,#4f8ef7,#8b5cf6);border-radius:2px;width:88%;"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:#8892b0;font-family:'JetBrains Mono',monospace;">Estadística</span><span style="font-size:12px;color:#4f8ef7;">85%</span></div>
+              <div style="height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;"><div style="height:100%;background:linear-gradient(90deg,#4f8ef7,#8b5cf6);border-radius:2px;width:85%;"></div></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:22px;">
+            <div style="width:3px;height:20px;background:linear-gradient(180deg,#8b5cf6,#06b6d4);border-radius:2px;"></div>
+            <span style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:#dde2f8;">Desarrollo</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:#8892b0;font-family:'JetBrains Mono',monospace;">Streamlit</span><span style="font-size:12px;color:#8b5cf6;">92%</span></div>
+              <div style="height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;"><div style="height:100%;background:linear-gradient(90deg,#8b5cf6,#06b6d4);border-radius:2px;width:92%;"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:#8892b0;font-family:'JetBrains Mono',monospace;">SQL / PostgreSQL</span><span style="font-size:12px;color:#8b5cf6;">90%</span></div>
+              <div style="height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;"><div style="height:100%;background:linear-gradient(90deg,#8b5cf6,#06b6d4);border-radius:2px;width:90%;"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:#8892b0;font-family:'JetBrains Mono',monospace;">FastAPI</span><span style="font-size:12px;color:#8b5cf6;">75%</span></div>
+              <div style="height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;"><div style="height:100%;background:linear-gradient(90deg,#8b5cf6,#06b6d4);border-radius:2px;width:75%;"></div></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:22px;">
+            <div style="width:3px;height:20px;background:linear-gradient(180deg,#10b981,#f59e0b);border-radius:2px;"></div>
+            <span style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:600;color:#dde2f8;">Analytics &amp; BI</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:#8892b0;font-family:'JetBrains Mono',monospace;">Power BI</span><span style="font-size:12px;color:#10b981;">87%</span></div>
+              <div style="height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;"><div style="height:100%;background:linear-gradient(90deg,#10b981,#f59e0b);border-radius:2px;width:87%;"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:#8892b0;font-family:'JetBrains Mono',monospace;">Excel / VBA</span><span style="font-size:12px;color:#10b981;">93%</span></div>
+              <div style="height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;"><div style="height:100%;background:linear-gradient(90deg,#10b981,#f59e0b);border-radius:2px;width:93%;"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:#8892b0;font-family:'JetBrains Mono',monospace;">Tableau</span><span style="font-size:12px;color:#10b981;">74%</span></div>
+              <div style="height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;"><div style="height:100%;background:linear-gradient(90deg,#10b981,#f59e0b);border-radius:2px;width:74%;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ST-FONDES FEATURED ═══ -->
+<section id="stfondes" style="padding:100px 0;background:linear-gradient(180deg,#07071a 0%,#08091b 50%,#07071a 100%);">
+  <div style="max-width:1200px;margin:0 auto;padding:0 24px;">
+    <div style="text-align:center;margin-bottom:64px;" data-aos="fade-up">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#4f8ef7;letter-spacing:.12em;display:block;margin-bottom:12px;">// 04. APP EN PRODUCCIÓN</span>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,4vw,48px);font-weight:700;color:#dde2f8;letter-spacing:-1.5px;margin-bottom:20px;">App <span class="gradient-text">ST-FONDES</span></h2>
+      <div style="width:60px;height:3px;background:linear-gradient(90deg,#4f8ef7,#8b5cf6);margin:0 auto;border-radius:2px;"></div>
+      <p style="color:#8892b0;font-size:16px;max-width:480px;margin:20px auto 0;">Mi proyecto principal — plataforma de análisis de datos en producción sobre Streamlit Cloud</p>
+    </div>
+
+    <div style="background:rgba(255,255,255,.02);border:1px solid rgba(79,142,247,.15);border-radius:24px;overflow:hidden;" data-aos="fade-up">
+      <div style="display:flex;" class="app-feature-split">
+        <!-- Left: mockup -->
+        <div style="flex:1;background:linear-gradient(135deg,rgba(79,142,247,.07),rgba(139,92,246,.05));position:relative;display:flex;align-items:center;justify-content:center;padding:48px;border-right:1px solid rgba(255,255,255,.06);">
+          <div style="width:100%;max-width:440px;background:rgba(7,7,26,.95);border:1px solid rgba(255,255,255,.1);border-radius:12px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5);">
+            <div style="background:rgba(255,255,255,.04);padding:11px 16px;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,.06);">
+              <div style="display:flex;gap:5px;"><div style="width:10px;height:10px;border-radius:50%;background:#ff5f57;"></div><div style="width:10px;height:10px;border-radius:50%;background:#febc2e;"></div><div style="width:10px;height:10px;border-radius:50%;background:#28c840;"></div></div>
+              <div style="flex:1;background:rgba(255,255,255,.06);border-radius:5px;padding:4px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#6b7299;">st-fondes.streamlit.app</div>
+            </div>
+            <div style="padding:20px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px;">
+                <div style="background:rgba(79,142,247,.1);border-radius:8px;padding:12px;text-align:center;"><div style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:#4f8ef7;">97.3%</div><div style="font-size:10px;color:#6b7299;margin-top:2px;">Accuracy</div></div>
+                <div style="background:rgba(139,92,246,.1);border-radius:8px;padding:12px;text-align:center;"><div style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:#8b5cf6;">12.8K</div><div style="font-size:10px;color:#6b7299;margin-top:2px;">Registros</div></div>
+                <div style="background:rgba(16,185,129,.1);border-radius:8px;padding:12px;text-align:center;"><div style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:#10b981;">Live</div><div style="font-size:10px;color:#6b7299;margin-top:2px;">Estado</div></div>
+              </div>
+              <div style="background:rgba(255,255,255,.03);border-radius:8px;padding:16px;">
+                <div style="font-size:11px;color:#6b7299;margin-bottom:10px;font-family:'JetBrains Mono',monospace;">Distribución por categoría</div>
+                <div style="display:flex;align-items:flex-end;gap:5px;height:52px;">
+                  <div style="flex:1;background:linear-gradient(180deg,#4f8ef7,rgba(79,142,247,.3));border-radius:3px 3px 0 0;height:80%;"></div>
+                  <div style="flex:1;background:linear-gradient(180deg,#8b5cf6,rgba(139,92,246,.3));border-radius:3px 3px 0 0;height:55%;"></div>
+                  <div style="flex:1;background:linear-gradient(180deg,#10b981,rgba(16,185,129,.3));border-radius:3px 3px 0 0;height:95%;"></div>
+                  <div style="flex:1;background:linear-gradient(180deg,#f59e0b,rgba(245,158,11,.3));border-radius:3px 3px 0 0;height:65%;"></div>
+                  <div style="flex:1;background:linear-gradient(180deg,#06b6d4,rgba(6,182,212,.3));border-radius:3px 3px 0 0;height:75%;"></div>
+                  <div style="flex:1;background:linear-gradient(180deg,#ef4444,rgba(239,68,68,.3));border-radius:3px 3px 0 0;height:45%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="position:absolute;top:20px;right:20px;background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.2);border-radius:10px;padding:10px 14px;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#4f8ef7;display:flex;align-items:center;gap:6px;">
+              <span style="width:6px;height:6px;background:#10b981;border-radius:50%;animation:pulseGlow 2s infinite;"></span>
+              Streamlit Cloud
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: description -->
+        <div class="app-desc" style="flex:0 0 400px;padding:48px;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;background:linear-gradient(135deg,#4f8ef7,#8b5cf6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:14px;">APP DESTACADA</div>
+          <h3 style="font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:#dde2f8;letter-spacing:-.5px;margin-bottom:14px;line-height:1.2;">Sistema de Análisis ST-FONDES</h3>
+          <p style="color:#8892b0;line-height:1.8;font-size:15px;margin-bottom:30px;">Plataforma web completa para el análisis, seguimiento y predicción de datos del fondo. Dashboards en tiempo real, modelos de ML y exportación de reportes automatizados.</p>
+
+          <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:34px;">
+            <div class="app-feature" style="display:flex;align-items:flex-start;gap:14px;padding:14px;border-left:2px solid rgba(79,142,247,.3);background:rgba(79,142,247,.04);border-radius:0 8px 8px 0;">
+              <i class="ti ti-chart-line" style="font-size:18px;color:#4f8ef7;margin-top:1px;flex-shrink:0;"></i>
+              <div><div style="font-size:14px;font-weight:600;color:#dde2f8;margin-bottom:3px;">Dashboard Interactivo</div><div style="font-size:13px;color:#6b7299;">Visualizaciones dinámicas con filtros en tiempo real</div></div>
+            </div>
+            <div class="app-feature" style="display:flex;align-items:flex-start;gap:14px;padding:14px;border-left:2px solid rgba(139,92,246,.3);background:rgba(139,92,246,.04);border-radius:0 8px 8px 0;">
+              <i class="ti ti-brain" style="font-size:18px;color:#8b5cf6;margin-top:1px;flex-shrink:0;"></i>
+              <div><div style="font-size:14px;font-weight:600;color:#dde2f8;margin-bottom:3px;">Modelos Predictivos</div><div style="font-size:13px;color:#6b7299;">Predicción con XGBoost — Accuracy: 97.3%</div></div>
+            </div>
+            <div class="app-feature" style="display:flex;align-items:flex-start;gap:14px;padding:14px;border-left:2px solid rgba(16,185,129,.3);background:rgba(16,185,129,.04);border-radius:0 8px 8px 0;">
+              <i class="ti ti-file-analytics" style="font-size:18px;color:#10b981;margin-top:1px;flex-shrink:0;"></i>
+              <div><div style="font-size:14px;font-weight:600;color:#dde2f8;margin-bottom:3px;">Reportes Automatizados</div><div style="font-size:13px;color:#6b7299;">Exportación PDF/Excel programada</div></div>
+            </div>
+          </div>
+
+          <a href="https://ST-FONDES.streamlit.app" target="_blank" class="btn-primary" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#4f8ef7,#8b5cf6);color:white;padding:15px 30px;border-radius:12px;font-weight:600;font-size:15px;">
+            <i class="ti ti-rocket" style="font-size:18px;"></i>
+            Abrir ST-FONDES
+            <i class="ti ti-arrow-right" style="font-size:16px;"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact" style="padding:100px 0;">
+  <div style="max-width:1200px;margin:0 auto;padding:0 24px;">
+    <div style="text-align:center;margin-bottom:64px;" data-aos="fade-up">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#4f8ef7;letter-spacing:.12em;display:block;margin-bottom:12px;">// 05. CONTACTO</span>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-size:clamp(32px,4vw,48px);font-weight:700;color:#dde2f8;letter-spacing:-1.5px;margin-bottom:20px;">Hablemos de tu <span class="gradient-text">proyecto</span></h2>
+      <div style="width:60px;height:3px;background:linear-gradient(90deg,#4f8ef7,#8b5cf6);margin:0 auto;border-radius:2px;"></div>
+      <p style="color:#8892b0;font-size:16px;max-width:460px;margin:20px auto 0;">¿Tienes un proyecto de datos o tecnología en mente? Conversemos.</p>
+    </div>
+
+    <div style="display:flex;gap:48px;" class="contact-split">
+      <div class="contact-info" style="flex:0 0 360px;" data-aos="fade-right">
+        <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:32px;">
+          <a href="mailto:admin@hectorjhon.com" class="contact-item" style="display:flex;align-items:center;gap:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:18px;color:inherit;">
+            <div style="width:46px;height:46px;background:rgba(79,142,247,.1);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-mail" style="font-size:22px;color:#4f8ef7;"></i></div>
+            <div><div style="font-size:11px;color:#6b7299;margin-bottom:3px;font-family:'JetBrains Mono',monospace;">Email</div><div style="font-size:14px;font-weight:500;color:#dde2f8;">admin@hectorjhon.com</div></div>
+            <i class="ti ti-arrow-right" style="font-size:15px;color:#6b7299;margin-left:auto;"></i>
+          </a>
+          <a href="https://linkedin.com/in/hectorjhon" target="_blank" class="contact-item" style="display:flex;align-items:center;gap:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:18px;color:inherit;">
+            <div style="width:46px;height:46px;background:rgba(10,102,194,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-brand-linkedin" style="font-size:22px;color:#0a66c2;"></i></div>
+            <div><div style="font-size:11px;color:#6b7299;margin-bottom:3px;font-family:'JetBrains Mono',monospace;">LinkedIn</div><div style="font-size:14px;font-weight:500;color:#dde2f8;">linkedin.com/in/hectorjhon</div></div>
+            <i class="ti ti-arrow-right" style="font-size:15px;color:#6b7299;margin-left:auto;"></i>
+          </a>
+          <a href="https://github.com/hectorjhon" target="_blank" class="contact-item" style="display:flex;align-items:center;gap:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:18px;color:inherit;">
+            <div style="width:46px;height:46px;background:rgba(255,255,255,.06);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-brand-github" style="font-size:22px;color:#dde2f8;"></i></div>
+            <div><div style="font-size:11px;color:#6b7299;margin-bottom:3px;font-family:'JetBrains Mono',monospace;">GitHub</div><div style="font-size:14px;font-weight:500;color:#dde2f8;">github.com/hectorjhon</div></div>
+            <i class="ti ti-arrow-right" style="font-size:15px;color:#6b7299;margin-left:auto;"></i>
+          </a>
+          <a href="https://wa.me/51999999999" target="_blank" class="contact-item" style="display:flex;align-items:center;gap:16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:18px;color:inherit;">
+            <div style="width:46px;height:46px;background:rgba(37,211,102,.1);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="ti ti-brand-whatsapp" style="font-size:22px;color:#25d366;"></i></div>
+            <div><div style="font-size:11px;color:#6b7299;margin-bottom:3px;font-family:'JetBrains Mono',monospace;">WhatsApp</div><div style="font-size:14px;font-weight:500;color:#dde2f8;">+51 999 999 999</div></div>
+            <i class="ti ti-arrow-right" style="font-size:15px;color:#6b7299;margin-left:auto;"></i>
+          </a>
+        </div>
+        <div style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:22px;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+            <span style="width:8px;height:8px;background:#10b981;border-radius:50%;animation:pulseGlow 2s infinite;"></span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#10b981;font-weight:500;">Disponible para proyectos</span>
+          </div>
+          <p style="font-size:13px;color:#8892b0;line-height:1.65;">Abierto a freelance, consultoría y colaboraciones. Tiempo de respuesta: &lt; 24h.</p>
+        </div>
+      </div>
+
+      <div style="flex:1;min-width:0;" data-aos="fade-left">
+        <div style="background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:40px;">
+          <h3 style="font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:#dde2f8;margin-bottom:28px;">Envíame un mensaje</h3>
+          <form onSubmit="{{ handleSubmit }}" style="display:flex;flex-direction:column;gap:18px;">
+            <div style="display:flex;gap:18px;">
+              <div style="flex:1;">
+                <label style="display:block;font-size:12px;color:#8892b0;margin-bottom:7px;font-family:'JetBrains Mono',monospace;">Nombre</label>
+                <input class="form-input" type="text" placeholder="Tu nombre" style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;color:#dde2f8;font-size:14px;font-family:'Inter',sans-serif;">
+              </div>
+              <div style="flex:1;">
+                <label style="display:block;font-size:12px;color:#8892b0;margin-bottom:7px;font-family:'JetBrains Mono',monospace;">Email</label>
+                <input class="form-input" type="email" placeholder="tu@email.com" style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;color:#dde2f8;font-size:14px;font-family:'Inter',sans-serif;">
+              </div>
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;color:#8892b0;margin-bottom:7px;font-family:'JetBrains Mono',monospace;">Asunto</label>
+              <input class="form-input" type="text" placeholder="¿En qué puedo ayudarte?" style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;color:#dde2f8;font-size:14px;font-family:'Inter',sans-serif;">
+            </div>
+            <div>
+              <label style="display:block;font-size:12px;color:#8892b0;margin-bottom:7px;font-family:'JetBrains Mono',monospace;">Mensaje</label>
+              <textarea class="form-input" placeholder="Cuéntame sobre tu proyecto..." rows="5" style="width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:11px 14px;color:#dde2f8;font-size:14px;font-family:'Inter',sans-serif;resize:vertical;"></textarea>
+            </div>
+            <button type="submit" id="submit-btn" class="btn-primary" style="background:linear-gradient(135deg,#4f8ef7,#8b5cf6);color:white;padding:14px 32px;border-radius:10px;font-weight:600;font-size:15px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Inter',sans-serif;">
+              <i class="ti ti-send" style="font-size:18px;"></i> Enviar mensaje
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer style="background:#050510;border-top:1px solid rgba(255,255,255,.06);padding:60px 0 28px;">
+  <div style="max-width:1200px;margin:0 auto;padding:0 24px;">
+    <div style="display:flex;justify-content:space-between;gap:48px;margin-bottom:48px;" class="footer-grid">
+      <div style="flex:0 0 260px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+          <div style="width:36px;height:36px;background:linear-gradient(135deg,#4f8ef7,#8b5cf6);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:white;">HJ</div>
+          <span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;color:#dde2f8;">Héctor Jhon</span>
+        </div>
+        <p style="font-size:14px;color:#6b7299;line-height:1.7;margin-bottom:22px;">Analista de Datos &amp; Consultor Tecnológico. Transformando datos en decisiones estratégicas.</p>
+        <div style="display:flex;gap:8px;">
+          <a href="#" class="social-btn" style="width:34px;height:34px;border:1px solid rgba(255,255,255,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#6b7299;"><i class="ti ti-brand-github" style="font-size:16px;"></i></a>
+          <a href="#" class="social-btn" style="width:34px;height:34px;border:1px solid rgba(255,255,255,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#6b7299;"><i class="ti ti-brand-linkedin" style="font-size:16px;"></i></a>
+          <a href="#" class="social-btn" style="width:34px;height:34px;border:1px solid rgba(255,255,255,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#6b7299;"><i class="ti ti-brand-twitter" style="font-size:16px;"></i></a>
+          <a href="mailto:admin@hectorjhon.com" class="social-btn" style="width:34px;height:34px;border:1px solid rgba(255,255,255,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#6b7299;"><i class="ti ti-mail" style="font-size:16px;"></i></a>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:#dde2f8;margin-bottom:18px;letter-spacing:.04em;text-transform:uppercase;">Navegación</div>
+        <div style="display:flex;flex-direction:column;gap:11px;">
+          <a href="#about" style="font-size:14px;color:#6b7299;">Sobre mí</a>
+          <a href="#projects" style="font-size:14px;color:#6b7299;">Proyectos</a>
+          <a href="#skills" style="font-size:14px;color:#6b7299;">Habilidades</a>
+          <a href="#stfondes" style="font-size:14px;color:#6b7299;">ST-FONDES</a>
+          <a href="#contact" style="font-size:14px;color:#6b7299;">Contacto</a>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:#dde2f8;margin-bottom:18px;letter-spacing:.04em;text-transform:uppercase;">Servicios</div>
+        <div style="display:flex;flex-direction:column;gap:11px;">
+          <span style="font-size:14px;color:#6b7299;">Análisis de Datos</span>
+          <span style="font-size:14px;color:#6b7299;">Machine Learning</span>
+          <span style="font-size:14px;color:#6b7299;">Visualización BI</span>
+          <span style="font-size:14px;color:#6b7299;">Apps Streamlit</span>
+          <span style="font-size:14px;color:#6b7299;">Consultoría</span>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;color:#dde2f8;margin-bottom:18px;letter-spacing:.04em;text-transform:uppercase;">Contacto</div>
+        <div style="display:flex;flex-direction:column;gap:13px;">
+          <a href="mailto:admin@hectorjhon.com" style="display:flex;align-items:center;gap:10px;font-size:14px;color:#6b7299;"><i class="ti ti-mail" style="font-size:15px;color:#4f8ef7;"></i>admin@hectorjhon.com</a>
+          <div style="display:flex;align-items:center;gap:10px;font-size:14px;color:#6b7299;"><i class="ti ti-map-pin" style="font-size:15px;color:#8b5cf6;"></i>Perú</div>
+          <a href="https://www.hectorjhon.com" style="display:flex;align-items:center;gap:10px;font-size:14px;color:#6b7299;"><i class="ti ti-world" style="font-size:15px;color:#10b981;"></i>www.hectorjhon.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="border-top:1px solid rgba(255,255,255,.06);padding-top:26px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px;">
+      <span style="font-size:13px;color:#6b7299;">© 2025 Hector Hernan Jhon Trisolini · Todos los derechos reservados</span>
+      <div style="display:flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#6b7299;">
+        <span>Construido con</span><span style="color:#ef4444;">♥</span><span>y</span><span style="color:#4f8ef7;">código limpio</span>
+      </div>
+    </div>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1440, &quot;height&quot;: 900 }
+}">
+class Component extends DCLogic {
+  state = { scrolled: false, menuOpen: false };
+
+  componentDidMount() {
+    if (window.AOS) {
+      AOS.init({ duration: 700, once: true, offset: 60, easing: 'ease-out-cubic' });
+    }
+    this._scrollHandler = () => {
+      const s = window.scrollY > 60;
+      if (s !== this.state.scrolled) this.setState({ scrolled: s });
+    };
+    window.addEventListener('scroll', this._scrollHandler, { passive: true });
+    this._startTyped();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._scrollHandler);
+    if (this._typedTimer) clearTimeout(this._typedTimer);
+  }
+
+  _startTyped() {
+    const roles = [
+      'Data Scientist',
+      'Analista de Sistemas',
+      'Consultor Tecnológico',
+      'Desarrollador Python',
+      'Experto en Power BI'
+    ];
+    let idx = 0, charIdx = 0, deleting = false;
+    const tick = () => {
+      const el = document.getElementById('typed-text');
+      if (!el) return;
+      const word = roles[idx];
+      if (deleting) { charIdx--; } else { charIdx++; }
+      el.textContent = word.substring(0, charIdx);
+      let delay = deleting ? 55 : 105;
+      if (!deleting && charIdx === word.length) { delay = 2200; deleting = true; }
+      else if (deleting && charIdx === 0) { deleting = false; idx = (idx + 1) % roles.length; delay = 380; }
+      this._typedTimer = setTimeout(tick, delay);
+    };
+    this._typedTimer = setTimeout(tick, 900);
+  }
+
+  renderVals() {
+    const { scrolled, menuOpen } = this.state;
+    return {
+      scrolled,
+      menuOpen,
+      navBg: scrolled ? 'rgba(7,7,26,.97)' : 'transparent',
+      navBlur: scrolled ? 'blur(24px) saturate(180%)' : 'none',
+      navBorder: scrolled ? '1px solid rgba(255,255,255,.08)' : '1px solid transparent',
+      menuIcon: menuOpen ? 'ti ti-x' : 'ti ti-menu-2',
+      toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      handleSubmit: (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('submit-btn');
+        if (btn) {
+          btn.innerHTML = '<i class="ti ti-check" style="font-size:18px"></i> Mensaje enviado';
+          btn.style.background = 'linear-gradient(135deg,#10b981,#059669)';
+          btn.disabled = true;
+        }
+      },
+    };
+  }
+}
+</script>
+</body>
+</html>
