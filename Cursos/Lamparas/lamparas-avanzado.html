@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso Avanzado: Diseños Profesionales con Fusion 360</title>
+    <meta name="description" content="Domina Fusion 360, compra al por mayor en Alibaba, crea tienda online propia y vende lámparas 3D de lujo.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0e27;
+            --bg-darker: #050814;
+            --accent-purple: #9d4edd;
+            --accent-pink: #ff006e;
+            --accent-cyan: #00d4ff;
+            --text-white: #ffffff;
+            --text-light: #e8e8f0;
+            --text-pale: #d0d0e8;
+            --gradient-1: linear-gradient(135deg, #1a1f3a 0%, #16213e 100%);
+            --gradient-2: linear-gradient(135deg, #9d4edd 0%, #ff006e 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animaciones */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(20px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(157, 78, 221, 0.3), 0 0 40px rgba(255, 0, 110, 0.1); }
+            50% { box-shadow: 0 0 40px rgba(157, 78, 221, 0.5), 0 0 60px rgba(255, 0, 110, 0.2); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Header */
+        header {
+            background: var(--gradient-1);
+            border-bottom: 1px solid rgba(157, 78, 221, 0.2);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: bold;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(157, 78, 221, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 0, 110, 0.05) 0%, transparent 50%);
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(157, 78, 221, 0.05) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(157, 78, 221, 0.15);
+            border: 1px solid var(--accent-purple);
+            color: var(--accent-cyan);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+            backdrop-filter: blur(10px);
+        }
+
+        .badge-premium {
+            background: rgba(255, 0, 110, 0.15);
+            border-color: var(--accent-pink);
+            color: var(--accent-pink);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 25px;
+            color: var(--text-white);
+            line-height: 1.2;
+            background: linear-gradient(135deg, #ffffff 0%, #d0d0e8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInLeft 0.8s ease-out 0.1s both;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 35px;
+            color: var(--text-pale);
+            line-height: 1.8;
+            animation: slideInRight 0.8s ease-out 0.2s both;
+        }
+
+        .cta-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-button.primary {
+            background: var(--gradient-2);
+            border-color: var(--accent-pink);
+            color: var(--text-white);
+            box-shadow: 0 0 30px rgba(157, 78, 221, 0.3);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .cta-button.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px rgba(157, 78, 221, 0.5);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .cta-button.secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.4);
+            transform: translateY(-3px);
+        }
+
+        /* Countdown */
+        .countdown-box {
+            background: rgba(157, 78, 221, 0.05);
+            border: 1px solid rgba(157, 78, 221, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            backdrop-filter: blur(10px);
+            animation: slideInUp 0.8s ease-out 0.4s both;
+        }
+
+        .countdown-box h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--accent-purple);
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .timer-item {
+            background: linear-gradient(135deg, rgba(157, 78, 221, 0.15) 0%, rgba(255, 0, 110, 0.05) 100%);
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 70px;
+            border: 1px solid rgba(157, 78, 221, 0.1);
+        }
+
+        .timer-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-purple);
+        }
+
+        .timer-label {
+            font-size: 0.8rem;
+            color: var(--text-pale);
+            margin-top: 5px;
+        }
+
+        /* Secciones */
+        section {
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        section.alt {
+            background: var(--gradient-1);
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            margin-bottom: 60px;
+            text-align: center;
+            color: var(--text-white);
+            position: relative;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--gradient-2);
+            border-radius: 2px;
+        }
+
+        h3 {
+            color: var(--accent-cyan);
+            margin-bottom: 15px;
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .card {
+            background: var(--gradient-1);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(157, 78, 221, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(157, 78, 221, 0.4);
+            box-shadow: 0 15px 50px rgba(157, 78, 221, 0.2);
+        }
+
+        .card-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .card h3 {
+            color: var(--text-white);
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: var(--text-pale);
+            font-size: 0.95rem;
+        }
+
+        /* Learning Items */
+        .learning-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .learning-item {
+            display: flex;
+            gap: 15px;
+            padding: 25px;
+            background: rgba(157, 78, 221, 0.08);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-purple);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .learning-item:hover {
+            background: rgba(157, 78, 221, 0.12);
+            transform: translateX(5px);
+        }
+
+        .learning-item-icon {
+            color: var(--accent-purple);
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .learning-item-text h4 {
+            color: var(--text-white);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .learning-item-text p {
+            color: var(--text-pale);
+            font-size: 0.9rem;
+        }
+
+        /* Suppliers */
+        .suppliers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+            margin-top: 50px;
+        }
+
+        .supplier-card {
+            background: var(--gradient-1);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(157, 78, 221, 0.15);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .supplier-card:hover {
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .supplier-logo {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .supplier-card h4 {
+            color: var(--text-white);
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        .supplier-card p {
+            color: var(--text-pale);
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+
+        .supplier-link {
+            display: inline-block;
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .supplier-link:hover {
+            color: var(--accent-pink);
+        }
+
+        /* Premium Badge */
+        .premium-badge {
+            position: relative;
+            display: inline-block;
+        }
+
+        .premium-label {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            background: linear-gradient(135deg, #9d4edd 0%, #ff006e 100%);
+            color: var(--text-white);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        /* Bonus Card */
+        .bonus-card {
+            background: linear-gradient(135deg, rgba(157, 78, 221, 0.2) 0%, rgba(255, 0, 110, 0.1) 100%);
+            border: 2px solid var(--accent-pink);
+            color: var(--text-white);
+            padding: 50px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 50px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .bonus-card::before {
+            content: '✨';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 4rem;
+            opacity: 0.2;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .bonus-card h3 {
+            color: var(--accent-pink);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Testimonios */
+        .testimonial {
+            background: var(--gradient-1);
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-purple);
+            border-top: 1px solid rgba(157, 78, 221, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .testimonial:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(157, 78, 221, 0.15);
+        }
+
+        .testimonial-stars {
+            color: var(--accent-purple);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .testimonial-text {
+            color: var(--text-pale);
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: var(--accent-pink);
+            font-size: 0.95rem;
+        }
+
+        /* FAQ */
+        .faq-item {
+            background: var(--gradient-1);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-cyan);
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .faq-item h4 {
+            color: var(--text-white);
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .faq-item h4:hover {
+            color: var(--accent-pink);
+        }
+
+        .faq-item p {
+            color: var(--text-pale);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-darker);
+            border-top: 1px solid rgba(157, 78, 221, 0.15);
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        footer p {
+            margin-bottom: 12px;
+            color: var(--text-pale);
+        }
+
+        footer a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--accent-pink);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+                margin-bottom: 40px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <span class="logo-icon">⭐</span>
+                    <span>3D Lamp Academy PRO</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#modulos">Módulos</a></li>
+                    <li><a href="#proveedores">Proveedores</a></li>
+                    <li><a href="#tienda">Tu Tienda</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="badge badge-premium">👑 CURSO AVANZADO PREMIUM</span>
+            <h1>Diseños Profesionales con Fusion 360</h1>
+            <p>Domina Fusion 360, compra al por mayor en Alibaba, crea tu tienda online propia y vende lámparas 3D de lujo con márgenes de ganancia de 300%-500%.</p>
+            
+            <div class="cta-container">
+                <button class="cta-button primary" onclick="alert('¡Excelente! Te notificaremos cuando esté disponible.')">
+                    👑 Acceso VIP (40% Descuento)
+                </button>
+                <button class="cta-button secondary" onclick="document.querySelector('#modulos').scrollIntoView({behavior: 'smooth'})">
+                    📚 Ver Contenido Avanzado
+                </button>
+            </div>
+
+            <div class="countdown-box">
+                <h3>⏰ Abrimos en:</h3>
+                <div class="countdown-timer">
+                    <div class="timer-item">
+                        <div class="timer-number" id="days">28</div>
+                        <div class="timer-label">Días</div>
+                    </div>
+                    <div class="timer-item">
+                        <div class="timer-number" id="hours">05</div>
+                        <div class="timer-label">Horas</div>
+                    </div>
+                    <div class="timer-item">
+                        <div class="timer-number" id="minutes">15</div>
+                        <div class="timer-label">Minutos</div>
+                    </div>
+                    <div class="timer-item">
+                        <div class="timer-number" id="seconds">42</div>
+                        <div class="timer-label">Segundos</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Módulos del Curso -->
+    <section id="modulos" class="alt">
+        <div class="container">
+            <h2>🎓 Módulos Avanzados</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon">🚀</div>
+                    <h3>1. Domina Fusion 360</h3>
+                    <p>Modelado paramétrico, superficies complejas y diseños de precisión profesional. Desde intermedio a experto.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎨</div>
+                    <h3>2. Diseños Únicas y Patentables</h3>
+                    <p>Técnicas avanzadas para crear diseños exclusivos que la competencia no puede copiar. Diferenciación total.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">⚙️</div>
+                    <h3>3. Optimización Profesional</h3>
+                    <p>Análisis de costos, tiempo de impresión y rendimiento. Maximiza ganancias reduciendo desperdicios.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🌏</div>
+                    <h3>4. Compra al Por Mayor (Alibaba)</h3>
+                    <p>Negocia directamente con proveedores chinos. Obtén componentes a 1/3 del precio local.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🏭</div>
+                    <h3>5. Manufactura en China</h3>
+                    <p>Encarga impresión masiva en fábricas chinas. Crea inventario sin invertir en impresoras propias.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🌐</div>
+                    <h3>6. Tu Tienda Online Propia</h3>
+                    <p>Shopify, WordPress, Wix. Crea y lanza tu ecommerce profesional en 2 semanas.</p>
+                </div>
+            </div>
+
+            <div class="bonus-card">
+                <h3>🎁 Bonus Exclusive: Litofanía Premium + Pack 50 Modelos</h3>
+                <p>Técnica avanzada de litofanía + 50 modelos 3D profesionales listos para producción masiva.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Qué Aprenderás -->
+    <section>
+        <div class="container">
+            <h2>✨ Conocimientos Avanzados</h2>
+            <div class="learning-grid">
+                <div class="learning-item">
+                    <div class="learning-item-icon">🔧</div>
+                    <div class="learning-item-text">
+                        <h4>Fusion 360 Experto</h4>
+                        <p>Modelado paramétrico, ensamblajes complejos y renders profesionales.</p>
+                    </div>
+                </div>
+                <div class="learning-item">
+                    <div class="learning-item-icon">💎</div>
+                    <div class="learning-item-text">
+                        <h4>Diseños de Lujo</h4>
+                        <p>Crear productos premium con detalles sofisticados que justifican precios altos.</p>
+                    </div>
+                </div>
+                <div class="learning-item">
+                    <div class="learning-item-icon">📊</div>
+                    <div class="learning-item-text">
+                        <h4>Análisis de Costos</h4>
+                        <p>Proyecciones financieras y márgenes de ganancia para cada diseño.</p>
+                    </div>
+                </div>
+                <div class="learning-item">
+                    <div class="learning-item-icon">🤝</div>
+                    <div class="learning-item-text">
+                        <h4>Negociación en Alibaba</h4>
+                        <p>Cómo contactar proveedores, negociar precios y asegurar calidad.</p>
+                    </div>
+                </div>
+                <div class="learning-item">
+                    <div class="learning-item-icon">🏭</div>
+                    <div class="learning-item-text">
+                        <h4>Manufactura en Masa</h4>
+                        <p>Procesos de producción, control de calidad y logística internacional.</p>
+                    </div>
+                </div>
+                <div class="learning-item">
+                    <div class="learning-item-icon">💻</div>
+                    <div class="learning-item-text">
+                        <h4>Tu Ecommerce Propio</h4>
+                        <p>Plataforma, marketing, SEO y estrategia de crecimiento a escala.</p>
+                    </div>
+                </div>
+                <div class="learning-item">
+                    <div class="learning-item-icon">📸</div>
+                    <div class="learning-item-text">
+                        <h4>Fotografia Comercial</h4>
+                        <p>Renders 3D profesionales y fotografía que convierte visitantes en clientes.</p>
+                    </div>
+                </div>
+                <div class="learning-item">
+                    <div class="learning-item-icon">🎯</div>
+                    <div class="learning-item-text">
+                        <h4>Marketing Avanzado</h4>
+                        <p>Estrategia de Facebook/Instagram Ads y SEO para dominar tu nicho.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proveedores y Manufactura -->
+    <section id="proveedores" class="alt">
+        <div class="container">
+            <h2>🌏 Compra al Por Mayor: Alibaba & Made in China</h2>
+            <p style="text-align: center; color: var(--text-pale); margin-bottom: 40px; font-size: 1.1rem;">
+                Accede a precios de mayorista y manufactura en China. Ahorra hasta 70% en costos.
+            </p>
+
+            <div class="suppliers-grid">
+                <div class="supplier-card">
+                    <div class="supplier-logo">🌐</div>
+                    <h4>Alibaba</h4>
+                    <p>Millones de proveedores. Componentes y manufactura. Perfecto para escala.</p>
+                    <a href="https://www.alibaba.com" target="_blank" class="supplier-link">Explorar →</a>
+                </div>
+                <div class="supplier-card">
+                    <div class="supplier-logo">🏭</div>
+                    <h4>Made in China</h4>
+                    <p>Plataforma especializada en manufactura. Impresión 3D masiva disponible.</p>
+                    <a href="https://www.made-in-china.com" target="_blank" class="supplier-link">Descubrir →</a>
+                </div>
+                <div class="supplier-card">
+                    <div class="supplier-logo">📦</div>
+                    <h4>GlobalSources</h4>
+                    <p>Verificación de proveedores. Mayor seguridad en transacciones.</p>
+                    <a href="https://www.globalsources.com" target="_blank" class="supplier-link">Visitar →</a>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 40px; background: rgba(157, 78, 221, 0.05); border-left: 4px solid var(--accent-purple);">
+                <h3>💡 Estrategia de Compra al Por Mayor</h3>
+                <ul style="list-style: none; text-align: left; max-width: 700px; margin: 20px auto;">
+                    <li style="padding: 12px 0; border-bottom: 1px solid rgba(157, 78, 221, 0.15);">
+                        <strong style="color: var(--accent-cyan);">Verificación:</strong> <span style="color: var(--text-pale);">Valida proveedores antes de comprometer capital. Samples primero.</span>
+                    </li>
+                    <li style="padding: 12px 0; border-bottom: 1px solid rgba(157, 78, 221, 0.15);">
+                        <strong style="color: var(--accent-cyan);">Negociación:</strong> <span style="color: var(--text-pale);">Volumen mínimos de 100-500 unidades. Márgenes de 300-500%.</span>
+                    </li>
+                    <li style="padding: 12px 0;">
+                        <strong style="color: var(--accent-cyan);">Logística:</strong> <span style="color: var(--text-pale);">Envío por mar (lento pero barato) o aire (rápido, caro). Elige según tu modelo.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tu Tienda Online -->
+    <section id="tienda">
+        <div class="container">
+            <h2>🛍️ Crea Tu Tienda Online Propia</h2>
+            <p style="text-align: center; color: var(--text-pale); margin-bottom: 40px; font-size: 1.1rem;">
+                Monetiza directamente. Sin intermediarios. 100% de las ganancias son tuyas.
+            </p>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon">🚀</div>
+                    <h3>Shopify Premium</h3>
+                    <p>Plataforma todo en uno. Diseños profesionales, marketing integrado, análisis avanzados.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎨</div>
+                    <h3>WordPress + WooCommerce</h3>
+                    <p>Control total. Máxima personalización. Inversión más baja a largo plazo.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💳</div>
+                    <h3>Pagos Internacionales</h3>
+                    <p>Stripe, PayPal, mercadopago. Vende a todo el mundo desde tu tienda.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📊</div>
+                    <h3>Analítica Completa</h3>
+                    <p>Dashboard que muestra exactamente qué vende, cuándo y a quién.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎯</div>
+                    <h3>Marketing Integrado</h3>
+                    <p>Email, SMS, Facebook Ads, Google Shopping. Todo en una plataforma.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🌍</div>
+                    <h3>Vende Internacionalmente</h3>
+                    <p>Múltiples monedas, idiomas y métodos de envío para clientes globales.</p>
+                </div>
+            </div>
+
+            <div class="bonus-card">
+                <h3>💎 Incluido: Diseño Profesional de Tienda</h3>
+                <p>Template premium + instalación + primeros 3 meses de hosting gratis.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Litofanía Premium -->
+    <section class="alt">
+        <div class="container">
+            <h2>✨ Bonus: Litofanía Premium Avanzada</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon">📸</div>
+                    <h3>Fotogrametría Profesional</h3>
+                    <p>Convierte cualquier foto en modelos 3D de alta resolución con técnicas profesionales.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎨</div>
+                    <h3>Diseños Artísticos</h3>
+                    <p>Crea lámparas de arte que se venden a 200-500 soles cada una. Margen: 400%.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💡</div>
+                    <h3>Efectos de Luz Avanzados</h3>
+                    <p>Juega con espesores y densidad de material para efectos de luz cinématicos.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎁</div>
+                    <h3>Regalos Personalizados Premium</h3>
+                    <p>Ofrece lámparas personalizadas con fotos. Precio: 300-800 soles por unidad.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">👨‍👩‍👧‍👦</div>
+                    <h3>Retratos en Luz</h3>
+                    <p>Transforma fotos familiares en obras de arte iluminadas. Nicho sin competencia.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🚀</div>
+                    <h3>Escala de Producción</h3>
+                    <p>Automatiza la creación en lotes. Produce 100+ litofanías por semana en China.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section>
+        <div class="container">
+            <h2>⭐ Resultados de Estudiantes Avanzados</h2>
+            <div class="grid">
+                <div class="testimonial">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-text">
+                        "Pasé de vender 50 lámparas/mes en Mercado Libre a 500/mes en mi tienda propia. Las ganancias se triplicaron."
+                    </div>
+                    <div class="testimonial-author">- Roberto S., Lima (9 meses de curso)</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-text">
+                        "Negocié en Alibaba, reduje costos 70%. Ahora mi margen es de 400%. Negocio completamente escalable."
+                    </div>
+                    <div class="testimonial-author">- Daniela M., Cusco (Mes 4)</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-text">
+                        "Las litofanías personalizadas son mi estrella. Vendo 20-30 por semana a 400 soles. Increíble rentabilidad."
+                    </div>
+                    <div class="testimonial-author">- Javier T., Arequipa (5 meses)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="alt">
+        <div class="container">
+            <h2>❓ Preguntas Avanzadas</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="faq-item">
+                    <h4>¿Necesito ser experto en 3D para empezar?</h4>
+                    <p>Recomendamos completar el curso básico primero. Si ya sabes Tinkercad, estás listo para avanzar a Fusion 360.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>¿Cómo negocio en Alibaba sin experiencia?</h4>
+                    <p>Te enseñamos el proceso completo: verificación de proveedores, negociación, pagos seguros y logística.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>¿Puedo vender en mi tienda mientras vendo en Mercado Libre?</h4>
+                    <p>Sí. Muchos estudiantes usan ambos canales. Tu tienda es para clientes premium y venta directa sin comisiones.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>¿Cuál es el ROI de este curso?</h4>
+                    <p>Estudiantes reportan recuperar la inversión en 2-4 semanas. Luego, ganancias puras.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>¿Incluye mentoría o grupo de estudiantes?</h4>
+                    <p>Sí. Acceso de por vida a comunidad privada + sesiones mensuales de mentoría grupal e individual.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>¿Qué diferencia hay con el curso básico?</h4>
+                    <p>Básico: Tinkercad + Mercado Libre. Avanzado: Fusion 360 + Tienda propia + Alibaba + Litofanía + Escala internacional.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section style="background: var(--gradient-1); text-align: center; border-top: 1px solid rgba(157, 78, 221, 0.2);">
+        <div class="container">
+            <h2 style="color: var(--text-white);">Transforma Tu Negocio</h2>
+            <p style="font-size: 1.2rem; margin: 25px 0; color: var(--text-pale);">
+                De emprendedor a empresario. Crea un negocio 100% automatizado y escalable.
+            </p>
+            <button class="cta-button primary" style="font-size: 1.15rem; padding: 18px 50px;" onclick="alert('¡Perfecto! Acceso VIP asegurado.')">
+                👑 Reservar Acceso VIP (40% OFF)
+            </button>
+            <p style="margin-top: 30px; font-size: 0.95rem; color: var(--text-pale);">
+                ⏰ Solo 50 estudiantes de acceso limitado. Incluye mentoría de por vida + actualizaciones.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p><strong style="color: var(--text-white);">3D Lamp Academy PRO</strong></p>
+            <p>Curso Avanzado: Diseños Profesionales con Fusion 360</p>
+            <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-pale);">
+                © 2024 3D Lamp Academy. Todos los derechos reservados.<br>
+                Transformando emprendedores en empresarios digitales.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            const targetDate = new Date('2025-03-01T00:00:00').getTime();
+            
+            setInterval(() => {
+                const now = new Date().getTime();
+                const difference = targetDate - now;
+                
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').textContent = days;
+                document.getElementById('hours').textContent = hours;
+                document.getElementById('minutes').textContent = minutes;
+                document.getElementById('seconds').textContent = seconds;
+            }, 1000);
+        }
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        updateCountdown();
+    </script>
+</body>
+</html>

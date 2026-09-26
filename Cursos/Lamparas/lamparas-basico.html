@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso Básico: Diseña tu Primera Lámpara 3D con Tinkercad</title>
+    <meta name="description" content="Aprende desde cero a diseñar lámparas 3D con Tinkercad e imprime tus primeras creaciones. Vende en Mercado Libre sin experiencia previa.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0e27;
+            --bg-darker: #050814;
+            --accent-orange: #ff6b35;
+            --accent-cyan: #00d4ff;
+            --text-white: #ffffff;
+            --text-light: #e8e8f0;
+            --text-pale: #d0d0e8;
+            --gradient-1: linear-gradient(135deg, #1a1f3a 0%, #16213e 100%);
+            --gradient-2: linear-gradient(135deg, #ff6b35 0%, #ff8555 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animaciones de fondo */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(20px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 53, 0.3), 0 0 40px rgba(0, 212, 255, 0.1); }
+            50% { box-shadow: 0 0 40px rgba(255, 107, 53, 0.5), 0 0 60px rgba(0, 212, 255, 0.2); }
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Header */
+        header {
+            background: var(--gradient-1);
+            border-bottom: 1px solid rgba(255, 107, 53, 0.2);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: bold;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 212, 255, 0.05) 0%, transparent 50%);
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.05) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0, 212, 255, 0.15);
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 25px;
+            color: var(--text-white);
+            line-height: 1.2;
+            background: linear-gradient(135deg, #ffffff 0%, #d0d0e8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInLeft 0.8s ease-out 0.1s both;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 35px;
+            color: var(--text-pale);
+            line-height: 1.8;
+            animation: slideInRight 0.8s ease-out 0.2s both;
+        }
+
+        .cta-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.3s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.05rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+        }
+
+        .cta-button.primary {
+            background: var(--gradient-2);
+            border-color: var(--accent-orange);
+            color: var(--text-white);
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.3);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .cta-button.primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px rgba(255, 107, 53, 0.5);
+        }
+
+        .cta-button.secondary {
+            background: transparent;
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .cta-button.secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.4);
+            transform: translateY(-3px);
+        }
+
+        /* Countdown */
+        .countdown-box {
+            background: rgba(255, 107, 53, 0.05);
+            border: 1px solid rgba(255, 107, 53, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            backdrop-filter: blur(10px);
+            animation: slideInUp 0.8s ease-out 0.4s both;
+        }
+
+        .countdown-box h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--accent-orange);
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .timer-item {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.15) 0%, rgba(0, 212, 255, 0.05) 100%);
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 70px;
+            border: 1px solid rgba(255, 107, 53, 0.1);
+        }
+
+        .timer-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--accent-orange);
+        }
+
+        .timer-label {
+            font-size: 0.8rem;
+            color: var(--text-pale);
+            margin-top: 5px;
+        }
+
+        /* Secciones */
+        section {
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        section.alt {
+            background: var(--gradient-1);
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            margin-bottom: 60px;
+            text-align: center;
+            color: var(--text-white);
+            position: relative;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--gradient-2);
+            border-radius: 2px;
+        }
+
+        h3 {
+            color: var(--accent-cyan);
+            margin-bottom: 15px;
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+
+        .card {
+            background: var(--gradient-1);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 107, 53, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 107, 53, 0.4);
+            box-shadow: 0 15px 50px rgba(255, 107, 53, 0.2);
+        }
+
+        .card-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .card h3 {
+            color: var(--text-white);
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: var(--text-pale);
+            font-size: 0.95rem;
+        }
+
+        /* Learning Items */
+        .learning-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .learning-item {
+            display: flex;
+            gap: 15px;
+            padding: 25px;
+            background: rgba(255, 107, 53, 0.08);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-orange);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .learning-item:hover {
+            background: rgba(255, 107, 53, 0.12);
+            transform: translateX(5px);
+        }
+
+        .learning-item-icon {
+            color: var(--accent-orange);
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .learning-item-text h4 {
+            color: var(--text-white);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .learning-item-text p {
+            color: var(--text-pale);
+            font-size: 0.9rem;
+        }
+
+        /* Suppliers */
+        .suppliers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+            margin-top: 50px;
+        }
+
+        .supplier-card {
+            background: var(--gradient-1);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .supplier-card:hover {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .supplier-logo {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .supplier-card h4 {
+            color: var(--text-white);
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        .supplier-card p {
+            color: var(--text-pale);
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+
+        .supplier-link {
+            display: inline-block;
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .supplier-link:hover {
+            color: var(--accent-orange);
+        }
+
+        /* Bonus Card */
+        .bonus-card {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.2) 0%, rgba(0, 212, 255, 0.1) 100%);
+            border: 2px solid var(--accent-orange);
+            color: var(--text-white);
+            padding: 50px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 50px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .bonus-card::before {
+            content: '✨';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 4rem;
+            opacity: 0.2;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .bonus-card h3 {
+            color: var(--accent-orange);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Testimonios */
+        .testimonial {
+            background: var(--gradient-1);
+            padding: 30px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-orange);
+            border-top: 1px solid rgba(0, 212, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .testimonial:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(255, 107, 53, 0.15);
+        }
+
+        .testimonial-stars {
+            color: var(--accent-orange);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .testimonial-text {
+            color: var(--text-pale);
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+            color: var(--accent-cyan);
+            font-size: 0.95rem;
+        }
+
+        /* FAQ */
+        .faq-item {
+            background: var(--gradient-1);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-cyan);
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .faq-item h4 {
+            color: var(--text-white);
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .faq-item h4:hover {
+            color: var(--accent-orange);
+        }
+
+        .faq-item p {
+            color: var(--text-pale);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-darker);
+            border-top: 1px solid rgba(255, 107, 53, 0.15);
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        footer p {
+            margin-bottom: 12px;
+            color: var(--text-pale);
+        }
+
+        footer a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--accent-orange);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+                margin-bottom: 40px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <span class="logo-icon">💡</span>
+                    <span>3D Lamp Academy</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#modulos">Módulos</a></li>
+                    <li><a href="#componentes">Componentes</a></li>
+                    <li><a href="#venta">Vender</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="badge">🎓 CURSO BÁSICO</span>
+            <h1>Diseña tu Primera Lámpara 3D</h1>
+            <p>Aprende desde cero con Tinkercad. Imprime tus propios diseños y comienza a vender en Mercado Libre sin experiencia previa.</p>
+            
+            <div class="cta-container">
+                <button class="cta-button primary" onclick="alert('¡Excelente! Te notificaremos cuando el curso esté disponible.')">
+                    🔔 Notificarme (Descuento Especial)
+                </button>
+                <button class="cta-button secondary" onclick="document.querySelector('#modulos').scrollIntoView({behavior: 'smooth'})">
+                    📚 Ver Contenido
+                </button>
+            </div>
+
+            <div class="countdown-box">
+                <h3>⏰ Curso disponible en:</h3>
+                <div class="countdown-timer">
+                    <div class="timer-item">
+                        <div class="timer-number" id="days">45</div>
+                        <div class="timer-label">Días</div>
+                    </div>
+                    <div class="timer-item">
+                        <div class="timer-number" id="hours">12</div>
+                        <div class="timer-label">Horas</div>
+                    </div>
+                    <div class="timer-item">
+                        <div class="timer-number" id="minutes">30</div>
+                        <div class="timer-label">Minutos</div>
+                    </div>
+                    <div class="timer-item">
+                        <div class="timer-number" id="seconds">45</div>
+                        <div class="timer-label">Segundos</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Módulos del Curso -->
+    <section id="modulos" class="alt">
+        <div class="container">
+            <h2>📚 Módulos del Curso Básico</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon">🎯</div>
+                    <h3>1. Introducción a Tinkercad</h3>
+                    <p>Interfaz, herramientas básicas y primeros pasos en diseño 3D. Aprenderás lo fundamental para crear cualquier forma.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🔲</div>
+                    <h3>2. Diseño de Lámparas Básicas</h3>
+                    <p>Crea tu primer modelo de lámpara con formas simples. Cilindros, cubos y esferas combinadas de forma inteligente.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">⚙️</div>
+                    <h3>3. Exportación para Impresión</h3>
+                    <p>Prepara tu diseño para impresión 3D. Formatos, escalas y optimización básica antes de imprimir.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🖨️</div>
+                    <h3>4. Impresión 3D Básica</h3>
+                    <p>Configuraciones esenciales de impresión. Temperatura, velocidad y materiales para lámparas de calidad.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💡</div>
+                    <h3>5. Componentes Eléctricos Simples</h3>
+                    <p>LEDs, cables y enchufes básicos. Ensamble seguro de componentes en tu lámpara impresa.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🛒</div>
+                    <h3>6. Venta en Mercado Libre</h3>
+                    <p>Crea tu tienda, fotografía profesional y estrategia de precios. Comienza a vender tus lámparas hoy.</p>
+                </div>
+            </div>
+
+            <div class="bonus-card">
+                <h3>🎁 Bonus: Pack de 10 Modelos Listos</h3>
+                <p>Recibe 10 diseños de lámparas 3D completamente funcionales que puedes imprimir y vender inmediatamente.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Qué Aprenderás -->
+    <section>
+        <div class="container">
+            <h2>✨ Detalles del Aprendizaje</h2>
+            <div class="learning-grid">
+                <div class="learning-item">
+                    <div class="learning-item-icon">📐</div>
+                    <div class="learning-item-text">
+                        <h4>Diseño Fundamentales</h4>
+                        <p>Técnicas de modelado 3D desde cero para crear lámparas funcionales y hermosas.</p>
+                    </div>
+                </div>
+                <div class="learning-item">
+                    <div class="learning-item-icon">🎨</div>
+                    <div class="learning-item-text">
+                        <h4>Personalización</h4>
+                        <p>Adapta diseños para crear variaciones únicas que se venderán a diferentes precios.</p>
+                    </div>
+                </div>
+                <div class="learning-item">
+                    <div class="learning-item-icon">📸</div>
+                    <div class="learning-item-text">
+                        <h4>Fotografía Profesional</h4>
+                        <p>Técnicas para fotografiar tus lámparas y mejorar significativamente tus ventas.</p>
+                    </div>
+                </div>
+                <div class="learning-item">
+                    <div class="learning-item-icon">💰</div>
+                    <div class="learning-item-text">
+                        <h4>Cálculo de Precios</h4>
+                        <p>Márgenes de ganancia, costos de materiales y estrategia de precios rentable.</p>
+                    </div>
+                </div>
+                <div class="learning-item">
+                    <div class="learning-item-icon">📊</div>
+                    <div class="learning-item-text">
+                        <h4>Análisis de Mercado</h4>
+                        <p>Investiga qué vende, tendencias y cómo diferenciarte de la competencia.</p>
+                    </div>
+                </div>
+                <div class="learning-item">
+                    <div class="learning-item-icon">🚀</div>
+                    <div class="learning-item-text">
+                        <h4>Plan de Lanzamiento</h4>
+                        <p>Estrategia paso a paso para tu primer mes de ventas en Mercado Libre.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Componentes -->
+    <section id="componentes" class="alt">
+        <div class="container">
+            <h2>🛠️ Dónde Comprar Componentes (Perú)</h2>
+            <p style="text-align: center; color: var(--text-pale); margin-bottom: 40px; font-size: 1.1rem;">
+                Tiendas locales con envío rápido y asesoramiento técnico
+            </p>
+
+            <div class="suppliers-grid">
+                <div class="supplier-card">
+                    <div class="supplier-logo">🏬</div>
+                    <h4>Tiendas Locales 3D</h4>
+                    <p>Asesoramiento técnico presencial. Calidad garantizada en componentes.</p>
+                    <a href="#" class="supplier-link">Ver Directorio →</a>
+                </div>
+                <div class="supplier-card">
+                    <div class="supplier-logo">📱</div>
+                    <h4>Mercado Libre</h4>
+                    <p>Múltiples vendedores. Envío rápido a todo Perú. Compra segura.</p>
+                    <a href="https://www.mercadolibre.com.pe" target="_blank" class="supplier-link">Explorar →</a>
+                </div>
+                <div class="supplier-card">
+                    <div class="supplier-logo">🏪</div>
+                    <h4>Sodimac</h4>
+                    <p>Herramientas y equipos profesionales. Precios competitivos.</p>
+                    <a href="https://www.sodimac.com.pe" target="_blank" class="supplier-link">Visitar →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filamentos -->
+    <section>
+        <div class="container">
+            <h2>🧵 Filamentos 3D en Perú</h2>
+            <p style="text-align: center; color: var(--text-pale); margin-bottom: 40px; font-size: 1.1rem;">
+                Guía completa de dónde comprar filamentos de calidad localmente
+            </p>
+
+            <div class="suppliers-grid">
+                <div class="supplier-card">
+                    <div class="supplier-logo">📦</div>
+                    <h4>Tiendas 3D Especializadas</h4>
+                    <p>Venta de filamentos PLA, ABS y PETG con garantía de calidad.</p>
+                    <a href="#" class="supplier-link">Consultar →</a>
+                </div>
+                <div class="supplier-card">
+                    <div class="supplier-logo">🎯</div>
+                    <h4>Mercado Libre Filamentos</h4>
+                    <p>Múltiples marcas: Prusament, eSUN y marcas locales peruanas.</p>
+                    <a href="https://www.mercadolibre.com.pe" target="_blank" class="supplier-link">Ver Ofertas →</a>
+                </div>
+                <div class="supplier-card">
+                    <div class="supplier-logo">🌐</div>
+                    <h4>Distribuidores Autorizados</h4>
+                    <p>Filamentos premium importados con certificados de autenticidad.</p>
+                    <a href="#" class="supplier-link">Contactar →</a>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 40px; background: rgba(0, 212, 255, 0.05); border-left: 4px solid var(--accent-cyan);">
+                <h3>💡 Recomendaciones de Filamento</h3>
+                <ul style="list-style: none; text-align: left; max-width: 700px; margin: 20px auto;">
+                    <li style="padding: 12px 0; border-bottom: 1px solid rgba(255, 107, 53, 0.15);">
+                        <strong style="color: var(--accent-cyan);">PLA:</strong> <span style="color: var(--text-pale);">Ideal para lámparas. Fácil de imprimir, colores vibrantes y amigable con el medio ambiente.</span>
+                    </li>
+                    <li style="padding: 12px 0; border-bottom: 1px solid rgba(255, 107, 53, 0.15);">
+                        <strong style="color: var(--accent-cyan);">PETG:</strong> <span style="color: var(--text-pale);">Mayor resistencia. Mejor opción para bases que soportarán peso.</span>
+                    </li>
+                    <li style="padding: 12px 0;">
+                        <strong style="color: var(--accent-cyan);">Marca Recomendada:</strong> <span style="color: var(--text-pale);">eSUN o Prusament para máxima calidad sin pagar demasiado.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Venta -->
+    <section id="venta" class="alt">
+        <div class="container">
+            <h2>💰 Tu Primer Paso: Vender en Mercado Libre</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon">📝</div>
+                    <h3>Crear Cuenta</h3>
+                    <p>Registro simple y verificación. Estás listo para vender en horas.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📸</div>
+                    <h3>Publicar Productos</h3>
+                    <p>Fotos profesionales y descripciones que venden. Te enseñamos cómo.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💳</div>
+                    <h3>Recibir Dinero</h3>
+                    <p>Métodos de pago seguros. Retira tus ganancias cuando quieras.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section>
+        <div class="container">
+            <h2>⭐ Testimonios de Estudiantes</h2>
+            <div class="grid">
+                <div class="testimonial">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-text">
+                        "Comencé sin saber nada de 3D. Ahora tengo mi tienda en Mercado Libre vendiendo 5-10 lámparas por semana. Recomiendo 100%"
+                    </div>
+                    <div class="testimonial-author">- Pedro R., Lima</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-text">
+                        "El curso es muy práctico. En una semana ya tenía mis primeras ventas. Los módulos son fáciles de seguir."
+                    </div>
+                    <div class="testimonial-author">- Ana T., Arequipa</div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <div class="testimonial-text">
+                        "Excelente inversión. Recuperé el costo del curso en la primera semana de ventas. Gracias por esta oportunidad."
+                    </div>
+                    <div class="testimonial-author">- Marco D., Cusco</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="alt">
+        <div class="container">
+            <h2>❓ Preguntas Frecuentes</h2>
+            <div style="max-width: 800px; margin: 0 auto;">
+                <div class="faq-item">
+                    <h4>¿Necesito experiencia previa en 3D?</h4>
+                    <p>No. El curso comienza desde cero con Tinkercad. Perfecto para principiantes absolutos.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>¿Qué impresora necesito?</h4>
+                    <p>Cualquier impresora FDM básica funciona (Creality Ender 3, Anet, etc.). El curso cubre configuraciones universales.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>¿Cuánto tiempo toma completar el curso?</h4>
+                    <p>Aproximadamente 6-8 horas de contenido. Puedes completarlo a tu ritmo, en una semana o en un mes.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>¿Cuál es el potencial de ingresos?</h4>
+                    <p>Estudiantes reportan 500-2000 soles mensuales en sus primeros meses. Depende de tu dedicación.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>¿Incluye soporte después del curso?</h4>
+                    <p>Sí. Acceso a grupo exclusivo de estudiantes + soporte por email durante 6 meses.</p>
+                </div>
+                <div class="faq-item">
+                    <h4>¿Hay garantía de dinero?</h4>
+                    <p>Garantía de 30 días. Si no estás satisfecho, te devolvemos el dinero sin preguntas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section style="background: var(--gradient-1); text-align: center; border-top: 1px solid rgba(255, 107, 53, 0.2);">
+        <div class="container">
+            <h2 style="color: var(--text-white);">¿Listo para Comenzar?</h2>
+            <p style="font-size: 1.2rem; margin: 25px 0; color: var(--text-pale);">
+                Únete a cientos de estudiantes que ya están ganando dinero con lámparas 3D
+            </p>
+            <button class="cta-button primary" style="font-size: 1.15rem; padding: 18px 50px;" onclick="alert('¡Perfecto! Recibirás notificaciones sobre el lanzamiento.')">
+                🔔 Notificarme Cuando Abra (Descuento -30%)
+            </button>
+            <p style="margin-top: 30px; font-size: 0.95rem; color: var(--text-pale);">
+                ⏰ Los primeros 100 estudiantes recibirán acceso de por vida + actualizaciones gratis
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p><strong style="color: var(--text-white);">3D Lamp Academy</strong></p>
+            <p>Curso Básico: Diseña tu Primera Lámpara 3D con Tinkercad</p>
+            <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-pale);">
+                © 2024 3D Lamp Academy. Todos los derechos reservados.<br>
+                Desarrollado para emprendedores que quieren monetizar sus habilidades.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            const targetDate = new Date('2025-02-15T00:00:00').getTime();
+            
+            setInterval(() => {
+                const now = new Date().getTime();
+                const difference = targetDate - now;
+                
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').textContent = days;
+                document.getElementById('hours').textContent = hours;
+                document.getElementById('minutes').textContent = minutes;
+                document.getElementById('seconds').textContent = seconds;
+            }, 1000);
+        }
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        updateCountdown();
+    </script>
+</body>
+</html>
