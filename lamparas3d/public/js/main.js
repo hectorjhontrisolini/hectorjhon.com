@@ -14,12 +14,13 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 function renderCatalog() {
     const grid = document.getElementById('catalog-grid');
+    if (!grid) return;
+    
     grid.innerHTML = lamparas.map(l => `
         <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden group hover:shadow-2xl transition duration-300 relative">
             ${l.badge ? `<span class="absolute top-4 left-4 z-10 bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded-md shadow-md">${l.badge}</span>` : ''}
             <div class="relative overflow-hidden h-64 bg-slate-100">
                 <img src="${l.img}" alt="${l.nombre}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" loading="lazy">
-                <!-- Acción rápida en Hover -->
                 <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
                     <button onclick="addToCart(${l.id})" class="bg-white text-slate-900 px-6 py-3 rounded-full font-bold shadow-lg hover:bg-indigo-600 hover:text-white transition transform translate-y-4 group-hover:translate-y-0">Añadir al carrito</button>
                 </div>
@@ -39,53 +40,101 @@ function renderCatalog() {
     `).join('');
 }
 
-// ... (El resto de las funciones openModal, addToCart, updateCart, checkoutWhatsApp, sendOrderToAdmin se mantienen EXACTAMENTE IGUAL que en la respuesta anterior) ...
-// Solo asegúrate de tenerlas al final del archivo para que el carrito funcione.
-
 function openModal(id) {
     const l = lamparas.find(x => x.id === id);
-    document.getElementById('modal-img').src = l.img;
+    const modalImg = document.getElementById('modal-img');
+    if (!modalImg) return; // Seguridad por si el modal no está en el HTML
+
+    modalImg.src = l.img;
     document.getElementById('modal-title').innerText = l.nombre;
     document.getElementById('modal-desc').innerText = l.desc;
     document.getElementById('modal-price').innerText = `$${l.precio.toFixed(2)}`;
     document.getElementById('modal-add-btn').onclick = () => { addToCart(l.id); closeModal(); };
     document.getElementById('modal').classList.remove('hidden');
 }
-function closeModal() { document.getElementById('modal').classList.add('hidden'); }
+
+function closeModal() { 
+    const modal = document.getElementById('modal');
+    if (modal) modal.classList.add('hidden'); 
+}
 
 function addToCart(id) {
     const item = cart.find(x => x.id === id);
     if (item) { item.qty += 1; } else { cart.push({ id, qty: 1 }); }
     updateCart();
 }
+
 function updateCart() {
     localStorage.setItem('cart', JSON.stringify(cart));
-    const count = cart.reduce((acc, curr) => acc + curr.qty, 0);
-    document.getElementById('cart-count').innerText = count;
+    const cartCount = document.getElementById('cart-count');
     const itemsDiv = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    
+    if (!cartCount || !itemsDiv || !cartTotal) return;
+
+    const count = cart.reduce((acc, curr) => acc + curr.qty, 0);
+    cartCount.innerText = count;
+    
     let total = 0;
     itemsDiv.innerHTML = cart.map(c => {
         const l = lamparas.find(x => x.id === c.id);
         total += l.precio * c.qty;
         return `<div class="flex justify-between items-center border-b border-slate-100 pb-3"><div class="flex items-center gap-3"><img src="${l.img}" class="w-12 h-12 rounded-lg object-cover"><div><p class="font-bold text-sm text-slate-800">${l.nombre}</p><p class="text-xs text-slate-500">Cant: ${c.qty}</p></div></div><p class="font-bold text-slate-800">$${(l.precio * c.qty).toFixed(2)}</p></div>`;
     }).join('');
-    document.getElementById('cart-total').innerText = `$${total.toFixed(2)}`;
+    cartTotal.innerText = `$${total.toFixed(2)}`;
 }
 
-// Eventos UI (Protegidos contra nulos)
-const cartBtn = document.getElementById('cart-btn');
-if (cartBtn) cartBtn.onclick = () => document.getElementById('cart-drawer').classList.remove('translate-x-full');
+// EVENTOS UI (Protegidos para evitar errores si falta un elemento)
+const btnCart = document.getElementById('cart-btn');
+if (btnCart) btnCart.onclick = () => document.getElementById('cart-drawer').classList.remove('translate-x-full');
 
-const closeCartBtn = document.getElementById('close-cart');
-if (closeCartBtn) closeCartBtn.onclick = () => document.getElementById('cart-drawer').classList.add('translate-x-full');
+const btnCloseCart = document.getElementById('close-cart');
+if (btnCloseCart) btnCloseCart.onclick = () => document.getElementById('cart-drawer').classList.add('translate-x-full');
 
-const closeModalBtn = document.getElementById('close-modal');
-if (closeModalBtn) closeModalBtn.onclick = closeModal;
+const btnCloseModal = document.getElementById('close-modal');
+if (btnCloseModal) btnCloseModal.onclick = closeModal;
 
 const modalContainer = document.getElementById('modal');
 if (modalContainer) {
     modalContainer.onclick = (e) => { if(e.target.id === 'modal') closeModal(); };
 }
 
+function checkoutWhatsApp() {
+    if(cart.length === 0) return alert("Tu carrito está vacío");
+    let msg = "Hola, quiero pedir los siguientes productos:%0A";
+    cart.forEach(c => {
+        const l = lamparas.find(x => x.id === c.id);
+        msg += `- ${l.nombre} (x${c.qty}) - $${(l.precio * c.qty).toFixed(2)}%0A`;
+    });
+    const total = cart.reduce((acc, c) => acc + (lamparas.find(x=>x.id===c.id).precio * c.qty), 0);
+    msg += `%0A*Total: $${total.toFixed(2)}*`;
+    window.open(`https://wa.me/51999999999?text=${msg}`, '_blank');
+}
+
+async function sendOrderToAdmin() {
+    if (cart.length === 0) return alert("Tu carrito está vacío");
+    const email = prompt("Ingresa tu correo (o deja vacío para 'Invitado'):") || 'Invitado';
+    const items = cart.map(c => {
+        const l = lamparas.find(x => x.id === c.id);
+        return { id: l.id, nombre: l.nombre, qty: c.qty, precio: l.precio };
+    });
+    const total = cart.reduce((acc, c) => acc + (lamparas.find(x=>x.id===c.id).precio * c.qty), 0);
+    
+    try {
+        const res = await fetch('api/orders', { // Quitamos el "/" inicial para producción
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, items, total })
+        });
+        if (res.ok) {
+            alert("✅ Pedido enviado. Revisa el panel de admin.");
+            cart = []; updateCart();
+        } else { alert("❌ Error al enviar."); }
+    } catch (error) {
+        alert("❌ Error de conexión.");
+    }
+}
+
+// Iniciar
 renderCatalog();
 updateCart();
