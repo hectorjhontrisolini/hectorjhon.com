@@ -341,5 +341,21 @@
             if (distance < 0) { clearInterval(x); document.getElementById("countdown").innerHTML = "¡Oferta Expirada!"; }
         }, 1000);
     </script>
+
+    <!-- Modal de Detalles -->
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl relative">
+            <button id="close-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+            <img id="modal-img" src="" alt="" class="w-full h-64 object-cover">
+            <div class="p-6">
+                <h3 id="modal-title" class="text-2xl font-bold text-gray-900"></h3>
+                <p id="modal-desc" class="mt-2 text-gray-600"></p>
+                <p id="modal-price" class="mt-4 text-3xl font-bold text-indigo-600"></p>
+                <button id="modal-add-btn" class="mt-6 w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition">Añadir al Carrito</button>
+            </div>
+        </div>
+    </div>
+
 </body>
+
 </html>
