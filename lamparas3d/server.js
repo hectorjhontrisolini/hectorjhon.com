@@ -1,3 +1,4 @@
+
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const bcrypt = require('bcryptjs');
@@ -32,6 +33,17 @@ db.serialize(() => {
         total REAL,
         status TEXT DEFAULT 'Pendiente',
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )`);
+
+    // NUEVA TABLA DE PRODUCTOS
+    db.run(`CREATE TABLE IF NOT EXISTS products (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nombre TEXT,
+        precio REAL,
+        oldPrice REAL,
+        descripcion TEXT,
+        img TEXT,
+        badge TEXT
     )`);
 
     db.get(`SELECT * FROM users WHERE role = 'admin'`, (err, row) => {
@@ -110,6 +122,34 @@ app.post('/api/orders', (req, res) => {
         [email || 'Invitado', JSON.stringify(items), total], function(err) {
         if (err) return res.status(500).json({ error: err.message });
         res.status(201).json({ message: 'Pedido creado', id: this.lastID });
+    });
+});
+
+// --- RUTAS PRODUCTOS (NUEVAS) ---
+
+// Obtener todos los productos (Público, para el catálogo)
+app.get('/api/products', (req, res) => {
+    db.all(`SELECT * FROM products ORDER BY id DESC`, [], (err, rows) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(rows);
+    });
+});
+
+// Añadir un producto (Solo Admin)
+app.post('/api/products', authenticateToken, isAdmin, (req, res) => {
+    const { nombre, precio, oldPrice, descripcion, img, badge } = req.body;
+    db.run(`INSERT INTO products (nombre, precio, oldPrice, descripcion, img, badge) VALUES (?, ?, ?, ?, ?, ?)`,
+        [nombre, precio, oldPrice || null, descripcion, img, badge || null], function(err) {
+            if (err) return res.status(500).json({ error: err.message });
+            res.status(201).json({ message: 'Producto creado exitosamente', id: this.lastID });
+        });
+});
+
+// Eliminar un producto (Solo Admin)
+app.delete('/api/products/:id', authenticateToken, isAdmin, (req, res) => {
+    db.run(`DELETE FROM products WHERE id = ?`, [req.params.id], function(err) {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ message: 'Producto eliminado' });
     });
 });
 
