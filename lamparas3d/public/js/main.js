@@ -72,39 +72,19 @@ function updateCart() {
     document.getElementById('cart-total').innerText = `$${total.toFixed(2)}`;
 }
 
-document.getElementById('cart-btn').onclick = () => document.getElementById('cart-drawer').classList.remove('translate-x-full');
-document.getElementById('close-cart').onclick = () => document.getElementById('cart-drawer').classList.add('translate-x-full');
-document.getElementById('modal').onclick = (e) => { if(e.target.id === 'modal') closeModal(); };
+// Eventos UI (Protegidos contra nulos)
+const cartBtn = document.getElementById('cart-btn');
+if (cartBtn) cartBtn.onclick = () => document.getElementById('cart-drawer').classList.remove('translate-x-full');
 
-function checkoutWhatsApp() {
-    if(cart.length === 0) return alert("Tu carrito está vacío");
-    let msg = "Hola, quiero pedir los siguientes productos:%0A";
-    cart.forEach(c => {
-        const l = lamparas.find(x => x.id === c.id);
-        msg += `- ${l.nombre} (x${c.qty}) - $${(l.precio * c.qty).toFixed(2)}%0A`;
-    });
-    const total = cart.reduce((acc, c) => acc + (lamparas.find(x=>x.id===c.id).precio * c.qty), 0);
-    msg += `%0A*Total: $${total.toFixed(2)}*`;
-    window.open(`https://wa.me/51999999999?text=${msg}`, '_blank');
-}
+const closeCartBtn = document.getElementById('close-cart');
+if (closeCartBtn) closeCartBtn.onclick = () => document.getElementById('cart-drawer').classList.add('translate-x-full');
 
-async function sendOrderToAdmin() {
-    if (cart.length === 0) return alert("Tu carrito está vacío");
-    const email = prompt("Ingresa tu correo (o deja vacío para 'Invitado'):") || 'Invitado';
-    const items = cart.map(c => {
-        const l = lamparas.find(x => x.id === c.id);
-        return { id: l.id, nombre: l.nombre, qty: c.qty, precio: l.precio };
-    });
-    const total = cart.reduce((acc, c) => acc + (lamparas.find(x=>x.id===c.id).precio * c.qty), 0);
-    const res = await fetch('/api/orders', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, items, total })
-    });
-    if (res.ok) {
-        alert("✅ Pedido enviado. Revisa el panel de admin.");
-        cart = []; updateCart();
-    } else { alert("❌ Error al enviar."); }
+const closeModalBtn = document.getElementById('close-modal');
+if (closeModalBtn) closeModalBtn.onclick = closeModal;
+
+const modalContainer = document.getElementById('modal');
+if (modalContainer) {
+    modalContainer.onclick = (e) => { if(e.target.id === 'modal') closeModal(); };
 }
 
 renderCatalog();
